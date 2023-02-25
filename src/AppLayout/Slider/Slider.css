@@ -1,0 +1,245 @@
+.hero-area {
+  position: relative;
+  background-color: #F4F7FA;
+  overflow: hidden;
+}
+
+.hero-area.style2 {
+  /* background-image: url(../images/hero/online-course.jpg); */
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: left;
+}
+
+.hero-area.style2 .hero-text {
+  margin-top: 240px !important;
+  text-align: left;
+}
+
+.hero-area.style2 .hero-text h5 {
+  background: #0EDC8D;
+  color: #fff;
+}
+
+.hero-area.style2 .hero-text h1 {
+  font-size: 40px;
+  line-height: 55px;
+  color: #081828;
+}
+
+.hero-area.style2 .hero-text h1 span {
+  font-weight: 400;
+  border-bottom: 2px solid #0EDC8D;
+}
+
+.hero-area.style2 .hero-text p {
+  color: #081828;
+}
+
+.hero-area.style2 .hero-text .button .btn {
+  background: #0EDC8D;
+  color: #fff;
+}
+
+.hero-area.style2 .hero-text .button .btn::before {
+  background: #081828;
+}
+
+.hero-area.style2 .hero-text .button .btn i {
+  display: inline-block;
+  margin-right: 5px;
+}
+
+.hero-area.style3 {
+  background: #fff;
+  position: relative;
+}
+
+.hero-area.style3::before {
+  position: absolute;
+  content: "";
+  left: 0;
+  bottom: 0;
+  height: 100px;
+  width: 100%;
+  /* background-image: url("../images/hero/shape1.svg"); */
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  z-index: 9;
+}
+
+.hero-area.style3 .hero-inner {
+  position: relative;
+  z-index: 2;
+  padding: 0;
+  background: #081828;
+  height: 780px;
+}
+
+.hero-area.style3 .hero-inner .inner-content {
+  z-index: 5;
+}
+
+.hero-area.style3 .hero-inner .hero-text {
+  margin-top: 240px !important;
+  text-align: left;
+}
+
+.hero-area.style3 .hero-inner .hero-text h5 {
+  background: #fff;
+  color: #081828;
+}
+
+.hero-area.style3 .hero-inner .hero-text h1 {
+  font-size: 38px !important;
+  color: #fff;
+  line-height: 55px !important;
+}
+
+.hero-area.style3 .hero-inner .hero-text p {
+  color: #fff;
+}
+
+.hero-area.style3 .hero-inner .hero-image img {
+  position: relative;
+  bottom: -60px;
+}
+
+.hero-area .tns-nav {
+  text-align: center;
+  position: absolute;
+  bottom: 60px;
+  -webkit-transform: translateX(-50%);
+  transform: translateX(-50%);
+  width: 100%;
+  left: 50%;
+  z-index: 9;
+}
+
+.hero-area .tns-nav button {
+  height: 10px;
+  width: 10px;
+  background-color: #fff;
+  border-radius: 30px;
+  display: inline-block;
+  border: none;
+  margin: 0px 5px;
+  -webkit-transition: all 0.4s ease;
+  transition: all 0.4s ease;
+}
+
+.hero-area .tns-nav button.tns-nav-active {
+  width: 20px;
+}
+
+.hero-area .hero-inner {
+  height: auto;
+  background-size: cover;
+  background-position: center;
+  position: relative;
+  z-index: 3;
+  padding-bottom: 150px;
+}
+
+.hero-area .hero-inner.overlay::before {
+  opacity: 0.9;
+  background: #081828;
+}
+
+.hero-area .hero-image {
+  margin-top: 90px;
+}
+
+.hero-area .hero-image img {
+  width: 100%;
+}
+
+.hero-area .hero-text {
+  float: none;
+  text-align: center;
+  margin-top: 150px !important;
+}
+
+.hero-area .hero-text h5 {
+  color: #fff !important;
+  font-size: 14px;
+  font-weight: 500;
+  display: block;
+  margin-bottom: 15px;
+  display: inline-block;
+  padding: 12px 22px;
+  background: #0EDC8D !important;
+  text-transform: none;
+  border-radius: 30px;
+}
+
+.hero-area .hero-text h1 {
+  font-weight: 700;
+  margin-bottom: 25px;
+  color: #fff;
+  font-size: 40px !important;
+  line-height: 50px !important;
+}
+
+.hero-area .hero-text h1 span {
+  color: #0EDC8D;
+}
+
+.hero-area .hero-text p {
+  font-size: 14px;
+  color: #fff;
+}
+
+.hero-area .hero-text .btn {
+  border: none;
+  background: #fff;
+  color: #081828;
+}
+
+.hero-area .hero-text .btn:hover {
+  color: #fff;
+}
+
+.hero-area .hero-text .btn i {
+  display: inline-block;
+  margin-left: 5px;
+}
+
+.hero-area .hero-text .btn.alt-btn {
+  background: #0EDC8D;
+  color: #fff;
+}
+
+.hero-area .hero-text .btn.alt-btn::before {
+  background: #fff;
+}
+
+.hero-area .hero-text .btn.alt-btn:hover {
+  color: #081828 !important;
+}
+
+.hero-area .hero-text .button {
+  margin-top: 35px;
+}
+
+.hero-area .hero-text .button .btn {
+  margin-right: 10px;
+}
+
+.hero-area .hero-text .button .btn:hover {
+  color: #fff;
+}
+
+.hero-area .hero-text .button .btn:last-child {
+  margin-right: 0px;
+}
+.slider-bg1 {
+	background-image: url('./Images/slider-bg1.jpg');
+}
+.slider-bg2 {
+	background-image: url('./Images/slider-bg2.jpg');
+}
+.slider-bg3 {
+	background-image: url('./Images/slider-bg3.jpg');
+}
