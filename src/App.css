@@ -125,3 +125,11 @@ video {
 .ml-2-12 {
   margin-left: 16.6666666667%
 }
+@media only screen and (max-width: 991px) {
+  .newsletter-m-0 {
+    margin-left: 0;
+  }
+  .call-action-m-0 {
+    margin-left: 0;
+  }
+}

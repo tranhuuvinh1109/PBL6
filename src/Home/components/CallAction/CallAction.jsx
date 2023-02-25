@@ -7,7 +7,7 @@ const CallAction = () => {
 		<div className="call-action section overlay">
 			<Container>
 				<Row>
-					<Col lg={8} md={12} xs={12} className='ml-2-12'>
+					<Col lg={8} md={12} xs={12} className='ml-2-12 call-action-m-0'>
 						<div className="call-content">
 							<span>EduGrids Free Lite Version</span>
 							<h2>Currently you are using free <br />Lite

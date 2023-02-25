@@ -10,7 +10,7 @@ const NewsLetter = () => {
 		<div className="newsletter-area section">
 			<Container>
 				<Row>
-					<Col lg={6} md={12} xs={12} className="ml-[25%]">
+					<Col lg={6} md={12} xs={12} className="ml-[25%] newsletter-m-0">
 						<div className="newsletter-title">
 							<span>Sign Up for</span>
 							<h2>The Newsletter</h2>
