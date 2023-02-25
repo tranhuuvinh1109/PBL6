@@ -1,0 +1,55 @@
+.our-achievement {
+  background-image: url(../images/achievement-bg.jpg);
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-attachment: fixed;
+  padding-top: 70px;
+  padding: 90px 0 120px 0;
+}
+
+.our-achievement.style3 {
+  padding-top: 200px;
+  position: relative;
+}
+
+.our-achievement.style3::after {
+  position: absolute;
+  content: "";
+  left: 0;
+  top: 0;
+  height: 100px;
+  width: 100%;
+  /* background-image: url("../images/hero/shape2.svg"); */
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  z-index: 2;
+}
+
+.our-achievement.overlay::before {
+  background-color: #0EDC8D;
+  opacity: 0.92;
+}
+
+.our-achievement .single-achievement {
+  margin-top: 30px;
+  text-align: center;
+  padding: 0;
+}
+
+.our-achievement .single-achievement h3 {
+  font-size: 35px;
+  font-weight: 700;
+  display: block;
+  margin-bottom: 15px;
+  color: #fff;
+}
+
+.our-achievement .single-achievement h4 {
+  font-weight: 700;
+  font-size: 20px;
+  display: block;
+  margin-top: 15px;
+  color: #fff;
+}

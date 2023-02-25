@@ -1,7 +1,7 @@
 import React from "react";
 import { Container, Row, Col } from "react-bootstrap";
 import CourseItem from "../../../components/CourseItem/CoureItem";
-import './Course.css';
+import '../../../Assets/css/Course.css';
 
 const Course = () => {
 	return (

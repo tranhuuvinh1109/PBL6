@@ -1,0 +1,83 @@
+.call-action {
+  background-image: url(../images/call-bg.jpg);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  z-index: 5;
+}
+
+.call-action.style2 {
+  background-color: #0EDC8D;
+}
+
+.call-action.style2 .call-content {
+  text-align: left;
+  padding: 0;
+}
+
+.call-action.style2 .call-content h2 {
+  color: #fff;
+}
+
+.call-action.style2 .call-content .button {
+  float: right;
+  margin: 0;
+}
+
+.call-action.style2 .call-content .button .btn {
+  background-color: #fff;
+  color: #081828;
+}
+
+.call-action.overlay::before {
+  background: #0EDC8D;
+  opacity: 0.95;
+}
+
+.call-action .call-content {
+  text-align: center;
+  padding: 0px 100px;
+}
+
+.call-action .call-content span {
+  color: #fff;
+  font-weight: 600;
+  display: block;
+  margin-bottom: 10px;
+}
+
+.call-action .call-content h2 {
+  font-size: 36px;
+  font-weight: 700;
+  color: #fff;
+  display: block;
+  margin-bottom: 15px;
+  line-height: 50px;
+}
+
+.call-action .call-content p {
+  color: #fff;
+}
+
+.call-action .call-content .button {
+  margin-top: 40px;
+}
+
+.call-action .call-content .button .btn {
+  background-color: #fff;
+  color: #081828;
+}
+
+.call-action .call-content .button .btn::before {
+  background-color: #081828;
+  width: 0;
+}
+
+.call-action .call-content .button .btn:hover::before {
+  width: 100%;
+}
+
+.call-action .call-content .button .btn:hover {
+  color: #fff;
+}

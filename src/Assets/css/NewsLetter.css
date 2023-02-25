@@ -1,0 +1,136 @@
+.newsletter-area {
+  background-color: #fff;
+  text-align: center;
+}
+
+.newsletter-area.style2 .newsletter-title i {
+  height: 70px;
+  width: 70px;
+  line-height: 70px;
+  text-align: center;
+  display: inline-block;
+  margin-bottom: 20px;
+  color: #fff;
+  background-color: #0EDC8D;
+  border-radius: 50%;
+  font-size: 30px;
+}
+
+.newsletter-area.style2 .subscribe-text form {
+  position: relative;
+  width: 100%;
+  padding: 0px 50px;
+}
+
+.newsletter-area.style2 .subscribe-text form input {
+  width: 100% !important;
+  height: 70px;
+  padding-right: 165px;
+}
+
+.newsletter-area.style2 .subscribe-text form .button {
+  position: absolute;
+  right: 60px;
+  top: 10px;
+}
+
+.newsletter-area .newsletter-title span {
+  color: #081828;
+  font-size: 14px;
+  font-weight: 600;
+  display: block;
+  margin-bottom: 5px;
+}
+
+.newsletter-area .newsletter-title h2 {
+  color: #081828;
+  font-size: 36px;
+  font-weight: 700;
+  display: block;
+  margin-bottom: 15px;
+}
+
+.newsletter-area .newsletter-title p {
+  font-size: 14px;
+}
+
+.newsletter-area .subscribe-text {
+  margin-top: 40px;
+  display: block;
+}
+
+.newsletter-area .subscribe-text form {
+  display: inline-block;
+  text-align: center;
+}
+
+.newsletter-area .subscribe-text input {
+  height: 50px;
+  width: 300px;
+  border: none;
+  background-color: #fff;
+  border: 1px solid #eee;
+  color: #081828;
+  border-radius: 0;
+  padding: 0px 30px;
+  display: block;
+  text-align: center;
+  display: inline-block;
+  font-weight: 500;
+  text-align: left;
+}
+
+.newsletter-area .subscribe-text .button {
+  display: inline-block;
+  position: relative;
+  top: -2px;
+}
+
+.newsletter-area .subscribe-text .button .btn {
+  height: 50px;
+  width: auto;
+  display: inline-block;
+  border: none;
+  background: #0EDC8D;
+  color: #fff;
+  margin-left: 10px;
+}
+
+.newsletter-area .subscribe-text .button .btn:hover {
+  color: #fff;
+}
+
+.newsletter-area .subscribe-text .button .btn:hover::before {
+  background-color: #081828;
+}
+
+.newsletter-area .subscribe-text .newsletter-social {
+  margin-top: 50px;
+}
+
+.newsletter-area .subscribe-text .newsletter-social li {
+  display: inline-block;
+  margin-right: 5px;
+}
+
+.newsletter-area .subscribe-text .newsletter-social li:last-child {
+  margin: 0;
+}
+
+.newsletter-icon {
+  height: 40px;
+  width: 40px;
+  line-height: 40px;
+  text-align: center;
+  font-size: 12px;
+  border: 1px solid #eee;
+  border-radius: 50%;
+  color: #081828;
+  background-color: #F4F7FA;
+}
+
+.newsletter-icon:hover {
+  border-color: transparent;
+  color: #fff;
+  background-color: #0EDC8D;
+}
