@@ -4,7 +4,27 @@ import logo from '../../logo.svg';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFacebook, faInstagram, faTelegram } from '@fortawesome/free-brands-svg-icons';
 import { faEnvelope } from '@fortawesome/free-solid-svg-icons'
-import { Container, Row, Col, Navbar } from "react-bootstrap";
+import { Container, Row, Col } from "react-bootstrap";
+import Navbar from "./components/Navbar";
+import { Link } from "react-router-dom";
+const listNavbar = [
+	{
+		title: 'Home',
+		path: '/',
+	},
+	{
+		title: 'Course',
+		path: '/page/course',
+	},
+	{
+		title: 'Event',
+		path: '/page/event',
+	},
+	{
+		title: 'Contact',
+		path: '/page/contact',
+	},
+]
 const Header = () => {
 	return (
 		<>
@@ -27,18 +47,17 @@ const Header = () => {
 								<div className="toolbar-social">
 									<ul>
 										<li><span className="title">Follow Us On : </span></li>
-										<li><a href="#"><FontAwesomeIcon icon={faFacebook} /></a></li>
-										<li><a href="#"><FontAwesomeIcon icon={faInstagram} /></a></li>
-										<li><a href="#"><FontAwesomeIcon icon={faTelegram} /></a></li>
-										<li><a href="#"><FontAwesomeIcon icon={faEnvelope} /></a></li>
+										<li><FontAwesomeIcon icon={faFacebook} className='text-white' /></li>
+										<li><FontAwesomeIcon icon={faInstagram} className='text-white' /></li>
+										<li><FontAwesomeIcon icon={faTelegram} className='text-white' /></li>
+										<li><FontAwesomeIcon icon={faEnvelope} className='text-white' /></li>
 									</ul>
 								</div>
 							</Col>
 							<Col lg={8} md={6} xs={12}>
 								<div className="toolbar-login">
 									<div className="button">
-										<a href="#">Create an Account</a>
-										<a href="#" className="btn">Log In</a>
+										<Link to="/login" className="btn">Log in</Link>
 									</div>
 								</div>
 							</Col>
@@ -48,36 +67,7 @@ const Header = () => {
 				<Container>
 					<Row className="items-center">
 						<Col lg={12}>
-							<div className="nav-inner">
-								<Navbar expand="lg">
-									<a className="navbar-brand" href="#">
-										<img src={logo} alt="Logo" />
-									</a>
-									<button className="navbar-toggler mobile-menu-btn" type="button" data-bs-toggle="collapse"
-										data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
-										aria-expanded="false" aria-label="Toggle navigation">
-										<span className="toggler-icon"></span>
-										<span className="toggler-icon"></span>
-										<span className="toggler-icon"></span>
-									</button>
-									<div className=" navbar-collapse sub-menu-bar" id="navbarSupportedContent">
-										<ul id="nav" className="navbar-nav ms-auto">
-											<li className="nav-item cursor-pointer"><a className="active" href="#">Home</a></li>
-											<li className="nav-item cursor-pointer"><a href="#">Courses</a></li>
-											<li className="nav-item cursor-pointer"><a href="#">Events</a></li>
-											<li className="nav-item cursor-pointer"><a href="#">Pages</a></li>
-											<li className="nav-item cursor-pointer"><a href="#">Blog</a></li>
-											<li className="nav-item cursor-pointer"><a href="#">Contact</a></li>
-										</ul>
-										<form className="d-flex search-form">
-											<input className="form-control me-2" type="search" placeholder="Search" aria-label="Search" />
-											<button className="btn btn-outline-success" type="submit"><i
-												className="lni lni-search-alt"></i></button>
-										</form>
-									</div>
-								</Navbar>
-
-							</div>
+							<Navbar logo={logo} listNav={listNavbar} />
 						</Col>
 
 					</Row>
