@@ -1,5 +1,5 @@
 import React from 'react';
-import Course from '../components/Course/Course';
+import Course from '../../components/Course/Course';
 
 
 const listCourse = [

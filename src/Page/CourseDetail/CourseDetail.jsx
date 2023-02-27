@@ -1,7 +1,7 @@
 import React from "react";
 import { Col, Container, Row } from "react-bootstrap";
 import { useParams } from "react-router-dom";
-import videoSRC from '../Assets/bunny.mp4';
+import videoSRC from '../../Assets/bunny.mp4';
 import { faCheck } from '@fortawesome/free-solid-svg-icons'
 import { Collapse } from 'antd';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";

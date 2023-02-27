@@ -1,9 +1,9 @@
 import Daskboard from "../Admin/Dashboard/Daskboard";
-import Contact from "../Contact/Contact";
-import CoursePage from "../CoursePage/CoursePage";
-import Event from "../EventPage/Event";
+import Contact from "../Page/Contact/Contact";
+import CoursePage from "..Page//CoursePage/CoursePage";
+import Event from "../Page/EventPage/Event";
 import HomePage from "../Home/HomePage";
-import ProfilePage from "../ProfilePage/ProfilePage";
+import ProfilePage from "../Page/ProfilePage/ProfilePage";
 
 export const routers = [
 	{

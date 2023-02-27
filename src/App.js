@@ -7,9 +7,9 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { PrivateRouter } from './Router/PrivateRouter';
 import AppContent from './AppLayout/Content/Content';
 import { adminRouter, routers } from './Router';
-import NotFound from './NotFound/NotFound';
+import NotFound from './Page/NotFound/NotFound';
 import AdminContent from './Admin/AdminContent';
-import CoureDetail from './CourseDetail/CourseDetail';
+import CoureDetail from './Page/CourseDetail/CourseDetail';
 
 
 
