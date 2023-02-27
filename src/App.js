@@ -10,12 +10,16 @@ import { adminRouter, routers } from './Router';
 import NotFound from './Page/NotFound/NotFound';
 import AdminContent from './Admin/AdminContent';
 import CoureDetail from './Page/CourseDetail/CourseDetail';
+import { Toaster } from 'react-hot-toast';
 
 
 
 function App () {
   return (
     <div className="App">
+      <Toaster
+        position="top-center"
+        reverseOrder={false} />
       <BrowserRouter>
         <Routes>
           <Route path='/' element={<HomePage />} />

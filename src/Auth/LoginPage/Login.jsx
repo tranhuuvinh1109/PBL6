@@ -5,10 +5,20 @@ import { Button, Checkbox, Form, Input } from 'antd';
 import { Link } from "react-router-dom";
 import { faCircleArrowLeft } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { useNavigate } from "react-router-dom";
+import toast from 'react-hot-toast';
+
 
 const Login = () => {
+	const navigator = useNavigate();
 	const onFinish = (values: any) => {
-		console.log('Received values of form: ', values);
+		if (values.email === 'admin') {
+			localStorage.setItem('userID', values.email)
+			toast.success('Login Successfully')
+			navigator('/');
+		} else {
+			toast.error('Login Fail')
+		}
 	};
 	return (
 		<div className="login">

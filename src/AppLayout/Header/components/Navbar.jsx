@@ -15,7 +15,7 @@ const Navbar = ({ logo, listNav }) => {
 		navRef.current.classList.toggle("responsive_nav");
 	};
 	const handleClickLogout = () => {
-		alert("logout");
+		localStorage.setItem('userID', '')
 	}
 	const items = [
 		{
