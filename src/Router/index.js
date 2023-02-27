@@ -1,6 +1,6 @@
 import Daskboard from "../Admin/Dashboard/Daskboard";
 import Contact from "../Page/Contact/Contact";
-import CoursePage from "..Page//CoursePage/CoursePage";
+import CoursePage from "../Page/CoursePage/CoursePage";
 import Event from "../Page/EventPage/Event";
 import HomePage from "../Home/HomePage";
 import ProfilePage from "../Page/ProfilePage/ProfilePage";
