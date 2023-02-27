@@ -6,8 +6,10 @@ import Login from './Auth/LoginPage/Login';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { PrivateRouter } from './Router/PrivateRouter';
 import AppContent from './AppLayout/Content/Content';
-import { routers } from './Router';
+import { adminRouter, routers } from './Router';
 import NotFound from './NotFound/NotFound';
+import AdminContent from './Admin/AdminContent';
+import CoureDetail from './CourseDetail/CourseDetail';
 
 
 
@@ -21,6 +23,15 @@ function App () {
           <Route path='page' element={<PrivateRouter path='/login' outlet={<AppContent />} />} >
             {
               routers.map(route => {
+                return <Route key={route.path} element={<route.component />} path={route.path} />
+              })
+            }
+            <Route path='course/:id' element={<CoureDetail />} />
+            <Route path='*' element={<NotFound />} />
+          </Route>
+          <Route path='admin' element={<PrivateRouter path='/login' outlet={<AdminContent />} />} >
+            {
+              adminRouter.map(route => {
                 return <Route key={route.path} element={<route.component />} path={route.path} />
               })
             }

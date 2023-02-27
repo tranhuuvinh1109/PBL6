@@ -8,7 +8,7 @@ import { faCalendarDays, faEnvelope } from '@fortawesome/free-solid-svg-icons';
 
 const Footer = () => {
 	return (
-		<footer className="footer">
+		<footer className="footer mt-6">
 			<div className="footer-middle">
 				<Container>
 					<Row>
@@ -21,10 +21,10 @@ const Footer = () => {
 									consequ magni dolores eos qui ratione.</p>
 								<div className="footer-social">
 									<ul className="p-0 text-left">
-										<li><a href="javascript:void(0)"><FontAwesomeIcon fontSize={14} icon={faFacebook} /></a></li>
-										<li><a href="javascript:void(0)"><FontAwesomeIcon fontSize={14} icon={faInstagram} /></a></li>
-										<li><a href="javascript:void(0)"><FontAwesomeIcon fontSize={14} icon={faTelegram} /></a></li>
-										<li><a href="javascript:void(0)"><FontAwesomeIcon fontSize={14} icon={faEnvelope} /></a></li>
+										<li><a href="#"><FontAwesomeIcon fontSize={14} icon={faFacebook} /></a></li>
+										<li><a href="#"><FontAwesomeIcon fontSize={14} icon={faInstagram} /></a></li>
+										<li><a href="#"><FontAwesomeIcon fontSize={14} icon={faTelegram} /></a></li>
+										<li><a href="#"><FontAwesomeIcon fontSize={14} icon={faEnvelope} /></a></li>
 									</ul>
 								</div>
 							</div>
@@ -61,11 +61,11 @@ const Footer = () => {
 							<div className="single-footer sm-custom-border f-link">
 								<h3 className="text-left">Course List</h3>
 								<ul className="text-left p-0">
-									<li><a href="javascript:void(0)">Advance Javascript – ES6</a></li>
-									<li><a href="javascript:void(0)">WordPress for Intermediate</a></li>
-									<li><a href="javascript:void(0)">iOS App Development</a></li>
-									<li><a href="javascript:void(0)">Wbsite Development</a></li>
-									<li><a href="javascript:void(0)">Android App Development</a></li>
+									<li><a href="#">Advance Javascript – ES6</a></li>
+									<li><a href="#">WordPress for Intermediate</a></li>
+									<li><a href="#">iOS App Development</a></li>
+									<li><a href="#">Wbsite Development</a></li>
+									<li><a href="#">Android App Development</a></li>
 								</ul>
 							</div>
 						</Col>

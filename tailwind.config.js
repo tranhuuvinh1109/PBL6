@@ -20,6 +20,12 @@ module.exports = {
       },
       height: {
         '75px': '75px',
+      },
+      maxWidth: {
+        '14rem': '14rem',
+      },
+      minWidth: {
+        '150px': '150px',
       }
     },
   },

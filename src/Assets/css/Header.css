@@ -571,6 +571,9 @@
   .header .search-form {
     margin-left: 30px !important;
   }
+  .nav-user {
+    display: none;
+  }
 }
 
 @media only screen and (min-width: 768px) and (max-width: 991px),
@@ -675,6 +678,17 @@
   background: #0EDC8D;
   border-color: transparent;
   color: #fff;
+}
+.header-after::after {
+  position: absolute;
+  left: 0px;
+  width: 100%;
+  height: 2px;
+  background: rgb(214 211 209);
+  content: "";
+  transition: all 0.3s;
+  bottom: 0px;
+    /* transform: translateY(-10px); */
 }
 
 /*======================================

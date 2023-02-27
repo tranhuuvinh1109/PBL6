@@ -1,11 +1,11 @@
 import React from "react";
 import { Container, Row, Col } from "react-bootstrap";
-import CourseItem from "../../../components/CourseItem/CoureItem";
-import '../../../Assets/css/Course.css';
+import CourseItem from "../CourseItem/CoureItem";
+import '../../Assets/css/Course.css';
 
-const Course = () => {
+const Course = ({ listCourse }) => {
 	return (
-		<div className="courses section">
+		<div className="courses section p-0 mt-20">
 			<Container>
 				<Row>
 					<Col xs={12}>
@@ -23,12 +23,13 @@ const Course = () => {
 
 				<div className="single-head">
 					<Row>
-						<CourseItem />
-						<CourseItem />
-						<CourseItem />
-						<CourseItem />
-						<CourseItem />
-						<CourseItem />
+						{
+							listCourse?.map((course, index) => {
+								return (
+									<CourseItem key={index} data={course} />
+								)
+							})
+						}
 					</Row>
 				</div>
 			</Container >

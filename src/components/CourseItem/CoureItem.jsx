@@ -1,22 +1,24 @@
 import React from 'react';
 import { Col } from "react-bootstrap";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faStar } from '@fortawesome/free-solid-svg-icons'
+import { faStar } from '@fortawesome/free-solid-svg-icons';
+import { Link } from "react-router-dom";
 
-const CourseItem = () => {
+const CourseItem = ({ data }) => {
 	return (
 		<Col lg={4} md={6} xs={12}>
 			<div className="single-course wow fadeInUp" data-wow-delay=".4s">
 				<div className="course-image">
-					<a href="#">
-						<img src="https://cdnimg.vietnamplus.vn/uploaded/mzdic/2023_02_22/realmadridkyluc222.jpg" alt="#" />
-					</a>
-					<p className="price">$200</p>
+					<Link to={`/page/course/${data.id}`}>
+						<img src={data.image} alt="#" className='lg:max-h-56 md:max-h-40' />
+					</Link>
+					<p className="price">{data.price}</p>
 				</div>
 				<div className="content">
-					<h3><a href="#">Business Management</a></h3>
-					<p>Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt
-						laborum.</p>
+					<h3>
+						<Link to={`/page/course/${data.id}`}>{data.name}</Link>
+					</h3>
+					<p>{data.description}</p>
 				</div>
 				<div className="bottom-content">
 					<ul className="review">
@@ -33,7 +35,7 @@ const CourseItem = () => {
 					</span>
 				</div>
 			</div>
-		</Col>
+		</Col >
 
 	)
 }

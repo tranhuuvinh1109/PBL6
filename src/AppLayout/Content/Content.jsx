@@ -11,7 +11,7 @@ const AppContent = () => {
 			{/* main content */}
 			<Outlet />
 			{/* end main content */}
-			<CallAction />
+			{/* <CallAction /> */}
 			<Footer />
 		</>
 	)

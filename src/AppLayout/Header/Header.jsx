@@ -39,8 +39,8 @@ const Header = () => {
 			</div>
 			{/* End Preloader */}
 			{/*  Start Header Area */}
-			<header className="header navbar-area">
-				<div className="toolbar-area">
+			<header className="header navbar-area header-after relative">
+				{/* <div className="toolbar-area">
 					<Container>
 						<Row>
 							<Col lg={8} md={6} xs={12}>
@@ -63,7 +63,7 @@ const Header = () => {
 							</Col>
 						</Row>
 					</Container>
-				</div>
+				</div> */}
 				<Container>
 					<Row className="items-center">
 						<Col lg={12}>

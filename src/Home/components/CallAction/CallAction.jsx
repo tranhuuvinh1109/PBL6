@@ -15,7 +15,7 @@ const CallAction = () => {
 							<p>Please, purchase full version of the template to get all pages,<br />
 								features and commercial license</p>
 							<div className="button">
-								<a href="javascript:void(0)" className="btn">Buy Now</a>
+								<a href="#" className="btn">Buy Now</a>
 							</div>
 						</div>
 					</Col>
