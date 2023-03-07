@@ -7,6 +7,7 @@ module.exports = {
     extend: {
       margin: {
         '25%': '25%',
+        'profile': '-6rem',
       },
       colors: {
         'greenCustom': '#0EDC8D',

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import '../../Assets/css/Login.css';
 import { LockOutlined, UserOutlined } from '@ant-design/icons';
 import { Button, Checkbox, Form, Input } from 'antd';
@@ -7,13 +7,16 @@ import { faCircleArrowLeft } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useNavigate } from "react-router-dom";
 import toast from 'react-hot-toast';
+import { AppContext } from '../../App';
 
 
 const Login = () => {
 	const navigator = useNavigate();
-	const onFinish = (values: any) => {
+	const setUser = useContext(AppContext)
+	const onFinish = (values) => {
 		if (values.email === 'admin') {
 			localStorage.setItem('userID', values.email)
+			setUser.setUser(values.email)
 			toast.success('Login Successfully')
 			navigator('/');
 		} else {

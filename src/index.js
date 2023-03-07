@@ -5,7 +5,7 @@ import App from './App';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import reportWebVitals from './reportWebVitals';
 // import './Assets/css/bootstrap.min.css';
-import './Assets/css/glightbox.min.css';
+// import './Assets/css/glightbox.min.css';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(

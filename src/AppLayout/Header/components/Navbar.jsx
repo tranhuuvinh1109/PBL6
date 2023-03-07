@@ -1,16 +1,26 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import React, { useRef } from 'react';
+import React, { useContext, useEffect, useRef } from 'react';
 import { faCircleXmark, faBars } from '@fortawesome/free-solid-svg-icons';
 import '../../../Assets/css/Navbar.css';
 import { NavLink, Link } from 'react-router-dom';
 import { Avatar, Dropdown, Space } from 'antd';
-import { DownOutlined } from '@ant-design/icons';
 import { faCaretDown, faArrowRightFromBracket, faUser } from '@fortawesome/free-solid-svg-icons'
+import { AppContext } from '../../../App';
+import { authAPI } from '../../../api/authApi';
 
 
 const Navbar = ({ logo, listNav }) => {
 	const navRef = useRef();
+	const contextData = useContext(AppContext)
+	const GetUser = async () => {
+		const res = await authAPI.getUser('/users')
+		console.log('s', res)
 
+	}
+	console.log('user', contextData);
+	useEffect(() => {
+		GetUser();
+	}, [])
 	const showNavbar = () => {
 		navRef.current.classList.toggle("responsive_nav");
 	};
@@ -83,7 +93,9 @@ const Navbar = ({ logo, listNav }) => {
 				<Space>
 					<div className='hidden xl:block 2xl:block bg-orange-200 px-1.5 py-1 rounded-full cursor-pointer hover:opacity-80'>
 						<Avatar size='large' src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTPJVOqLLr0GTxic4gT7si741MVw7U8q-x91A&usqp=CAU' alt='avatar' />
-						<span className='px-2 text-base font-medium'>Tran Huu Vinh</span>
+						{
+							contextData?.user && <span className='px-2 text-base font-medium'>{contextData?.user}</span>
+						}
 						<FontAwesomeIcon icon={faCaretDown} className='pr-1.5' />
 					</div>
 				</Space>

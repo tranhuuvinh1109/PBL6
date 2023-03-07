@@ -1,12 +1,9 @@
 import React from "react";
 import '../../Assets/css//Header.css';
 import logo from '../../logo.svg';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faFacebook, faInstagram, faTelegram } from '@fortawesome/free-brands-svg-icons';
-import { faEnvelope } from '@fortawesome/free-solid-svg-icons'
 import { Container, Row, Col } from "react-bootstrap";
 import Navbar from "./components/Navbar";
-import { Link } from "react-router-dom";
+
 const listNavbar = [
 	{
 		title: 'Home',

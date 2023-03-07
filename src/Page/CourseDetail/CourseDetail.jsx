@@ -14,6 +14,7 @@ const text = `
 
 const CoureDetail = () => {
 	const { id } = useParams();
+	console.log(id)
 	return (
 		<Container fluid="md" className="text-left mb-20">
 			<Row>
