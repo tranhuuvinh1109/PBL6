@@ -2,7 +2,8 @@ import axios from 'axios';
 // import { TOKEN_KEY } from '../constant';
 // console.log(process.env.REACT_APP_API_URL);
 const axiosClient = axios.create({
-	baseURL: 'https://jsonplaceholder.typicode.com'
+	baseURL: 'https://6406ffdd77c1a905a0e9c15f.mockapi.io/api/v1'
+	// 'https://jsonplaceholder.typicode.com' 
 });
 // axiosClient.interceptors.request.use(
 //   (config) => {
