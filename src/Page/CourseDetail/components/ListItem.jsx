@@ -1,9 +1,11 @@
 import React from 'react';
-
-const ListItem = ({ infor, setIdLecture }) => {
+import { faCirclePlay } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+const ListItem = ({ infor }) => {
 	return (
 		<div>
-			<button onClick={() => setIdLecture(infor.id)}>
+			<FontAwesomeIcon icon={faCirclePlay} />
+			<button>
 				{infor?.name}
 			</button>
 		</div>

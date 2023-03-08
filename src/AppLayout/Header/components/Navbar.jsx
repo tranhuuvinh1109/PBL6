@@ -13,7 +13,7 @@ const Navbar = ({ logo, listNav }) => {
 	const navRef = useRef();
 	const contextData = useContext(AppContext)
 	const GetUser = async () => {
-		const res = await authAPI.getUser('/user')
+		const res = await authAPI.getUser('/course')
 		console.log('s', res)
 
 	}

@@ -734,10 +734,6 @@ button.bg-secondary:focus {
   background-color: #d2e3ee !important;
 }
 
-.bg-default {
-  background-color: #172b4d !important;
-}
-
 a.bg-default:hover,
 a.bg-default:focus,
 button.bg-default:hover,

@@ -76,7 +76,7 @@ const ProfilePage = () => {
 					</Col>
 
 					<Col xl={8} className="order-xl-1">
-						<div className="card bg-secondary shadow">
+						<div className="card shadow">
 							<div className="card-header bg-white border-0">
 								<Row className="items-center">
 									<Col xs={8}>

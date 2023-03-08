@@ -8,6 +8,7 @@ module.exports = {
       margin: {
         '25%': '25%',
         'profile': '-6rem',
+        '46px': '46px',
       },
       colors: {
         'greenCustom': '#0EDC8D',

@@ -4,6 +4,7 @@ import CoursePage from "../Page/CoursePage/CoursePage";
 import Event from "../Page/EventPage/Event";
 import HomePage from "../Home/HomePage";
 import ProfilePage from "../Page/ProfilePage/ProfilePage";
+import Learning from "../Page/LearningPage/Learning";
 
 export const routers = [
 	{
@@ -25,6 +26,10 @@ export const routers = [
 	{
 		path: 'user/profile',
 		component: ProfilePage
+	},
+	{
+		path: 'learning/:id',
+		component: Learning
 	}
 ];
 
