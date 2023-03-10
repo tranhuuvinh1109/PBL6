@@ -1,6 +1,6 @@
 
 import './App.css';
-import React, { createContext, useState } from 'react';
+import React, { createContext, useEffect, useState } from 'react';
 import HomePage from './Home/HomePage';
 import Login from './Auth/LoginPage/Login';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
@@ -10,17 +10,34 @@ import { adminRouter, routers } from './Router';
 import NotFound from './Page/NotFound/NotFound';
 import AdminContent from './Admin/AdminContent';
 import CoureDetail from './Page/CourseDetail/CourseDetail';
+// import ScrollToTop from "react-scroll-to-top";
 import { Toaster } from 'react-hot-toast';
+import { authAPI } from './api/authApi';
 
 
 export const AppContext = createContext({});
 
 function App () {
+  const [listCourse, setListCourse] = useState([]);
   const [user, setUser] = useState();
+  const GetCourse = async () => {
+    const res = await authAPI.getUser('/course')
+
+    if (res.status === 200) {
+      setListCourse(res.data);
+    }
+    return [];
+
+  }
+  useEffect(() => {
+    GetCourse();
+  }, [])
+
 
   return (
-    <AppContext.Provider value={{ user, setUser }} >
+    <AppContext.Provider value={{ user, setUser, listCourse }} >
       <div className="App">
+        {/* <ScrollToTop smooth color="#6f00ff" /> */}
         <Toaster
           position="top-center"
           reverseOrder={false} />

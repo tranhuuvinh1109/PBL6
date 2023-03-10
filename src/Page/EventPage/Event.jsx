@@ -2,8 +2,11 @@ import React from "react";
 
 const Event = () => {
 	return (
-		<h1>Events</h1>
-
+		<div className='mt-20 min-h-[630px]' >
+			<h1>
+				Event
+			</h1>
+		</div >
 	)
 }
 export default Event;

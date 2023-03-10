@@ -4,9 +4,10 @@ import { useParams } from "react-router-dom";
 import { faCheck } from '@fortawesome/free-solid-svg-icons'
 import { Collapse } from 'antd';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import ListItem from "./components/ListItem";
+import LessonItem from "./components/LessonItem";
 import { authAPI } from '../../api/authApi';
 import { useNavigate } from 'react-router-dom'
+import Loading from "../../components/Loading/Loading";
 const { Panel } = Collapse;
 
 const CoureDetail = () => {
@@ -18,14 +19,14 @@ const CoureDetail = () => {
 		if (res.status === 200) {
 			setInfor(res.data)
 		}
-		return;
+		return [];
 	}
 
 	useEffect(() => {
 		GetInformationCourse()
 	}, [])
 	return (
-		<Container fluid="md" className="text-left mb-20">
+		<Container fluid="md" className="text-left mb-20 mt-20 min-h-[630px]">
 			<Row>
 				<Col xs={12} lg={8}>
 					<h1 className="text-left">
@@ -67,7 +68,7 @@ const CoureDetail = () => {
 							{
 								infor.lesson?.map((item) => {
 									return (
-										<ListItem key={item.id} infor={item} />
+										<LessonItem key={item.id} infor={item} />
 									)
 								})
 							}
@@ -76,7 +77,10 @@ const CoureDetail = () => {
 				</Col>
 				<Col xs={12} lg={4}>
 					{
-						infor.video && <iframe src={infor.video} title="video" width="400" height="350" frameBorder="6" allow="autoplay; fullscreen" allowFullScreen style={{ width: "100%" }}></iframe>
+						infor.video ?
+							<iframe src={infor.video} title="video" width="400" height="350" frameBorder="6" allow="autoplay; fullscreen" allowFullScreen style={{ width: "100%" }}></iframe>
+							:
+							<Loading />
 					}
 
 					<div className="mt-4 flex justify-between">

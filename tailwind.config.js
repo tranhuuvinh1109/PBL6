@@ -28,6 +28,10 @@ module.exports = {
       },
       minWidth: {
         '150px': '150px',
+      },
+      minHeight: {
+        '150px': '150px',
+        '630px': '630px',
       }
     },
   },

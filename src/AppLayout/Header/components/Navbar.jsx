@@ -1,26 +1,16 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import React, { useContext, useEffect, useRef } from 'react';
+import React, { useContext, useRef } from 'react';
 import { faCircleXmark, faBars } from '@fortawesome/free-solid-svg-icons';
 import '../../../Assets/css/Navbar.css';
 import { NavLink, Link } from 'react-router-dom';
 import { Avatar, Dropdown, Space } from 'antd';
 import { faCaretDown, faArrowRightFromBracket, faUser } from '@fortawesome/free-solid-svg-icons'
 import { AppContext } from '../../../App';
-import { authAPI } from '../../../api/authApi';
 
 
 const Navbar = ({ logo, listNav }) => {
 	const navRef = useRef();
 	const contextData = useContext(AppContext)
-	const GetUser = async () => {
-		const res = await authAPI.getUser('/course')
-		console.log('s', res)
-
-	}
-	console.log('user', contextData);
-	useEffect(() => {
-		GetUser();
-	}, [])
 	const showNavbar = () => {
 		navRef.current.classList.toggle("responsive_nav");
 	};

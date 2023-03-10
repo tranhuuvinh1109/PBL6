@@ -1,6 +1,7 @@
-import React, { useEffect, useState } from 'react';
-import { authAPI } from '../../api/authApi';
+import React, { useContext } from 'react';
+import { AppContext } from '../../App';
 import Course from '../../components/Course/Course';
+import Loading from '../../components/Loading/Loading';
 
 
 // const listCourse = [
@@ -49,22 +50,16 @@ import Course from '../../components/Course/Course';
 // ]
 
 const CoursePage = () => {
-	const [listCourse, setListCourse] = useState();
-	const GetCourse = async () => {
-		const res = await authAPI.getUser('/course')
-
-		if (res.status === 200) {
-			setListCourse(res.data);
-		}
-		return;
-
-	}
-	useEffect(() => {
-		GetCourse();
-	}, [])
+	const context = useContext(AppContext)
 	return (
 		<>
-			<Course listCourse={listCourse} />
+			{
+				context?.listCourse ?
+					<Course listCourse={context.listCourse} />
+					:
+					<Loading />
+			}
+
 		</>
 	)
 }

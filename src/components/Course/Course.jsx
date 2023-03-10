@@ -22,6 +22,7 @@ const Course = ({ listCourse }) => {
 				</Row>
 
 				<div className="single-head">
+
 					<Row>
 						{
 							listCourse?.map((course, index) => {
