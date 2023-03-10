@@ -5,6 +5,8 @@ import Event from "../Page/EventPage/Event";
 import HomePage from "../Home/HomePage";
 import ProfilePage from "../Page/ProfilePage/ProfilePage";
 import Learning from "../Page/LearningPage/Learning";
+import CourseManagement from "../Admin/CourseManagement/CourseManagement";
+import EventManagement from "../Admin/EventManagement/EventManagement";
 
 export const routers = [
 	{
@@ -39,14 +41,14 @@ export const adminRouter = [
 		path: 'daskboard',
 		component: Daskboard
 	},
-	// {
-	// 	path: 'event',
-	// 	component: Event
-	// },
-	// {
-	// 	path: 'course',
-	// 	component: Course
-	// },
+	{
+		path: 'event',
+		component: EventManagement
+	},
+	{
+		path: 'course',
+		component: CourseManagement
+	},
 	// {
 	// 	path: 'contact',
 	// 	component: Contact

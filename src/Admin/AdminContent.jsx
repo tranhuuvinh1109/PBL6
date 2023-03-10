@@ -3,30 +3,30 @@ import logoSmall from '../logo-small.svg';
 import { PieChartOutlined, DesktopOutlined } from '@ant-design/icons';
 import { Avatar, Breadcrumb, Layout, Menu, Popover, theme } from 'antd';
 import React, { useState } from 'react';
-import { Outlet } from 'react-router-dom';
+import { Outlet, useNavigate } from 'react-router-dom';
 import UserClickContent from './components/UserClickContent';
 const { Header, Content, Footer, Sider } = Layout;
-function getItem (label, key, icon, children) {
-	return {
-		key,
-		icon,
-		children,
-		label,
-	};
-}
-const items = [
-	getItem('Option 1', '1', <PieChartOutlined />, undefined),
-	getItem('Option 2', '2', <DesktopOutlined />, undefined),
-	// getItem('User', 'sub1', <UserOutlined />, [
-	//   getItem('Tom', '3', undefined, undefined),
-	//   // getItem('Bill', '4'),
-	//   // getItem('Alex', '5'),
-	// ], undefined),
-	// getItem('Team', 'sub2', <TeamOutlined />, [getItem('Team 1', '6'), getItem('Team 2', '8')]),
-	// getItem('Files', '9', <FileOutlined />),
-];
+
+const listMenu = [
+	{
+		title: 'Dashboard',
+		icon: <DesktopOutlined />,
+		url: 'dashboard'
+	},
+	{
+		title: 'Course',
+		icon: <PieChartOutlined />,
+		url: 'course'
+	},
+	{
+		title: 'Event',
+		icon: <DesktopOutlined />,
+		url: 'event'
+	},
+]
 
 const AdminContent = () => {
+	const navigate = useNavigate();
 	const [collapsed, setCollapsed] = useState(false);
 	const {
 		token: { colorBgContainer },
@@ -47,7 +47,6 @@ const AdminContent = () => {
 					style={{
 						height: 32,
 						margin: 16,
-						// background: 'rgba(255, 255, 255, 0.2)',
 					}}
 				>
 					{
@@ -56,7 +55,22 @@ const AdminContent = () => {
 					}
 
 				</div>
-				<Menu theme="light" defaultSelectedKeys={['1']} mode="inline" items={items} />
+				<Menu theme="light" defaultSelectedKeys={['1']} mode="inline">
+					{
+						listMenu.map((item, index) => {
+							return (
+								<Menu.Item icon={item.icon} key={index} onClick={() => navigate(`${item.url}`)}>
+									{
+										item.title
+									}
+								</Menu.Item>
+							)
+						})
+					}
+
+
+
+				</Menu>
 			</Sider>
 			<Layout className="site-layout">
 				<Header
@@ -66,11 +80,14 @@ const AdminContent = () => {
 					}}
 				>
 					<Popover content={UserClickContent} trigger="click">
-						<div className='bg-red-500 max-w-[14rem]'>
-							<Avatar src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NXx8dXNlcnxlbnwwfHwwfHw%3D&w=1000&q=80" size='large' alt="user" />
-							<span>
-								Admin
-							</span>
+						<div className='float-right px-2 min-w-[200px] text-left'>
+							<div className=''>
+								<Avatar src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NXx8dXNlcnxlbnwwfHwwfHw%3D&w=1000&q=80" size='large' alt="user" />
+								<span className='ml-1.5 text-base text-base font-semibold'>
+									Admin
+								</span>
+							</div>
+
 						</div>
 
 					</Popover>

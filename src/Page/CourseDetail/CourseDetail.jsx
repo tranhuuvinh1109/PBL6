@@ -87,7 +87,7 @@ const CoureDetail = () => {
 						<h3 className="text-red-400">
 							500
 						</h3>
-						<button className="bg-red-400 text-white py-1.5 px-3 rounded-full min-w-[150px]"
+						<button className="bg-red-400 text-white py-1.5 px-3 rounded-full min-w-[150px] hover:bg-red-300"
 							onClick={() => {
 								navigate(`/page/learning/${infor?.id}`)
 							}}
