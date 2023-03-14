@@ -21,17 +21,15 @@ const ProfilePage = () => {
 							<Row className="justify-center">
 								<Col lg={3} className="order-lg-2">
 									<div className="card-profile-image">
-										<a href="#">
-											<img src="https://demos.creative-tim.com/argon-dashboard/assets-old/img/theme/team-4.jpg" className="rounded-circle" alt="team" />
-										</a>
+										<img src="https://demos.creative-tim.com/argon-dashboard/assets-old/img/theme/team-4.jpg" className="rounded-circle" alt="team" />
 									</div>
 								</Col>
 							</Row>
 
 							<div className="card-header text-center border-0 pt-32 pt-md-4 pb-0 pb-md-4">
 								<div className="flex justify-between">
-									<a href="#" className="btn btn-sm btn-info mr-4">Connect</a>
-									<a href="#" className="btn btn-sm btn-default float-right">Message</a>
+									<button className="btn btn-sm btn-info mr-4">Connect</button>
+									<button className="btn btn-sm btn-default float-right">Message</button>
 								</div>
 							</div>
 							<div className="card-body pt-0 pt-md-4">
@@ -69,7 +67,6 @@ const ProfilePage = () => {
 									</div>
 									<hr className="my-4" />
 									<p className="text-sm">Ryan — the name taken by Melbourne-raised, Brooklyn-based Nick Murphy — writes, performs and records all of his own music.</p>
-									<a href="#">Show more</a>
 								</div>
 							</div>
 						</div>
@@ -83,7 +80,7 @@ const ProfilePage = () => {
 										<h3 className="mb-0 text-left text-lg">My account</h3>
 									</Col>
 									<Col xs={4} className="text-right">
-										<a href="#" className="btn btn-sm btn-primary">Settings</a>
+										<button className="btn btn-sm btn-primary">Settings</button>
 									</Col>
 
 								</Row>

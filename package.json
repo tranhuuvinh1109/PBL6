@@ -50,5 +50,9 @@
   },
   "devDependencies": {
     "tailwindcss": "^3.2.7"
-  }
+  },
+  "main": "index.js",
+  "repository": "https://github.com/tranhuuvinh1109/PBL6.git",
+  "author": "VinhHuuTran <tranhuuvinh1109@gmail.com>",
+  "license": "MIT"
 }

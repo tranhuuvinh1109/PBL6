@@ -29,10 +29,6 @@ const CourseItem = ({ data }) => {
 						<li><FontAwesomeIcon icon={faStar} /></li>
 						<li>10 Reviews</li>
 					</ul>
-					<span className="tag">
-						<i className="lni lni-tag"></i>
-						<a href='#'>Business</a>
-					</span>
 				</div>
 			</div>
 		</Col >

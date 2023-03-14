@@ -21,10 +21,10 @@ const Footer = () => {
 									consequ magni dolores eos qui ratione.</p>
 								<div className="footer-social">
 									<ul className="p-0 text-left">
-										<li><a href="#"><FontAwesomeIcon fontSize={14} icon={faFacebook} /></a></li>
-										<li><a href="#"><FontAwesomeIcon fontSize={14} icon={faInstagram} /></a></li>
-										<li><a href="#"><FontAwesomeIcon fontSize={14} icon={faTelegram} /></a></li>
-										<li><a href="#"><FontAwesomeIcon fontSize={14} icon={faEnvelope} /></a></li>
+										<li><FontAwesomeIcon fontSize={14} icon={faFacebook} /></li>
+										<li><FontAwesomeIcon fontSize={14} icon={faInstagram} /></li>
+										<li><FontAwesomeIcon fontSize={14} icon={faTelegram} /></li>
+										<li><FontAwesomeIcon fontSize={14} icon={faEnvelope} /></li>
 									</ul>
 								</div>
 							</div>
@@ -61,11 +61,11 @@ const Footer = () => {
 							<div className="single-footer sm-custom-border f-link">
 								<h3 className="text-left">Course List</h3>
 								<ul className="text-left p-0">
-									<li><a href="#">Advance Javascript – ES6</a></li>
-									<li><a href="#">WordPress for Intermediate</a></li>
-									<li><a href="#">iOS App Development</a></li>
-									<li><a href="#">Wbsite Development</a></li>
-									<li><a href="#">Android App Development</a></li>
+									<li>Advance Javascript – ES6</li>
+									<li>WordPress for Intermediate</li>
+									<li>iOS App Development</li>
+									<li>Wbsite Development</li>
+									<li>Android App Development</li>
 								</ul>
 							</div>
 						</Col>
