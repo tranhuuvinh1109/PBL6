@@ -55,7 +55,7 @@ const AdminContent = () => {
 					}
 
 				</div>
-				<Menu theme="light" defaultSelectedKeys={['1']} mode="inline">
+				<Menu theme="light" defaultSelectedKeys={['0']} mode="inline">
 					{
 						listMenu.map((item, index) => {
 							return (
@@ -116,13 +116,6 @@ const AdminContent = () => {
 						<Outlet />
 					</div>
 				</Content>
-				<Footer
-					style={{
-						textAlign: 'center',
-					}}
-				>
-					Ant Design ©2023 Created by Ant UED
-				</Footer>
 			</Layout>
 		</Layout>
 	)

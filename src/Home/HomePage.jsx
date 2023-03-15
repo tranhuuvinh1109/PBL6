@@ -8,6 +8,7 @@ import Achievement from './components/Achievement/Achievement';
 import CallAction from './components/CallAction/CallAction';
 import NewsLetter from './components/NewsLetter/NewsLetter';
 import { AppContext } from '../App';
+import ScrollToTop from "react-scroll-to-top";
 
 const HomePage = () => {
 	const context = useContext(AppContext)
@@ -20,6 +21,7 @@ const HomePage = () => {
 			<Achievement />
 			<NewsLetter />
 			<CallAction />
+			<ScrollToTop smooth />
 			<Footer />
 		</>
 	)

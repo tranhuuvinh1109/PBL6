@@ -5,7 +5,7 @@ import { Container, Row, Col, Spinner } from 'react-bootstrap';
 import { useParams } from "react-router-dom";
 import CommentItem from './components/CommentItem/CommentItem';
 import LessonItem from './components/LessonItem/LessonItem';
-import { faPaperPlane } from '@fortawesome/free-solid-svg-icons'
+import { faPaperPlane } from '@fortawesome/free-solid-svg-icons';
 
 const { Panel } = Collapse;
 

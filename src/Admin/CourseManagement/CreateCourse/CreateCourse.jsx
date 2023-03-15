@@ -1,8 +1,8 @@
 import { Button, message, Steps } from 'antd';
 import React, { createContext, useMemo, useState } from 'react';
-import FirstContent from '../components/FirstContent';
-import SecondContent from '../components/SecondContent';
-import ThirdContent from '../components/ThirdContent';
+import FirstContent from './components/FirstContent';
+import SecondContent from './components/SecondContent';
+import ThirdContent from './components/ThirdContent';
 export const CreateCourseContext = createContext({});
 const steps = [
 	{
@@ -53,12 +53,12 @@ const CreateCourse = () => {
 		return stepActive[0].content;
 	}, [current])
 	return (
-		<CreateCourseContext.Provider value={ { courseContext, setCourseContext } }>
+		<CreateCourseContext.Provider value={{ courseContext, setCourseContext }}>
 			<Steps
-				current={ current }
-				onChange={ onChange }
+				current={current}
+				onChange={onChange}
 				type='navigation'
-				items={ items }
+				items={items}
 			>
 			</Steps>
 			<div>
@@ -67,30 +67,30 @@ const CreateCourse = () => {
 				}
 			</div>
 			<div
-				style={ {
+				style={{
 					marginTop: 24,
-				} }
+				}}
 			>
-				{ current < steps.length - 1 && (
-					<Button className='btn-custom' onClick={ () => next() }>
+				{current < steps.length - 1 && (
+					<Button className='btn-custom' onClick={() => next()}>
 						Next
 					</Button>
-				) }
-				{ current === steps.length - 1 && (
-					<Button className='btn-custom' onClick={ () => message.success('Processing complete!') }>
+				)}
+				{current === steps.length - 1 && (
+					<Button className='btn-custom' onClick={() => message.success('Processing complete!')}>
 						Done
 					</Button>
-				) }
-				{ current > 0 && (
+				)}
+				{current > 0 && (
 					<Button
-						style={ {
+						style={{
 							margin: '0 8px',
-						} }
-						onClick={ () => prev() }
+						}}
+						onClick={() => prev()}
 					>
 						Previous
 					</Button>
-				) }
+				)}
 			</div>
 		</CreateCourseContext.Provider>
 	);
