@@ -31,10 +31,20 @@ const CreateCourse = () => {
 		category: 0,
 	});
 
-	const handleChange2 = e => {
+	const handleChangeLesson = e => {
 		e.preventDefault();
 		const index = e.target.id;
 		setArrLesson(s => {
+			const newArr = s.slice();
+			newArr[index].value = e.target.value;
+			return newArr;
+		});
+	};
+
+	const handleChangePlan = e => {
+		e.preventDefault();
+		const index = e.target.id;
+		setArrPlan(s => {
 			const newArr = s.slice();
 			newArr[index].value = e.target.value;
 			return newArr;
@@ -120,7 +130,7 @@ const CreateCourse = () => {
 							<div className='mb-2' key={ index }>
 								<input
 									className='input-custom w-5/12'
-									onChange={ handleChange2 }
+									onChange={ handleChangeLesson }
 									value={ item.value }
 									id={ index }
 									type="text"
@@ -147,7 +157,7 @@ const CreateCourse = () => {
 							<div className='mb-2' key={ index }>
 								<input
 									className='input-custom w-5/12'
-									onChange={ handleChange2 }
+									onChange={ handleChangePlan }
 									value={ item.value }
 									id={ index }
 									type="text"
