@@ -70,62 +70,62 @@ const CourseManagement = () => {
 	const getColumnSearchProps = (dataIndex) => ({
 		filterDropdown: ({ setSelectedKeys, selectedKeys, confirm, clearFilters, close }) => (
 			<div
-				style={ {
+				style={{
 					padding: 8,
-				} }
-				onKeyDown={ (e) => e.stopPropagation() }
+				}}
+				onKeyDown={(e) => e.stopPropagation()}
 			>
 				<Input
-					ref={ searchInput }
-					placeholder={ `Search ${dataIndex}` }
-					value={ selectedKeys[0] }
-					onChange={ (e) => setSelectedKeys(e.target.value ? [e.target.value] : []) }
-					onPressEnter={ () => handleSearch(selectedKeys, confirm, dataIndex) }
-					style={ {
+					ref={searchInput}
+					placeholder={`Search ${dataIndex}`}
+					value={selectedKeys[0]}
+					onChange={(e) => setSelectedKeys(e.target.value ? [e.target.value] : [])}
+					onPressEnter={() => handleSearch(selectedKeys, confirm, dataIndex)}
+					style={{
 						marginBottom: 8,
 						display: 'block',
-					} }
+					}}
 				/>
 				<Space>
 					<Button
 						type="primary"
-						onClick={ () => handleSearch(selectedKeys, confirm, dataIndex) }
-						icon={ <SearchOutlined /> }
+						onClick={() => handleSearch(selectedKeys, confirm, dataIndex)}
+						icon={<SearchOutlined />}
 						size="small"
-						style={ {
+						style={{
 							width: 90,
-						} }
+						}}
 					>
 						Search
 					</Button>
 					<Button
-						onClick={ () => clearFilters && handleReset(clearFilters) }
+						onClick={() => clearFilters && handleReset(clearFilters)}
 						size="small"
-						style={ {
+						style={{
 							width: 90,
-						} }
+						}}
 					>
 						Reset
 					</Button>
 					<Button
 						type="link"
 						size="small"
-						onClick={ () => {
+						onClick={() => {
 							confirm({
 								closeDropdown: false,
 							});
 							setSearchText(selectedKeys[0]);
 							setSearchedColumn(dataIndex);
-						} }
+						}}
 					>
 						Filter
 					</Button>
 					<Button
 						type="link"
 						size="small"
-						onClick={ () => {
+						onClick={() => {
 							close();
-						} }
+						}}
 					>
 						close
 					</Button>
@@ -134,9 +134,9 @@ const CourseManagement = () => {
 		),
 		filterIcon: (filtered) => (
 			<SearchOutlined
-				style={ {
+				style={{
 					color: filtered ? '#1890ff' : undefined,
-				} }
+				}}
 			/>
 		),
 		onFilter: (value, record) =>
@@ -149,13 +149,13 @@ const CourseManagement = () => {
 		render: (text) =>
 			searchedColumn === dataIndex ? (
 				<Highlighter
-					highlightStyle={ {
+					highlightStyle={{
 						backgroundColor: '#ffc069',
 						padding: 0,
-					} }
-					searchWords={ [searchText] }
+					}}
+					searchWords={[searchText]}
 					autoEscape
-					textToHighlight={ text ? text.toString() : '' }
+					textToHighlight={text ? text.toString() : ''}
 				/>
 			) : (
 				text
@@ -216,16 +216,16 @@ const CourseManagement = () => {
 				<h1>
 					Course Daskboard
 				</h1>
-				<Button className='btn-custom' onClick={ showModal }>
+				<Button className='btn-custom' onClick={showModal}>
 					Create Course
 				</Button>
-				<Modal title="Basic Modal" open={ isModalOpen } onOk={ handleOk } onCancel={ handleCancel } width={ 1200 }>
+				<Modal title="Basic Modal" open={isModalOpen} onOk={handleOk} onCancel={handleCancel} width={1000}>
 					<div>
 						<CreateCourse />
 					</div>
 				</Modal>
 			</div>
-			<Table columns={ columns } dataSource={ data } className='mt-4' />;
+			<Table columns={columns} dataSource={data} className='mt-4' />;
 		</div>
 	)
 }

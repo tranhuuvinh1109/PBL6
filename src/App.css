@@ -135,4 +135,10 @@ video {
 }
 .btn-custom {
   background-color: #0EDC8D;
+  border-radius: 4px;
+}
+.input-custom {
+  border-radius: 4px;
+  padding: 4px 8px;
+  border: 1px solid rgb(161 161 170);
 }
