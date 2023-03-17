@@ -1,12 +1,9 @@
 import React from 'react';
-// import { Avatar, List } from 'antd';
-// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-// import { faPenToSquare, faTrash } from '@fortawesome/free-solid-svg-icons'
 import { SearchOutlined } from '@ant-design/icons';
-import { Button, Input, Modal, Space, Table } from 'antd';
+import { Button, Input, Space, Table } from 'antd';
 import { useRef, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Highlighter from 'react-highlight-words';
-import CreateCourse from './CreateCourse/CreateCourse';
 const data = [
 	{
 		id: '1',
@@ -42,19 +39,8 @@ const data = [
 	},
 ];
 const CourseManagement = () => {
-	const [isModalOpen, setIsModalOpen] = useState(false);
+	const navigate = useNavigate();
 
-	const showModal = () => {
-		setIsModalOpen(true);
-	};
-
-	const handleOk = () => {
-		setIsModalOpen(false);
-	};
-
-	const handleCancel = () => {
-		setIsModalOpen(false);
-	};
 	const [searchText, setSearchText] = useState('');
 	const [searchedColumn, setSearchedColumn] = useState('');
 	const searchInput = useRef(null);
@@ -216,14 +202,9 @@ const CourseManagement = () => {
 				<h1>
 					Course Daskboard
 				</h1>
-				<Button className='btn-custom' onClick={showModal}>
+				<Button className='btn-custom' onClick={() => navigate('create')}>
 					Create Course
 				</Button>
-				<Modal title="Basic Modal" open={isModalOpen} onOk={handleOk} onCancel={handleCancel} width={1000}>
-					<div>
-						<CreateCourse />
-					</div>
-				</Modal>
 			</div>
 			<Table columns={columns} dataSource={data} className='mt-4' />;
 		</div>

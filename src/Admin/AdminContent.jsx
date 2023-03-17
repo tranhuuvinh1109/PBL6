@@ -5,7 +5,7 @@ import { Avatar, Breadcrumb, Layout, Menu, Popover, theme } from 'antd';
 import React, { useState } from 'react';
 import { Outlet, useNavigate } from 'react-router-dom';
 import UserClickContent from './components/UserClickContent';
-const { Header, Content, Footer, Sider } = Layout;
+const { Header, Content, Sider } = Layout;
 
 const listMenu = [
 	{
@@ -67,9 +67,6 @@ const AdminContent = () => {
 							)
 						})
 					}
-
-
-
 				</Menu>
 			</Sider>
 			<Layout className="site-layout">

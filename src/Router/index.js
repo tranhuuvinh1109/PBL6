@@ -7,6 +7,7 @@ import ProfilePage from "../Page/ProfilePage/ProfilePage";
 import Learning from "../Page/LearningPage/Learning";
 import CourseManagement from "../Admin/CourseManagement/CourseManagement";
 import EventManagement from "../Admin/EventManagement/EventManagement";
+import CreateCourse from "../Admin/CourseManagement/CreateCourse/CreateCourse";
 
 export const routers = [
 	{
@@ -48,6 +49,10 @@ export const adminRouter = [
 	{
 		path: 'course',
 		component: CourseManagement
+	},
+	{
+		path: 'course/create',
+		component: CreateCourse
 	},
 	// {
 	// 	path: 'contact',
