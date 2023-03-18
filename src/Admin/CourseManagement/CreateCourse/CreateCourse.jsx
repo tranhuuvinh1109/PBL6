@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { InputNumber, Input, Divider } from 'antd';
-// import { getStorageClient } from '../../../Firebase/firebaseClient';
-// import { ref, uploadBytes } from '@firebase/storage';
+import { getStorageClient } from '../../../Firebase/firebaseClient';
+import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { faXmark, faPlus, faPencil } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import ReactQuill from 'react-quill';
@@ -12,6 +12,7 @@ const { TextArea } = Input;
 const CreateCourse = () => {
 	const [selectedFile, setSelectedFile] = useState(null);
 	const [arrLesson, setArrLesson] = useState([{
+		id: 1,
 		lessonName: "",
 		linkVideo: "",
 		grammar: "",
@@ -22,6 +23,8 @@ const CreateCourse = () => {
 		value: "",
 	}]);
 
+	const [imageUrl, setImageUrl] = useState(null);
+
 	const [course, setCourse] = useState({
 		name: '',
 		price: 0,
@@ -29,25 +32,18 @@ const CreateCourse = () => {
 		image: '',
 		lesson: [],
 		plan: [],
-		video: '',
 		teacherId: 0,
 		category: 0,
 	});
 
 	const handleChangeLesson = e => {
 		e.preventDefault();
-		const index = +e.target.id.slice(-1);
+		console.log(e)
+		const id = +e.target.id.split("-")[1];
 		const temp = [...arrLesson];
-		temp[index][e.target.name.split("-")[0]] = e.target.value;
+		const itemChange = temp.findIndex(item => item.id === id);
+		temp[itemChange][e.target.name.split("-")[0]] = e.target.value;
 		setArrLesson(temp);
-	};
-
-	const handleChangeLessonGrammar = (index, e) => {
-		// const index = +e.target.id.slice(-1);
-		// const temp = [...arrLesson];
-		// temp[index][e.target.name.split("-")[0]] = e.target.value;
-		// setArrLesson(temp);
-		console.log(index, e)
 	};
 
 	const handleChangePlan = e => {
@@ -70,27 +66,46 @@ const CreateCourse = () => {
 		file.preview = URL.createObjectURL(file);
 		setSelectedFile(file);
 	}
-	// const handleFileUpload = async () => {
-	// 	const storage = getStorageClient;
-	// 	if (selectedFile.preview) {
-	// 		console.log(111, selectedFile);
-	// 		const storageRef = ref(storage, `images/${selectedFile.preview.name}`);
-	// 		await uploadBytes(storageRef, selectedFile.preview);
-	// 	}
-	// }
+	const handleFileUpload = async () => {
+		const randomNum = new Date().getTime();
+		const newName = 'course' + randomNum;
+		if (selectedFile.preview) {
+			const storageRef = ref(getStorageClient, `images/course`);
+			const fileRef = ref(storageRef, newName);
+
+			uploadBytes(fileRef, selectedFile)
+				.then((snapshot) => {
+					getDownloadURL(snapshot.ref).then((downloadURL) => {
+						console.log("Upload successful, download URL:", downloadURL);
+						setImageUrl(downloadURL);
+					});
+				})
+				.catch((error) => {
+					console.log("Upload failed:", error);
+				});
+
+		}
+	}
 	const hanldeChange = (event) => {
 		setCourse({ ...course, [event.target.name]: event.target.value })
 	}
 	const addLesson = () => {
+		const randomNum = new Date().getTime();
 		setArrLesson([
 			...arrLesson,
 			{
+				id: randomNum,
 				lessonName: "",
 				linkVideo: "",
 				grammar: "",
 			}
 		]);
 	}
+
+	const handleSubmit = () => {
+		console.log('SUBMIT --> ', course, arrLesson, arrPlan)
+	}
+
 	const removeLesson = (index) => {
 
 		if (arrLesson.length !== 1) {
@@ -139,28 +154,29 @@ const CreateCourse = () => {
 			<div className='w-full flex'>
 				<label className='w-2/12 text-base font-medium'>Lesson:</label>
 				<div className='w-10/12'>
-					{ arrLesson.map((item, index) => {
+					{ arrLesson.map((item) => {
 						return (
-							<div className='mb-4'>
+							<div className='mb-4' key={ item.id }>
 								<div className='flex'>
-									<div className='mb-2 w-6/12' key={ index }>
-										<label htmlFor={ `lessonName-${index}` } className='w-2/12'>Lesson Name:</label>
-										<Input id={ `lessonName-${index}` } name={ `lessonName-${index}` } className='w-8/12' onChange={ handleChangeLesson } value={ item.name } />
+									<div className='mb-2 w-6/12'>
+										<label htmlFor={ `lessonName-${item.id}` } className='w-2/12'>Lesson Name:</label>
+										<Input id={ `lessonName-${item.id}` } name={ `lessonName-${item.id}` } className='w-8/12' onChange={ handleChangeLesson } value={ item.name } />
 									</div>
 									<div className='w-6/12'>
-										<label htmlFor={ `linkVideo-${index}` } className='w-2/12'>Link Video:</label>
-										<Input id={ `linkVideo-${index}` } name={ `linkVideo-${index}` } className='w-8/12' onChange={ handleChangeLesson } value={ item.linkVideo } />
-										<button onClick={ () => removeLesson(index) } className='btn-custom w-1/12 ml-2'>
+										<label htmlFor={ `linkVideo-${item.id}` } className='w-2/12'>Link Video:</label>
+										<Input id={ `linkVideo-${item.id}` } name={ `linkVideo-${item.id}` } className='w-8/12' onChange={ handleChangeLesson } value={ item.linkVideo } />
+										<button onClick={ () => removeLesson(item.id) } className='btn-custom w-1/12 ml-2'>
 											<FontAwesomeIcon icon={ faXmark } />
 										</button>
 									</div>
 								</div>
 								<div className='w-full'>
-									<label htmlFor={ `grammar-${index}` } className='w-1/12'>Grammar:</label>
-									<ReactQuill theme="snow" value={ item.grammar } id={ `grammar-${index}` }
+									<label htmlFor={ `grammar-${item.id}` } className='w-1/12'>Grammar:</label>
+									<ReactQuill theme="snow" value={ item.grammar } id={ `grammar-${item.id}` }
 										onChange={ (e) => {
 											const temp = [...arrLesson];
-											temp[index].grammar = e;
+											const itemChange = temp.findIndex(e => e.id === item.id)
+											temp[itemChange].grammar = e;
 											setArrLesson(temp);
 										} } />
 								</div>
@@ -224,6 +240,16 @@ const CreateCourse = () => {
 			<div>
 				<label htmlFor='description' className='w-2/12 text-base font-medium' onClick={ () => console.log('arr', arrLesson) }>Description:</label>
 				<TextArea rows={ 4 } className='w-10/12' id='description' name='description' maxLength={ 6 } value={ course.description } onChange={ (event) => hanldeChange(event) } />
+			</div>
+			<Divider />
+			<div>
+				<button className='btn-custom px-3 py-2' onClick={ handleSubmit }>
+					DONE
+				</button>
+				<button className='btn-custom px-3 py-2' onClick={ handleFileUpload }>
+					UPLOAD
+				</button>
+				{ imageUrl && <img src={ imageUrl } alt="Uploaded image" /> }
 			</div>
 		</div>
 	);
