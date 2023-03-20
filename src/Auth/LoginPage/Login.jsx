@@ -38,7 +38,7 @@ const Login = () => {
 						<Form
 							size='small'
 							name="normal_login"
-							className="login-form w-10/12"
+							className="login-form"
 							initialValues={{ remember: true }}
 							onFinish={onFinish}
 						>
@@ -76,7 +76,7 @@ const Login = () => {
 						</Form>
 					</div>
 				</div>
-				<div className="right">
+				<div className="right hidden md:block">
 					<div className="right-text">
 						<h2>JLPT</h2>
 						<h5>Teaching Japanese to everyone</h5>
