@@ -271,7 +271,7 @@ const CreateCourse = () => {
 				<button className='btn-custom px-3 py-2' onClick={handleFileUpload}>
 					UPLOAD
 				</button>
-				{imageUrl && <img src={imageUrl} alt="Uploaded image" />}
+				{imageUrl && <img src={imageUrl} alt="Uploaded" />}
 			</div>
 		</div>
 	);

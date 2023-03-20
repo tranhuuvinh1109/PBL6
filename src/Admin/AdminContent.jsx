@@ -1,11 +1,10 @@
 import logo from '../logo.svg';
-import logoSmall from '../logo-small.svg';
 import { PieChartOutlined, DesktopOutlined } from '@ant-design/icons';
 import { Avatar, Breadcrumb, Layout, Menu, Popover, theme } from 'antd';
-import React, { useState } from 'react';
+import React from 'react';
 import { Outlet, useNavigate } from 'react-router-dom';
 import UserClickContent from './components/UserClickContent';
-const { Header, Content, Sider } = Layout;
+const { Content, Sider } = Layout;
 
 const listMenu = [
 	{
@@ -27,7 +26,6 @@ const listMenu = [
 
 const AdminContent = () => {
 	const navigate = useNavigate();
-	const [collapsed, setCollapsed] = useState(false);
 	const {
 		token: { colorBgContainer },
 	} = theme.useToken();
@@ -38,10 +36,7 @@ const AdminContent = () => {
 			}}
 		>
 			<Sider
-				collapsible collapsed={collapsed} onCollapse={(value) => {
-					console.log('collapsed', value)
-					setCollapsed(value)
-				}} theme='light'
+				theme='light'
 			>
 				<div
 					style={{
@@ -49,10 +44,7 @@ const AdminContent = () => {
 						margin: 16,
 					}}
 				>
-					{
-						collapsed ? <img src={logoSmall} alt='logo' className='w-full' />
-							: <img src={logo} alt='logo' />
-					}
+					<img src={logo} alt='logo' />
 
 				</div>
 				<Menu theme="light" defaultSelectedKeys={['0']} mode="inline">
@@ -70,26 +62,18 @@ const AdminContent = () => {
 				</Menu>
 			</Sider>
 			<Layout className="site-layout">
-				<Header
-					style={{
-						padding: 0,
-						background: colorBgContainer,
-					}}
-				>
+				<div className='bg-white h-16 relative'>
 					<Popover content={UserClickContent} trigger="click">
-						<div className='float-right px-2 min-w-[200px] text-left'>
+						<div className='float-right px-2 min-w-[200px] text-left bg-red-400 userClick'>
 							<div className=''>
 								<Avatar src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NXx8dXNlcnxlbnwwfHwwfHw%3D&w=1000&q=80" size='large' alt="user" />
 								<span className='ml-1.5 text-base text-base font-semibold'>
 									Admin
 								</span>
 							</div>
-
 						</div>
-
 					</Popover>
-
-				</Header>
+				</div>
 				<Content
 					style={{
 						margin: '0 16px',
@@ -100,8 +84,6 @@ const AdminContent = () => {
 							margin: '16px 0',
 						}}
 					>
-						<Breadcrumb.Item>User</Breadcrumb.Item>
-						<Breadcrumb.Item>Bill</Breadcrumb.Item>
 					</Breadcrumb>
 					<div
 						style={{
