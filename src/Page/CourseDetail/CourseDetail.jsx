@@ -50,7 +50,7 @@ const CoureDetail = () => {
 														<FontAwesomeIcon icon={faCheck} className='mr-2 text-red-400' />
 														<span>
 															{
-																item.title
+																item?.title
 															}
 														</span>
 													</div>

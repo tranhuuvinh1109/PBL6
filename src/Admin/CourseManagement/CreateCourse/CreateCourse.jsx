@@ -21,7 +21,7 @@ const CreateCourse = () => {
 
 	const [arrPlan, setArrPlan] = useState([{
 		id: 1,
-		value: "",
+		title: "",
 	}]);
 
 	const [imageUrl, setImageUrl] = useState(null);
@@ -141,7 +141,7 @@ const CreateCourse = () => {
 			...arrPlan,
 			{
 				id: randomNum,
-				value: ""
+				title: ""
 			}
 		]);
 	}

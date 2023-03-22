@@ -8,19 +8,30 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useNavigate } from "react-router-dom";
 import toast from 'react-hot-toast';
 import { AppContext } from '../../App';
+import { authAPI } from '../../api/authApi';
 
 
 const Login = () => {
 	const navigator = useNavigate();
-	const setUser = useContext(AppContext)
-	const onFinish = (values) => {
-		if (values.email === 'admin') {
-			localStorage.setItem('userID', values.email)
-			setUser.setUser(values.email)
-			toast.success('Login Successfully')
-			navigator('/');
+	const context = useContext(AppContext)
+	const onFinish = async (values) => {
+		if (values.email && values.password) {
+			try {
+				const res = await authAPI.login(values)
+				console.log(values);
+				if (res.status === 200) {
+					console.log('finish', res);
+					context.setUser(res.data.data);
+					navigator('/');
+					toast.success('Login Successfully')
+				}
+			} catch (error) {
+				console.log(error)
+			}
+
+			// navigator('/');
 		} else {
-			toast.error('Login Fail')
+			toast.error('Nhap email password')
 		}
 	};
 	return (
@@ -59,11 +70,11 @@ const Login = () => {
 									placeholder="Password"
 								/>
 							</Form.Item>
-							<Form.Item>
+							{/* <Form.Item>
 								<Form.Item name="remember" valuePropName="checked" noStyle>
 									<Checkbox>Remember me</Checkbox>
 								</Form.Item>
-							</Form.Item>
+							</Form.Item> */}
 
 							<Form.Item>
 								<Button type="primary" htmlType="submit" className="login-form-button w-full">

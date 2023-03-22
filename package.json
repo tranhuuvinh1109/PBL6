@@ -22,6 +22,7 @@
     "react-dom": "^18.2.0",
     "react-highlight-words": "^0.20.0",
     "react-hot-toast": "^2.4.0",
+    "react-qr-code": "^2.0.11",
     "react-quill": "^2.0.0",
     "react-router-dom": "^6.8.1",
     "react-scripts": "5.0.1",
