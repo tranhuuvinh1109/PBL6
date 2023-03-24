@@ -13,6 +13,7 @@ import CoureDetail from './Page/CourseDetail/CourseDetail';
 // import ScrollToTop from "react-scroll-to-top";
 import { Toaster } from 'react-hot-toast';
 import { authAPI } from './api/authApi';
+import { courseAPI } from './api/courseAPI';
 
 
 export const AppContext = createContext({});
@@ -20,22 +21,29 @@ export const AppContext = createContext({});
 function App () {
   const [listCourse, setListCourse] = useState([]);
   const [user, setUser] = useState();
-  const GetCourse = async () => {
-    const res = await authAPI.getUser('/course')
-
+  const getUser = async (id) => {
+    const res = await authAPI.getUser(id);
     if (res.status === 200) {
-      setListCourse(res.data);
+      setUser(res.data.data)
     }
-    return [];
-
+  }
+  const GetCourse = async () => {
+    const res = await courseAPI.getCourse();
+    if (res.status === 200) {
+      setListCourse(res.data.data);
+    }
   }
   useEffect(() => {
     GetCourse();
+    const id = localStorage.getItem('userID');
+    if (id) {
+      getUser(id);
+    }
   }, [])
 
 
   return (
-    <AppContext.Provider value={{ user, setUser, listCourse }} >
+    <AppContext.Provider value={{ user, setUser, listCourse, setListCourse }} >
       <div className="App">
         {/* <ScrollToTop smooth color="#6f00ff" /> */}
         <Toaster

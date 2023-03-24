@@ -84,13 +84,10 @@ const Navbar = ({ logo, listNav }) => {
 					<div className='hidden xl:block 2xl:block bg-orange-200 px-1.5 py-1 rounded-full cursor-pointer hover:opacity-80'>
 						<Avatar size='large' src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTPJVOqLLr0GTxic4gT7si741MVw7U8q-x91A&usqp=CAU' alt='avatar' />
 						{
-							contextData?.user.name && <span className='px-2 text-base font-medium'>{contextData?.user.name}</span>
+							contextData?.user?.name && <span className='px-2 text-base font-medium'>{contextData?.user.name}</span>
 						}
 						<FontAwesomeIcon icon={faCaretDown} className='pr-1.5' />
 					</div>
-					<p onClick={() => console.log('user', contextData?.user)}>
-						ssss
-					</p>
 				</Space>
 			</Dropdown>
 

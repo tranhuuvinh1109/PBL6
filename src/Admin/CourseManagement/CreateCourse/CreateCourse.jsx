@@ -58,6 +58,7 @@ const CreateCourse = () => {
 	};
 
 	const onChange = (value) => {
+		console.log(value, imageUrl)
 		setCourse({ ...course, price: value })
 	};
 
@@ -167,7 +168,7 @@ const CreateCourse = () => {
 					<Input id='name' name='name' className='w-9/12' value={course.name} onChange={(event) => hanldeChange(event)} />
 				</div>
 				<div className='w-4/12'>
-					<label htmlFor='price' className='m-0 px-4 pl-8 text-base font-medium'>Price:</label>
+					<label htmlFor='price' className='m-0 px-4 pl-8 text-base font-medium' >Price:</label>
 					<InputNumber id='price' name='price' defaultValue={0} value={course.price} onChange={onChange} />
 				</div>
 			</div>
@@ -244,7 +245,7 @@ const CreateCourse = () => {
 				<label className='w-2/12 text-base font-medium'>Image:</label>
 				<div class="avatar-upload">
 					<div class="avatar-edit">
-						<input type='file' accept=".png, .jpg, .jpeg" name='image' id='image' className='w-4/12 imageUploadInput' onChange={handleFileInputChange} />
+						<input type='file' name='image' id='image' className='w-4/12 imageUploadInput' onChange={handleFileInputChange} />
 						<label htmlFor="image" className='imageUpload text-center'>
 							<FontAwesomeIcon icon={faPencil} className='text-slate-400 iconLabel' />
 						</label>

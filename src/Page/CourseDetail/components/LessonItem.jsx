@@ -7,7 +7,7 @@ const LessonItem = ({ infor }) => {
 		<div className='py-1 cursor-default'>
 			<FontAwesomeIcon icon={faCircle} fontSize={10} />
 			<span className='ml-3  text-sm font-medium text-base'>
-				{infor?.lessonName}
+				{infor?.name}
 			</span>
 		</div>
 	)

@@ -13,7 +13,7 @@ const LessonItem = ({ lesson, setActived, isActive }) => {
 			<FontAwesomeIcon icon={faCirclePlay} fontSize={16} />
 			<span className="ml-1.5 text-sm font-medium text-base">
 				{
-					lesson.title
+					lesson.name
 				}
 			</span>
 		</div>

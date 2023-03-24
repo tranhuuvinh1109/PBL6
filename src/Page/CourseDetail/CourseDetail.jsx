@@ -1,36 +1,56 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useMemo } from "react";
 import { Col, Container, Row } from "react-bootstrap";
 import { useParams } from "react-router-dom";
 import { faCheck } from '@fortawesome/free-solid-svg-icons'
 import { Collapse } from 'antd';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import LessonItem from "./components/LessonItem";
-import { authAPI } from '../../api/authApi';
 import { useNavigate } from 'react-router-dom'
 import Loading from "../../components/Loading/Loading";
+import { courseAPI } from "../../api/courseAPI";
+
 const { Panel } = Collapse;
 
 const CoureDetail = () => {
-	const navigate = useNavigate();
 	const { id } = useParams();
-	const [infor, setInfor] = useState([]);
-	const GetInformationCourse = async () => {
-		const res = await authAPI.getUser(`/course/${id}`)
+	const navigate = useNavigate();
+	const [infor, setInfor] = useState();
+
+	const GetInformationCourse = async (id) => {
+		console.log('this', id)
+		const res = await courseAPI.getCourseDetail(id)
 		if (res.status === 200) {
-			setInfor(res.data)
+			setInfor(res.data.data)
 		}
-		return [];
+		return;
 	}
 
+	const handleClickRegister = () => {
+		navigate(`/page/learning/${infor?.id}`)
+	}
+
+	const renderVideo = useMemo(() => {
+		if (infor?.lessons) {
+			return (
+				<video controls className="w-full rounded-lg">
+					<source src='https://firebasestorage.googleapis.com/v0/b/moment-learning.appspot.com/o/images%2Fcourse%2Fcourse1679630847908?alt=media&token=62d4954c-ebaf-4910-b846-3739a9fc2bc2' type="video/mp4" />
+				</video>
+			)
+		}
+		return <Loading />
+	}, [infor])
+
 	useEffect(() => {
-		GetInformationCourse()
+		GetInformationCourse(id)
 	}, [])
 	return (
 		<Container fluid="md" className="text-left mb-20 mt-20 min-h-[630px]">
 			<Row>
 				<Col xs={12} lg={8}>
 					<h1 className="text-left">
-						JLPT N5
+						{
+							infor?.name
+						}
 					</h1>
 					<p>
 						Để có kiến thức nền tảng để học tốt tiếng nhật
@@ -43,7 +63,7 @@ const CoureDetail = () => {
 							<Container>
 								<Row>
 									{
-										infor.plan?.map((item) => {
+										infor?.plans?.map((item) => {
 											return (
 												<Col xs={12} lg={6} md={6}>
 													<div className="py-2">
@@ -66,7 +86,7 @@ const CoureDetail = () => {
 					<Collapse accordion className="mt-4">
 						<Panel header="Lesson content" key="1">
 							{
-								infor.lesson?.map((item) => {
+								infor?.lessons?.map((item) => {
 									return (
 										<LessonItem key={item.id} infor={item} />
 									)
@@ -77,21 +97,16 @@ const CoureDetail = () => {
 				</Col>
 				<Col xs={12} lg={4}>
 					{
-						infor.video ?
-							<iframe src={infor.video} title="video" width="400" height="350" frameBorder="6" allow="autoplay; fullscreen" allowFullScreen style={{ width: "100%" }}></iframe>
-							:
-							<Loading />
+						renderVideo
 					}
 
 					<div className="mt-4 flex justify-between">
 						<h3 className="text-red-400">
-							500
+							{
+								infor?.price
+							}
 						</h3>
-						<button className="bg-red-400 text-white py-1.5 px-3 rounded-full min-w-[150px] hover:bg-red-300"
-							onClick={() => {
-								navigate(`/page/learning/${infor?.id}`)
-							}}
-						>
+						<button className="bg-red-400 text-white py-1.5 px-3 rounded-full min-w-[150px] hover:bg-red-300" onClick={handleClickRegister}>
 							Register
 						</button>
 					</div>

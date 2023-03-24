@@ -20,16 +20,15 @@ const Login = () => {
 				const res = await authAPI.login(values)
 				console.log(values);
 				if (res.status === 200) {
-					console.log('finish', res);
 					context.setUser(res.data.data);
+					console.log(res.data.data)
 					navigator('/');
+					localStorage.setItem('userID', res.data.data.id)
 					toast.success('Login Successfully')
 				}
 			} catch (error) {
 				console.log(error)
 			}
-
-			// navigator('/');
 		} else {
 			toast.error('Nhap email password')
 		}

@@ -1,41 +1,14 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Avatar, Collapse } from 'antd';
-import React, { useMemo, useState } from 'react';
+import React, { useMemo, useState, useEffect } from 'react';
 import { Container, Row, Col, Spinner } from 'react-bootstrap';
 import { useParams } from "react-router-dom";
 import CommentItem from './components/CommentItem/CommentItem';
 import LessonItem from './components/LessonItem/LessonItem';
 import { faPaperPlane } from '@fortawesome/free-solid-svg-icons';
+import { courseAPI } from '../../api/courseAPI';
 
 const { Panel } = Collapse;
-
-const listLesson = [
-	{
-		id: 1,
-		title: 'Lesson 1',
-		video: 'https://player.vimeo.com/video/805460496?h=2012a742f0'
-	},
-	{
-		id: 2,
-		title: 'Lesson 2',
-		video: 'https://player.vimeo.com/video/805460791?h=341d277aad'
-	},
-	{
-		id: 3,
-		title: 'Lesson 3',
-		video: 'https://player.vimeo.com/video/805460496?h=2012a742f0'
-	},
-	{
-		id: 4,
-		title: 'Lesson 4',
-		video: 'https://player.vimeo.com/video/805460791?h=341d277aad'
-	},
-	{
-		id: 5,
-		title: 'Lesson 5',
-		video: 'https://player.vimeo.com/video/805460496?h=2012a742f0'
-	}
-]
 
 const Comment = {
 	user: {
@@ -48,32 +21,47 @@ const Comment = {
 
 
 const Learning = () => {
-	const id = useParams();
-	console.log(id)
-	const [actived, setActived] = useState(1)
-	const renderVideo = useMemo(() => {
-		const findItem = listLesson.filter(item => actived === item.id);
-		if (findItem[0]) {
-			return findItem[0].video;
+	const { id } = useParams();
+	const [infor, setInfor] = useState({});
+	const [actived, setActived] = useState(1);
+
+	const GetInformationCourse = async (id) => {
+		const res = await courseAPI.getCourseDetail(id)
+		if (res.status === 200) {
+			setInfor(res.data.data)
 		}
-		return;
-	}, [actived])
+	}
+	const renderVideo = useMemo(() => {
+		if (infor?.lessons) {
+			const findItem = infor.lessons.filter(item => actived === item.id);
+			if (findItem[0].video) {
+				return findItem[0].video
+			} else {
+				return;
+			}
+		}
+	}, [actived, infor])
 
 	const renderLeson = useMemo(() => {
-		return listLesson?.map((item) => {
-			return <LessonItem lesson={item} key={item.id} setActived={setActived} isActive={actived === item.id} />
-		})
-	}, [actived])
+		if (infor?.lessons) {
+			return infor.lessons?.map((item) => {
+				return <LessonItem lesson={item} key={item.id} setActived={setActived} isActive={actived === item.id} />
+			})
+		}
+	}, [actived, infor])
 
+	useEffect(() => {
+		GetInformationCourse(id)
+	}, [])
 	return (
 		<div>
 			<Container>
 				<Row>
 					<Col xs={12} lg={8}>
 						{
-							renderVideo ? <iframe src={renderVideo}
-								width="600" height="564" title='video' frameBorder="0" allow="autoplay; fullscreen" allowFullScreen style={{ width: "100%" }} />
-								:
+							renderVideo ? <video controls className="w-full rounded-lg">
+								<source src={renderVideo} type="video/mp4" />
+							</video> :
 								<Spinner animation="grow" />
 						}
 					</Col>
