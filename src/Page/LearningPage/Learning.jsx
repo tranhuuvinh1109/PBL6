@@ -1,6 +1,6 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Avatar, Collapse } from 'antd';
-import React, { useMemo, useState, useEffect } from 'react';
+import React, { useMemo, useState, useEffect, useContext } from 'react';
 import { Container, Row, Col, Spinner } from 'react-bootstrap';
 import { useParams } from "react-router-dom";
 import CommentItem from './components/CommentItem/CommentItem';
@@ -8,23 +8,43 @@ import LessonItem from './components/LessonItem/LessonItem';
 import { faPaperPlane } from '@fortawesome/free-solid-svg-icons';
 import { courseAPI } from '../../api/courseAPI';
 import parse from 'html-react-parser';
+import { db } from '../../Firebase/firebaseClient';
+import { AppContext } from '../../App';
+import { authAPI } from '../../api/authApi';
 
 const { Panel } = Collapse;
 
-const Comment = {
-	user: {
-		userName: 'Do Phuong Uyen',
-		avatar: 'https://image.nhandan.vn/1200x630/Uploaded/2023/yqjwcqjlq/2022_11_24/ronaldo-portugal-copy-1844.jpg'
-	},
-	content: "This is comment content There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form.",
-	createAt: "30 m ago"
-}
-
-
 const Learning = () => {
 	const { id } = useParams();
+	const [comments, setComments] = useState([]);
+	const [commentsData, setCommentsData] = useState([]);
+	const [contentComment, setContentComment] = useState('');
 	const [infor, setInfor] = useState({});
 	const [actived, setActived] = useState(1);
+	const context = useContext(AppContext)
+
+	const handleChange = (e) => {
+		setContentComment(e.target.value)
+	}
+
+	const handleSubmitComment = (e) => {
+		e.preventDefault();
+		if (infor) {
+			db.collection('lessons')
+				.doc(id + "-" + actived)
+				.collection('comments')
+				.add({
+					userId: context.user.id,
+					content: contentComment
+				})
+				.then(() => {
+					setContentComment('');
+				})
+				.catch((error) => {
+					console.error('Error adding comment: ', error);
+				});
+		}
+	};
 
 	const GetInformationCourse = async (id) => {
 		const res = await courseAPI.getCourseDetail(id)
@@ -32,6 +52,15 @@ const Learning = () => {
 			setInfor(res.data.data)
 		}
 	}
+
+	const GetInformationUser = async (id) => {
+		const res = await authAPI.getUser(id)
+		if (res.status === 200) {
+			return res.data.data
+		}
+		return {};
+	}
+
 	const renderVideo = useMemo(() => {
 		if (infor?.lessons) {
 			const findItem = infor.lessons.filter(item => actived === item.id);
@@ -64,9 +93,48 @@ const Learning = () => {
 		}
 	}, [actived, infor])
 
+	const convertomment = useMemo(async () => {
+		const list = [];
+		if (comments) {
+			for (const comment of comments) {
+				const temp = await GetInformationUser(comment.userId);
+				if (temp) {
+					list.push({
+						user: temp,
+						content: comment.content
+					});
+				}
+			}
+		}
+		return list;
+	}, [comments])
+
+	const renderComment = useMemo(() => {
+		return commentsData?.map((comment, index) => {
+			return <CommentItem comment={comment} key={index} />
+		})
+	}, [commentsData])
+
+	useEffect(() => {
+		convertomment.then((result) => {
+			setCommentsData(result);
+		});
+	}, [comments]);
+
 	useEffect(() => {
 		GetInformationCourse(id)
-	}, [id])
+		const unsubscribe = db
+			.collection('lessons')
+			.doc(id + "-" + actived)
+			.collection('comments')
+			.onSnapshot((snapshot) => {
+				setComments(snapshot.docs.map((doc) => doc.data()));
+			});
+		return () => {
+			unsubscribe();
+		};
+	}, [id, actived])
+
 	return (
 		<div>
 			<Container>
@@ -102,15 +170,18 @@ const Learning = () => {
 							Comment
 						</h4>
 						<div className='text-left max-h-[500px] min-h-[300px]  overflow-y-auto'>
-							<CommentItem comment={Comment} />
+							{
+								renderComment
+							}
+
 						</div>
 						<div className='flex mt-2 border-t-2 px-3'>
 							<div className='mt-1'>
 								<Avatar src="https://image.nhandan.vn/1200x630/Uploaded/2023/yqjwcqjlq/2022_11_24/ronaldo-portugal-copy-1844.jpg" size="large" />
 							</div>
 							<div className='ml-2 mt-1 w-full'>
-								<input type="text" placeholder="Enter Comment" className='py-2 px-2 w-10/12 border-gray-300' />
-								<button className='w-2/12 btn' title='Send'>
+								<input type="text" placeholder="Enter Comment" name='contentComment' value={contentComment} onChange={handleChange} className='py-2 px-2 w-10/12 border-gray-300' />
+								<button className='w-2/12 btn' title='Send' onClick={handleSubmitComment}>
 									<FontAwesomeIcon icon={faPaperPlane} />
 								</button>
 							</div>
