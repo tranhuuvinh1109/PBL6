@@ -20,7 +20,6 @@ export const PrivateRouter = ({ path, outlet }) => {
 	//   }
 	// }
 	if (!userID) {
-		console.log('userID', userID);
 		return <Navigate to={{ pathname: path }} />;
 	}
 	else {

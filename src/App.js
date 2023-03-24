@@ -24,6 +24,7 @@ function App () {
   const getUser = async (id) => {
     const res = await authAPI.getUser(id);
     if (res.status === 200) {
+      console.log(1, res.data.data)
       setUser(res.data.data)
     }
   }

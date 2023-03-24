@@ -1,9 +1,11 @@
 import logo from '../logo.svg';
 import { PieChartOutlined, DesktopOutlined } from '@ant-design/icons';
 import { Avatar, Breadcrumb, Layout, Menu, Popover, theme } from 'antd';
-import React from 'react';
+import React, { useContext, useEffect } from 'react';
 import { Outlet, useNavigate } from 'react-router-dom';
 import UserClickContent from './components/UserClickContent';
+import { AppContext } from '../App';
+import useCheckAdmin from '../hook/useCheckAdmin';
 const { Content, Sider } = Layout;
 
 const listMenu = [
@@ -25,10 +27,18 @@ const listMenu = [
 ]
 
 const AdminContent = () => {
+	const context = useContext(AppContext);
 	const navigate = useNavigate();
 	const {
 		token: { colorBgContainer },
 	} = theme.useToken();
+
+	const isAdmin = useCheckAdmin(context?.user);
+
+	if (!isAdmin) {
+		return <div>Bạn không có quyền truy cập vào trang quản trị</div>;
+	}
+
 	return (
 		<Layout
 			style={{

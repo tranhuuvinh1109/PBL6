@@ -245,7 +245,7 @@ const CreateCourse = () => {
 				<label className='w-2/12 text-base font-medium'>Image:</label>
 				<div class="avatar-upload">
 					<div class="avatar-edit">
-						<input type='file' name='image' id='image' className='w-4/12 imageUploadInput' onChange={handleFileInputChange} />
+						<input type='file' name='image' accept=".png, .jpg, .jpeg" id='image' className='w-4/12 imageUploadInput' onChange={handleFileInputChange} />
 						<label htmlFor="image" className='imageUpload text-center'>
 							<FontAwesomeIcon icon={faPencil} className='text-slate-400 iconLabel' />
 						</label>
