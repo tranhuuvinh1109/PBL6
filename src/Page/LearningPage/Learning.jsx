@@ -7,6 +7,7 @@ import CommentItem from './components/CommentItem/CommentItem';
 import LessonItem from './components/LessonItem/LessonItem';
 import { faPaperPlane } from '@fortawesome/free-solid-svg-icons';
 import { courseAPI } from '../../api/courseAPI';
+import parse from 'html-react-parser';
 
 const { Panel } = Collapse;
 
@@ -35,9 +36,22 @@ const Learning = () => {
 		if (infor?.lessons) {
 			const findItem = infor.lessons.filter(item => actived === item.id);
 			if (findItem[0].video) {
-				return findItem[0].video
-			} else {
-				return;
+				return (
+					<div className='w-full'>
+						<iframe src={findItem[0].video} className='w-full top-0 left-0' title='video lesson' allowFullScreen />
+					</div>
+				)
+			}
+			return <Spinner animation="grow" />
+		}
+		return <Spinner animation="grow" />
+	}, [actived, infor])
+
+	const renderGrammar = useMemo(() => {
+		if (infor?.lessons) {
+			const findItem = infor.lessons.filter(item => actived === item.id);
+			if (findItem[0].grammar) {
+				return parse(findItem[0].grammar);
 			}
 		}
 	}, [actived, infor])
@@ -52,17 +66,14 @@ const Learning = () => {
 
 	useEffect(() => {
 		GetInformationCourse(id)
-	}, [])
+	}, [id])
 	return (
 		<div>
 			<Container>
 				<Row>
 					<Col xs={12} lg={8}>
 						{
-							renderVideo ? <video controls className="w-full rounded-lg">
-								<source src={renderVideo} type="video/mp4" />
-							</video> :
-								<Spinner animation="grow" />
+							renderVideo
 						}
 					</Col>
 					<Col xs={12} lg={4}>
@@ -80,8 +91,11 @@ const Learning = () => {
 			</Container>
 			<Container>
 				<Row>
-					<Col xs={12} lg={8}>
-						Grammar
+					<Col xs={12} lg={8} className='text-left'>
+						<h4>Grammar</h4>
+						{
+							infor && renderGrammar
+						}
 					</Col>
 					<Col xs={12} lg={4} className="">
 						<h4>

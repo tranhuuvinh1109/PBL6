@@ -42,7 +42,7 @@ const CoureDetail = () => {
 
 	useEffect(() => {
 		GetInformationCourse(id)
-	}, [])
+	}, [id])
 	return (
 		<Container fluid="md" className="text-left mb-20 mt-20 min-h-[630px]">
 			<Row>

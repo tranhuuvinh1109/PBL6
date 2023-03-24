@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import '../../Assets/css/Login.css';
 import { LockOutlined, UserOutlined } from '@ant-design/icons';
-import { Button, Checkbox, Form, Input } from 'antd';
+import { Button, Form, Input } from 'antd';
 import { Link } from "react-router-dom";
 import { faCircleArrowLeft } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -18,10 +18,8 @@ const Login = () => {
 		if (values.email && values.password) {
 			try {
 				const res = await authAPI.login(values)
-				console.log(values);
 				if (res.status === 200) {
 					context.setUser(res.data.data);
-					console.log(res.data.data)
 					navigator('/');
 					localStorage.setItem('userID', res.data.data.id)
 					toast.success('Login Successfully')
