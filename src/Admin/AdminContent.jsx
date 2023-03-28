@@ -1,7 +1,7 @@
 import logo from '../logo.svg';
 import { PieChartOutlined, DesktopOutlined } from '@ant-design/icons';
 import { Avatar, Breadcrumb, Layout, Menu, Popover, theme } from 'antd';
-import React, { useContext, useEffect } from 'react';
+import React, { useContext } from 'react';
 import { Outlet, useNavigate } from 'react-router-dom';
 import UserClickContent from './components/UserClickContent';
 import { AppContext } from '../App';
@@ -36,7 +36,10 @@ const AdminContent = () => {
 	const isAdmin = useCheckAdmin(context?.user);
 
 	if (!isAdmin) {
-		return <div>Bạn không có quyền truy cập vào trang quản trị</div>;
+		return <div>
+			Bạn không có quyền truy cập vào trang quản trị
+			<button className='btn-custom ml-4 px-4 py-2' onClick={() => navigate(-1)}>Back</button>
+		</div>;
 	}
 
 	return (

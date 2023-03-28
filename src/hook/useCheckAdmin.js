@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 const useCheckAdmin = (user) => {
@@ -10,11 +10,8 @@ const useCheckAdmin = (user) => {
 			setIsAdmin(true);
 		} else {
 			setIsAdmin(false);
-			if (user) {
-				navigate('/login')
-			}
 		}
-	}, [user]);
+	}, [user, navigate]);
 
 	return isAdmin;
 }

@@ -21,11 +21,13 @@ export const AppContext = createContext({});
 function App () {
   const [listCourse, setListCourse] = useState([]);
   const [user, setUser] = useState();
-  const getUser = async (id) => {
-    const res = await authAPI.getUser(id);
+  const getUser = async () => {
+    const res = await authAPI.getUserByToken();
+    console.log(res)
     if (res.status === 200) {
-      console.log(1, res.data.data)
+
       setUser(res.data.data)
+      localStorage.setItem('userID', res.data.access_token)
     }
   }
   const GetCourse = async () => {
@@ -36,9 +38,9 @@ function App () {
   }
   useEffect(() => {
     GetCourse();
-    const id = localStorage.getItem('userID');
-    if (id) {
-      getUser(id);
+    const token = localStorage.getItem('userID');
+    if (token) {
+      getUser();
     }
   }, [])
 

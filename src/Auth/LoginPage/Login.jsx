@@ -21,7 +21,7 @@ const Login = () => {
 				if (res.status === 200) {
 					context.setUser(res.data.data);
 					navigator('/');
-					localStorage.setItem('userID', res.data.data.id)
+					localStorage.setItem('userID', res.data.access_token)
 					toast.success('Login Successfully')
 				}
 			} catch (error) {

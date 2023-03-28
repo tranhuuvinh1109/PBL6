@@ -11,6 +11,7 @@ import parse from 'html-react-parser';
 import { db } from '../../Firebase/firebaseClient';
 import { AppContext } from '../../App';
 import { authAPI } from '../../api/authApi';
+import ReactPlayer from 'react-player'
 
 const { Panel } = Collapse;
 
@@ -21,7 +22,7 @@ const Learning = () => {
 	const [contentComment, setContentComment] = useState('');
 	const [infor, setInfor] = useState({});
 	const [actived, setActived] = useState(1);
-	const context = useContext(AppContext)
+	const context = useContext(AppContext);
 
 	const handleChange = (e) => {
 		setContentComment(e.target.value)
@@ -29,12 +30,17 @@ const Learning = () => {
 
 	const handleSubmitComment = (e) => {
 		e.preventDefault();
+		console.log(1212,
+			{
+				userId: context,
+				content: contentComment
+			})
 		if (infor) {
 			db.collection('lessons')
 				.doc(id + "-" + actived)
 				.collection('comments')
 				.add({
-					userId: context.user.id,
+					userId: context.user?.id,
 					content: contentComment
 				})
 				.then(() => {
@@ -64,10 +70,11 @@ const Learning = () => {
 	const renderVideo = useMemo(() => {
 		if (infor?.lessons) {
 			const findItem = infor.lessons.filter(item => actived === item.id);
-			if (findItem[0].video) {
+			console.log(findItem)
+			if (findItem[0]?.video) {
 				return (
-					<div className='w-full'>
-						<iframe src={findItem[0].video} className='w-full top-0 left-0' title='video lesson' allowFullScreen />
+					<div className='w-full rounded-xl overflow-hidden'>
+						<ReactPlayer url={findItem[0].video} controls={true} width={'100%'} height={'100%'} />
 					</div>
 				)
 			}
@@ -79,7 +86,7 @@ const Learning = () => {
 	const renderGrammar = useMemo(() => {
 		if (infor?.lessons) {
 			const findItem = infor.lessons.filter(item => actived === item.id);
-			if (findItem[0].grammar) {
+			if (findItem[0]?.grammar) {
 				return parse(findItem[0].grammar);
 			}
 		}
@@ -119,7 +126,7 @@ const Learning = () => {
 		convertomment.then((result) => {
 			setCommentsData(result);
 		});
-	}, [comments]);
+	}, [comments, convertomment]);
 
 	useEffect(() => {
 		GetInformationCourse(id)
@@ -128,12 +135,13 @@ const Learning = () => {
 			.doc(id + "-" + actived)
 			.collection('comments')
 			.onSnapshot((snapshot) => {
+				console.log(snapshot)
 				setComments(snapshot.docs.map((doc) => doc.data()));
 			});
 		return () => {
 			unsubscribe();
 		};
-	}, [id, actived])
+	}, [id, actived]);
 
 	return (
 		<div>
@@ -160,7 +168,7 @@ const Learning = () => {
 			<Container>
 				<Row>
 					<Col xs={12} lg={8} className='text-left'>
-						<h4>Grammar</h4>
+						<h4 onClick={() => console.log(setComments)}>Grammar</h4>
 						{
 							infor && renderGrammar
 						}

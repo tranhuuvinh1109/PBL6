@@ -7,32 +7,32 @@ const axiosClient = axios.create({
 
 	// 'https://jsonplaceholder.typicode.com' 
 });
-// axiosClient.interceptors.request.use(
-//   (config) => {
-//     const accessToken = localStorage.getItem(TOKEN_KEY.ACCESS_TOKEN);
-//     if (accessToken != null) {
-//       return {
-//         ...config,
-//         headers: {
-//           Authorization: `Bearer ${accessToken}`,
-//           ...config.headers
-//         }
-//       };
-//     }
+axiosClient.interceptors.request.use(
+	(config) => {
+		const accessToken = localStorage.getItem("userID");
+		if (accessToken != null) {
+			return {
+				...config,
+				headers: {
+					Authorization: `Bearer ${accessToken}`,
+					...config.headers
+				}
+			};
+		}
 
-//     return {
-//       ...config,
-//       headers: {
-//         ...config.headers
-//       }
-//     };
-//   },
-//   async (error) => await Promise.reject(error)
-// );
-// axiosClient.interceptors.response.use(
-//   async (response) => await Promise.resolve(response),
-//   async (error) => {
-//     return await Promise.reject(error);
-//   }
-// );
+		return {
+			...config,
+			headers: {
+				...config.headers
+			}
+		};
+	},
+	async (error) => await Promise.reject(error)
+);
+axiosClient.interceptors.response.use(
+	async (response) => await Promise.resolve(response),
+	async (error) => {
+		return await Promise.reject(error);
+	}
+);
 export default axiosClient;

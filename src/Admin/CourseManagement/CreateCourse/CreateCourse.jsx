@@ -14,8 +14,8 @@ const CreateCourse = () => {
 	const [selectedFile, setSelectedFile] = useState(null);
 	const [arrLesson, setArrLesson] = useState([{
 		id: 1,
-		lessonName: "",
-		linkVideo: "",
+		name: "",
+		video: "",
 		grammar: "",
 	}]);
 
@@ -49,16 +49,16 @@ const CreateCourse = () => {
 
 	const handleChangePlan = e => {
 		e.preventDefault();
-		const index = e.target.id;
-		setArrPlan(s => {
-			const newArr = s.slice();
-			newArr[index].value = e.target.value;
-			return newArr;
-		});
+
+		const id = +e.target.name.split("-")[1];
+		const temp = [...arrPlan];
+		const itemChange = temp.findIndex(item => item.id === id);
+		console.log(itemChange, id, temp)
+		temp[itemChange][e.target.name.split("-")[0]] = e.target.value;
+		setArrPlan(temp)
 	};
 
 	const onChange = (value) => {
-		console.log(value, imageUrl)
 		setCourse({ ...course, price: value })
 	};
 
@@ -75,15 +75,17 @@ const CreateCourse = () => {
 			const storageRef = ref(getStorageClient, `images/course`);
 			const fileRef = ref(storageRef, newName);
 
-			uploadBytes(fileRef, selectedFile)
+			return uploadBytes(fileRef, selectedFile)
 				.then((snapshot) => {
 					getDownloadURL(snapshot.ref).then((downloadURL) => {
 						console.log("Upload successful, download URL:", downloadURL);
 						setImageUrl(downloadURL);
+						return true;
 					});
 				})
 				.catch((error) => {
 					console.log("Upload failed:", error);
+					return false;
 				});
 
 		}
@@ -97,42 +99,60 @@ const CreateCourse = () => {
 			...arrLesson,
 			{
 				id: randomNum,
-				lessonName: "",
-				linkVideo: "",
+				name: "",
+				video: "",
 				grammar: "",
 			}
 		]);
 	}
 
 	const handleSubmit = async () => {
-		const res = await courseAPI.postCourse({
+		const uploadSuccess = await handleFileUpload();
+		console.log(111, {
 			name: course.name,
 			description: course.description,
+			teacher: 1,
 			image: imageUrl,
-			lesson: arrLesson,
-			plan: arrPlan,
+			lessons: arrLesson,
+			plans: arrPlan,
 			price: course.price,
-			video: '',
-			total_star: 5,
-		})
-		console.log('SUBMIT ', {
-			name: course.name,
-			description: course.description,
-			image: imageUrl,
-			lesson: arrLesson,
-			plan: arrPlan,
-			price: course.price
-		}, res)
+		}, uploadSuccess)
+		if (true) {
+			console.log(222, {
+				name: course.name,
+				description: course.description,
+				teacher: 1,
+				category: 1,
+				image: imageUrl,
+				lessons: arrLesson,
+				plans: arrPlan,
+				price: course.price,
+			})
+			const res = await courseAPI.postCourse({
+				name: course.name,
+				description: course.description,
+				teacher: 1,
+				image: imageUrl,
+				lessons: arrLesson,
+				plans: arrPlan,
+				price: course.price,
+			});
+			if (res.status === 200) {
+				console.log('submit successful', res.data);
+			} else {
+				console.log('submit fail', res);
+			}
+		} else {
+			console.log('Image upload failed. Aborting submission.');
+		}
 	}
 
 	const removeLesson = (id) => {
-
 		if (arrLesson.length !== 1) {
 			const temp = [...arrLesson];
 			const index = temp.findIndex(item => item.id === id);
 			temp.splice(index, 1);
 			setArrLesson(temp)
-			console.log("remove", index, temp, arrLesson)
 		}
 	}
 
@@ -183,11 +203,11 @@ const CreateCourse = () => {
 								<div className='flex'>
 									<div className='mb-2 w-6/12'>
 										<label htmlFor={`lessonName-${item.id}`} className='w-2/12'>Lesson Name:</label>
-										<Input id={`lessonName-${item.id}`} name={`lessonName-${item.id}`} className='w-8/12' onChange={handleChangeLesson} value={item.name} />
+										<Input id={`lessonName-${item.id}`} name={`name-${item.id}`} className='w-8/12' onChange={handleChangeLesson} value={item.name} />
 									</div>
 									<div className='w-6/12'>
 										<label htmlFor={`linkVideo-${item.id}`} className='w-2/12'>Link Video:</label>
-										<Input id={`linkVideo-${item.id}`} name={`linkVideo-${item.id}`} className='w-8/12' onChange={handleChangeLesson} value={item.linkVideo} />
+										<Input id={`linkVideo-${item.id}`} name={`video-${item.id}`} className='w-8/12' onChange={handleChangeLesson} value={item.video} />
 										<button onClick={() => removeLesson(item.id)} className='btn-custom w-1/12 ml-2'>
 											<FontAwesomeIcon icon={faXmark} />
 										</button>
@@ -223,7 +243,7 @@ const CreateCourse = () => {
 						{arrPlan.map((item) => {
 							return (
 								<div className='mb-2' key={item.id}>
-									<Input id={item.id} className='w-8/12' onChange={handleChangePlan} value={item.value} />
+									<Input id={item.id} name={`title-${item.id}`} className='w-8/12' onChange={handleChangePlan} value={item.title} />
 									<button onClick={() => removePlan(item.id)} className='btn-custom w-1/12 ml-7'>
 										<FontAwesomeIcon icon={faXmark} />
 									</button>

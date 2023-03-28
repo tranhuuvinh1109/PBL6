@@ -8,16 +8,18 @@ import LessonItem from "./components/LessonItem";
 import { useNavigate } from 'react-router-dom'
 import Loading from "../../components/Loading/Loading";
 import { courseAPI } from "../../api/courseAPI";
+// import { AppContext } from '../../App';
+// import toast from 'react-hot-toast';
 
 const { Panel } = Collapse;
 
 const CoureDetail = () => {
 	const { id } = useParams();
+	// const context = useContext(AppContext);
 	const navigate = useNavigate();
 	const [infor, setInfor] = useState();
 
 	const GetInformationCourse = async (id) => {
-		console.log('this', id)
 		const res = await courseAPI.getCourseDetail(id)
 		if (res.status === 200) {
 			setInfor(res.data.data)
@@ -26,7 +28,26 @@ const CoureDetail = () => {
 	}
 
 	const handleClickRegister = () => {
-		navigate(`/page/learning/${infor?.id}`)
+		navigate(`/page/learning/${infor?.id}`);
+		// if (context?.user) {
+		// 	const params = {
+		// 		userId: context.user.id,
+		// 		courseId: +id
+		// 	}
+		// 	const res = await courseAPI.registerCourse(params);
+		// 	if (res.status === 200) {
+		// 		console.log('register', res.data.data);
+		// 		navigate(`/page/learning/${infor?.id}`);
+		// 		toast.success('Register Course Successfully')
+		// 	}
+		// 	if (res.status === 201) {
+		// 		toast.success('data exist')
+		// 		navigate(`/page/learning/${infor?.id}`);
+		// 	}
+		// 	else {
+		// 		toast.error('Register Course Failed');
+		// 	}
+		// }
 	}
 
 	const renderVideo = useMemo(() => {
