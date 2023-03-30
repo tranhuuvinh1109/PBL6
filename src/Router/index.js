@@ -1,13 +1,13 @@
 import Daskboard from "../Admin/Dashboard/Daskboard";
 import Contact from "../Page/Contact/Contact";
 import CoursePage from "../Page/CoursePage/CoursePage";
-import Event from "../Page/EventPage/Event";
 import HomePage from "../Home/HomePage";
 import ProfilePage from "../Page/ProfilePage/ProfilePage";
 import Learning from "../Page/LearningPage/Learning";
 import CourseManagement from "../Admin/CourseManagement/CourseManagement";
 import EventManagement from "../Admin/EventManagement/EventManagement";
 import CreateCourse from "../Admin/CourseManagement/CreateCourse/CreateCourse";
+import BlogPage from "../Page/BlogPage/BlogPage";
 
 export const routers = [
 	{
@@ -15,8 +15,8 @@ export const routers = [
 		component: HomePage
 	},
 	{
-		path: 'event',
-		component: Event
+		path: 'blog',
+		component: BlogPage
 	},
 	{
 		path: 'course',

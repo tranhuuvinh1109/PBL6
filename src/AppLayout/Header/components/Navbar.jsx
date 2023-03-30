@@ -1,19 +1,39 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import React, { useContext, useRef } from 'react';
-import { faCircleXmark, faBars } from '@fortawesome/free-solid-svg-icons';
+import React, { useContext, useState } from 'react';
 import '../../../Assets/css/Navbar.css';
 import { NavLink, Link } from 'react-router-dom';
 import { Avatar, Dropdown, Space } from 'antd';
-import { faCaretDown, faArrowRightFromBracket, faUser } from '@fortawesome/free-solid-svg-icons'
+import { faCaretDown, faArrowRightFromBracket, faUser, faBars, faHouse, faBlog, faAddressCard } from '@fortawesome/free-solid-svg-icons'
 import { AppContext } from '../../../App';
+import Offcanvas from 'react-bootstrap/Offcanvas';
 
-
-const Navbar = ({ logo, listNav }) => {
-	const navRef = useRef();
+const listNavbar = [
+	{
+		title: 'Home',
+		path: '/',
+		icon: <FontAwesomeIcon icon={faHouse} />
+	},
+	{
+		title: 'Course',
+		path: '/page/course',
+		icon: <FontAwesomeIcon icon={faHouse} />
+	},
+	{
+		title: 'Blog',
+		path: '/page/blog',
+		icon: <FontAwesomeIcon icon={faBlog} />
+	},
+	{
+		title: 'Contact',
+		path: '/page/contact',
+		icon: <FontAwesomeIcon icon={faAddressCard} />
+	},
+]
+const Navbar = ({ logo }) => {
+	const [show, setShow] = useState(false);
+	const handleClose = () => setShow(false);
+	const toggleShow = () => setShow((s) => !s);
 	const contextData = useContext(AppContext)
-	const showNavbar = () => {
-		navRef.current.classList.toggle("responsive_nav");
-	};
 	const handleClickLogout = () => {
 		localStorage.setItem('userID', '')
 	}
@@ -33,25 +53,9 @@ const Navbar = ({ logo, listNav }) => {
 			<a href='/'>
 				<img src={logo} className='w-[170px]' alt='logo' />
 			</a>
-			{/* mobile */}
-			<Dropdown
-				menu={{
-					items,
-				}}
-				trigger={['click']}
-			>
-				<Space>
-					<div className='nav-user xl:hidden 2xl:hidden  bg-orange-200 px-1.5 py-1 rounded-full cursor-pointer'>
-						<Avatar src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTPJVOqLLr0GTxic4gT7si741MVw7U8q-x91A&usqp=CAU' alt='avatar' />
-						<span className='px-1 text-base font-medium'>Tran Huu Vinh</span>
-						<FontAwesomeIcon icon={faCaretDown} className='pr-1' />
-					</div>
-				</Space>
-			</Dropdown>
-
-			<nav ref={navRef} className='nav-nav'>
+			<nav className='nav-nav'>
 				{
-					listNav.map((item, index) => {
+					listNavbar.map((item, index) => {
 						return (
 							<NavLink
 								to={item.path}
@@ -60,20 +64,18 @@ const Navbar = ({ logo, listNav }) => {
 									isActive ? "link-item active-item" : "link-item"
 								}
 							>
-								{item.title}
+								{item.icon}
+								<span className='ml-2'>
+									{item.title}
+								</span>
 							</NavLink>
 						)
 					})
 				}
-
-				<button className="nav-btn nav-close-btn" onClick={showNavbar}>
-					<FontAwesomeIcon icon={faCircleXmark} />
-				</button>
 			</nav>
-			<button className="nav-btn" onClick={showNavbar}>
+			<button onClick={toggleShow} className='lg:hidden float-right'>
 				<FontAwesomeIcon icon={faBars} />
 			</button>
-			{/* table - pc */}
 			<Dropdown
 				menu={{
 					items,
@@ -81,7 +83,7 @@ const Navbar = ({ logo, listNav }) => {
 				trigger={['click']}
 			>
 				<Space>
-					<div className='hidden xl:block 2xl:block bg-orange-200 px-1.5 py-1 rounded-full cursor-pointer hover:opacity-80'>
+					<div className='bg-orange-200 px-1.5 py-1 rounded-full cursor-pointer hover:opacity-80 hidden lg:block'>
 						{
 							contextData?.user && <>
 								<Avatar size='large' src={contextData?.user.avatar} alt='avatar' />
@@ -92,6 +94,52 @@ const Navbar = ({ logo, listNav }) => {
 					</div>
 				</Space>
 			</Dropdown>
+			<Offcanvas show={show} onHide={handleClose}>
+				<Offcanvas.Header closeButton>
+					<Offcanvas.Title></Offcanvas.Title>
+				</Offcanvas.Header>
+				<Offcanvas.Body>
+					<div>
+						<img src='https://danviet.mediacdn.vn/296231569849192448/2022/7/10/1657467881994186713673-0-0-1250-2000-crop-16574679259871419731430.jpg' alt='avatar' className='w-16 h-16 rounded-full' />
+						<Link to='/page/user/profile'>
+							<h4 className='mt-2'>
+								Tran Huu Vinh
+							</h4>
+						</Link>
+					</div>
+					<div className='flex flex-col justify-between'>
+						<div className='flex flex-col mt-3'>
+							{
+								listNavbar.map((item, index) => {
+									return (
+										<NavLink
+											to={item.path}
+											key={index}
+											className={({ isActive }) =>
+												isActive ? "link-item active-item" : "link-item"
+											}
+										>
+											{item.icon}
+											<span className='ml-3'>
+												{item.title}
+											</span>
+										</NavLink>
+									)
+								})
+							}
+						</div>
+						<button onClick={handleClickLogout}>
+							<Link to='/login'>
+								<FontAwesomeIcon icon={faArrowRightFromBracket} />
+								<span>
+									Logout
+								</span>
+							</Link>
+
+						</button>
+					</div>
+				</Offcanvas.Body>
+			</Offcanvas>
 
 		</header>
 	)
