@@ -14,6 +14,7 @@ import CoureDetail from './Page/CourseDetail/CourseDetail';
 import { Toaster } from 'react-hot-toast';
 import { authAPI } from './api/authApi';
 import { courseAPI } from './api/courseAPI';
+import BlogDetail from './Page/BlogDetail/BlogDetail';
 
 
 export const AppContext = createContext({});
@@ -63,6 +64,7 @@ function App () {
                 })
               }
               <Route path='course/:id' element={<CoureDetail />} />
+              <Route path='blog/:id' element={<BlogDetail />} />
               <Route path='*' element={<NotFound />} />
             </Route>
             <Route path='admin' element={<PrivateRouter path='/login' outlet={<AdminContent />} />} >

@@ -39,7 +39,6 @@ const CreateCourse = () => {
 
 	const handleChangeLesson = e => {
 		e.preventDefault();
-		console.log(e)
 		const id = +e.target.id.split("-")[1];
 		const temp = [...arrLesson];
 		const itemChange = temp.findIndex(item => item.id === id);
@@ -49,11 +48,9 @@ const CreateCourse = () => {
 
 	const handleChangePlan = e => {
 		e.preventDefault();
-
 		const id = +e.target.name.split("-")[1];
 		const temp = [...arrPlan];
 		const itemChange = temp.findIndex(item => item.id === id);
-		console.log(itemChange, id, temp)
 		temp[itemChange][e.target.name.split("-")[0]] = e.target.value;
 		setArrPlan(temp)
 	};

@@ -21,7 +21,7 @@ const Learning = () => {
 	const [commentsData, setCommentsData] = useState([]);
 	const [contentComment, setContentComment] = useState('');
 	const [infor, setInfor] = useState({});
-	const [actived, setActived] = useState(1);
+	const [actived, setActived] = useState();
 	const context = useContext(AppContext);
 
 	const handleChange = (e) => {
@@ -30,11 +30,6 @@ const Learning = () => {
 
 	const handleSubmitComment = (e) => {
 		e.preventDefault();
-		console.log(1212,
-			{
-				userId: context,
-				content: contentComment
-			})
 		if (infor) {
 			db.collection('lessons')
 				.doc(id + "-" + actived)
@@ -70,7 +65,6 @@ const Learning = () => {
 	const renderVideo = useMemo(() => {
 		if (infor?.lessons) {
 			const findItem = infor.lessons.filter(item => actived === item.id);
-			console.log(findItem)
 			if (findItem[0]?.video) {
 				return (
 					<div className='w-full rounded-xl overflow-hidden'>
@@ -135,7 +129,6 @@ const Learning = () => {
 			.doc(id + "-" + actived)
 			.collection('comments')
 			.onSnapshot((snapshot) => {
-				console.log(snapshot)
 				setComments(snapshot.docs.map((doc) => doc.data()));
 			});
 		return () => {
@@ -168,7 +161,7 @@ const Learning = () => {
 			<Container>
 				<Row>
 					<Col xs={12} lg={8} className='text-left'>
-						<h4 onClick={() => console.log(setComments)}>Grammar</h4>
+						<h4 onClick={() => console.log(actived, infor)}>Grammar</h4>
 						{
 							infor && renderGrammar
 						}
