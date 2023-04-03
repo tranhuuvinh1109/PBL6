@@ -9,12 +9,10 @@ import AppContent from './AppLayout/Content/Content';
 import { adminRouter, routers } from './Router';
 import NotFound from './Page/NotFound/NotFound';
 import AdminContent from './Admin/AdminContent';
-import CoureDetail from './Page/CourseDetail/CourseDetail';
 // import ScrollToTop from "react-scroll-to-top";
 import { Toaster } from 'react-hot-toast';
 import { authAPI } from './api/authApi';
 import { courseAPI } from './api/courseAPI';
-import BlogDetail from './Page/BlogDetail/BlogDetail';
 
 
 export const AppContext = createContext({});
@@ -24,11 +22,10 @@ function App () {
   const [user, setUser] = useState();
   const getUser = async () => {
     const res = await authAPI.getUserByToken();
-    console.log(res)
     if (res.status === 200) {
 
       setUser(res.data.data)
-      localStorage.setItem('userID', res.data.access_token)
+      localStorage.setItem('userID', res.data.refresh_token)
     }
   }
   const GetCourse = async () => {
@@ -63,8 +60,6 @@ function App () {
                   return <Route key={route.path} element={<route.component />} path={route.path} />
                 })
               }
-              <Route path='course/:id' element={<CoureDetail />} />
-              <Route path='blog/:id' element={<BlogDetail />} />
               <Route path='*' element={<NotFound />} />
             </Route>
             <Route path='admin' element={<PrivateRouter path='/login' outlet={<AdminContent />} />} >

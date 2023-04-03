@@ -9,6 +9,8 @@ import EventManagement from "../Admin/EventManagement/EventManagement";
 import CreateCourse from "../Admin/CourseManagement/CreateCourse/CreateCourse";
 import BlogPage from "../Page/BlogPage/BlogPage";
 import CreateBlog from "../Page/BlogPage/CreateBlog/CreateBlog";
+import BlogDetail from "../Page/BlogDetail/BlogDetail";
+import CoureDetail from "../Page/CourseDetail/CourseDetail";
 
 export const routers = [
 	{
@@ -22,6 +24,10 @@ export const routers = [
 	{
 		path: 'course',
 		component: CoursePage
+	},
+	{
+		path: 'course/:id',
+		component: CoureDetail
 	},
 	{
 		path: 'contact',
@@ -38,6 +44,10 @@ export const routers = [
 	{
 		path: 'blog/create',
 		component: CreateBlog
+	},
+	{
+		path: 'blog/:id',
+		component: BlogDetail
 	},
 ];
 
