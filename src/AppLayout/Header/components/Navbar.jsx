@@ -1,11 +1,12 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import React, { useContext, useState } from 'react';
+import React, { useCallback, useContext, useMemo, useState } from 'react';
 import '../../../Assets/css/Navbar.css';
 import { NavLink, Link } from 'react-router-dom';
-import { Avatar, Dropdown, Space } from 'antd';
-import { faCaretDown, faArrowRightFromBracket, faUser, faBars, faHouse, faBlog, faAddressCard } from '@fortawesome/free-solid-svg-icons'
+import { Avatar, Button, Dropdown, Popover, Space } from 'antd';
+import { faArrowRightFromBracket, faUser, faBars, faHouse, faBlog, faAddressCard, faLightbulb } from '@fortawesome/free-solid-svg-icons'
 import { AppContext } from '../../../App';
 import Offcanvas from 'react-bootstrap/Offcanvas';
+import MyCourseItem from './MyCourseItem';
 
 const listNavbar = [
 	{
@@ -16,7 +17,7 @@ const listNavbar = [
 	{
 		title: 'Course',
 		path: '/page/course',
-		icon: <FontAwesomeIcon icon={faHouse} />
+		icon: <FontAwesomeIcon icon={faLightbulb} />
 	},
 	{
 		title: 'Blog',
@@ -34,19 +35,74 @@ const Navbar = ({ logo }) => {
 	const handleClose = () => setShow(false);
 	const toggleShow = () => setShow((s) => !s);
 	const contextData = useContext(AppContext)
-	const handleClickLogout = () => {
-		localStorage.setItem('userID', '')
-	}
-	const items = [
-		{
-			label: <Link to='/page/user/profile' className='no-underline '><FontAwesomeIcon icon={faUser} fontSize={16} /><span className='text-base font-semibold ml-2.5'>Profile</span></Link>,
-			key: '0',
-		},
-		{
-			label: <Link to='/login' onClick={handleClickLogout} className='no-underline '><FontAwesomeIcon icon={faArrowRightFromBracket} fontSize={16} /><span className='text-base font-semibold ml-2.5'>Logout</span></Link>,
-			key: '1',
+	const handleClickLogout = useCallback(() => {
+		contextData.setUser(undefined);
+		localStorage.setItem('userID', '');
+	}, [contextData])
+
+	const renderUser = useMemo(() => {
+		const items = [
+			{
+				label: <Link to='/page/user/profile' className='no-underline '><FontAwesomeIcon icon={faUser} fontSize={16} /><span className='text-base font-semibold ml-2.5'>Profile</span></Link>,
+				key: '0',
+			},
+			{
+				label: <Link to='/login' onClick={handleClickLogout} className='no-underline '><FontAwesomeIcon icon={faArrowRightFromBracket} fontSize={16} /><span className='text-base font-semibold ml-2.5'>Logout</span></Link>,
+				key: '1',
+			}
+		];
+		if (contextData.user) {
+			return (
+				<div className='flex items-center'>
+					<Popover placement="bottomRight" trigger="hover"
+						content={
+							<div className='w-[380px]'>
+								<div className='flex justify-between'>
+									<h6>
+										My Course
+									</h6>
+									<Link to={'my-course'} >
+										View All
+									</Link>
+								</div>
+								<div>
+									<MyCourseItem />
+								</div>
+							</div>
+						}
+					>
+						<Button>My Course</Button>
+					</Popover>
+					<Dropdown
+						menu={{
+							items,
+						}}
+						trigger={['click']}
+					>
+						<Space>
+							<div className='p-1 rounded-full cursor-pointer hover:opacity-80 hidden lg:block'>
+								{
+									contextData.user?.avatar ? <Avatar size='large' src={contextData?.user.avatar} alt='avatar' />
+										:
+										<Avatar src="https://fullstack.edu.vn/static/media/fallback-avatar.155cdb2376c5d99ea151.jpg" size='large' alt="avtar" />
+								}
+
+							</div>
+						</Space>
+					</Dropdown>
+				</div>
+
+			)
+		} else {
+			return (
+				<button className='btn-custom'
+					onClick={handleClickLogout}
+				>
+					<Link to="/login" className='no-underline '>Login</Link>
+				</button>
+			)
 		}
-	];
+	}, [contextData, handleClickLogout])
 
 	return (
 		<header className='nav-header'>
@@ -76,24 +132,9 @@ const Navbar = ({ logo }) => {
 			<button onClick={toggleShow} className='lg:hidden float-right'>
 				<FontAwesomeIcon icon={faBars} />
 			</button>
-			<Dropdown
-				menu={{
-					items,
-				}}
-				trigger={['click']}
-			>
-				<Space>
-					<div className='bg-orange-200 px-1.5 py-1 rounded-full cursor-pointer hover:opacity-80 hidden lg:block'>
-						{
-							contextData?.user && <>
-								<Avatar size='large' src={contextData?.user.avatar} alt='avatar' />
-								<span className='px-2 text-base font-medium'>{contextData?.user.name}</span>
-							</>
-						}
-						<FontAwesomeIcon icon={faCaretDown} className='pr-1.5' />
-					</div>
-				</Space>
-			</Dropdown>
+			{
+				renderUser
+			}
 			<Offcanvas show={show} onHide={handleClose}>
 				<Offcanvas.Header closeButton>
 					<Offcanvas.Title></Offcanvas.Title>

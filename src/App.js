@@ -23,7 +23,6 @@ function App () {
   const getUser = async () => {
     const res = await authAPI.getUserByToken();
     if (res.status === 200) {
-
       setUser(res.data.data)
       localStorage.setItem('userID', res.data.refresh_token)
     }

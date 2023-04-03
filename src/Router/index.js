@@ -11,6 +11,7 @@ import BlogPage from "../Page/BlogPage/BlogPage";
 import CreateBlog from "../Page/BlogPage/CreateBlog/CreateBlog";
 import BlogDetail from "../Page/BlogDetail/BlogDetail";
 import CoureDetail from "../Page/CourseDetail/CourseDetail";
+import MyCourse from "../Page/MyCourse/MyCourse";
 
 export const routers = [
 	{
@@ -48,6 +49,10 @@ export const routers = [
 	{
 		path: 'blog/:id',
 		component: BlogDetail
+	},
+	{
+		path: 'my-course',
+		component: MyCourse
 	},
 ];
 
