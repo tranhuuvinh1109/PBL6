@@ -35,6 +35,9 @@ module.exports = {
         '150px': '150px',
         '630px': '630px',
         '480px': '480px',
+      },
+      maxHeight: {
+        '490px': '490px',
       }
     },
   },

@@ -2,8 +2,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { useCallback, useContext, useMemo, useState } from 'react';
 import '../../../Assets/css/Navbar.css';
 import { NavLink, Link } from 'react-router-dom';
-import { Avatar, Button, Dropdown, Popover, Space } from 'antd';
-import { faArrowRightFromBracket, faUser, faBars, faHouse, faBlog, faAddressCard, faLightbulb } from '@fortawesome/free-solid-svg-icons'
+import { Avatar, Button, Divider, Dropdown, Popover, Space } from 'antd';
+import { faArrowRightFromBracket, faUser, faBars, faHouse, faBlog, faLightbulb } from '@fortawesome/free-solid-svg-icons'
 import { AppContext } from '../../../App';
 import Offcanvas from 'react-bootstrap/Offcanvas';
 import MyCourseItem from './MyCourseItem';
@@ -24,20 +24,42 @@ const listNavbar = [
 		path: '/page/blog',
 		icon: <FontAwesomeIcon icon={faBlog} />
 	},
-	{
-		title: 'Contact',
-		path: '/page/contact',
-		icon: <FontAwesomeIcon icon={faAddressCard} />
-	},
 ]
 const Navbar = ({ logo }) => {
 	const [show, setShow] = useState(false);
+	const [searchValue, setSearchValue] = useState('');
 	const handleClose = () => setShow(false);
 	const toggleShow = () => setShow((s) => !s);
 	const contextData = useContext(AppContext)
 	const handleClickLogout = useCallback(() => {
 		contextData.setUser(undefined);
 		localStorage.setItem('userID', '');
+	}, [contextData]);
+
+	const handleChange = (e) => {
+		e.preventDefault();
+		setSearchValue(e.target.value);
+	}
+
+	const renderUserMobile = useMemo(() => {
+		if (contextData.user) {
+			return (
+				<>
+					<div>
+						{
+							contextData.user?.avatar ? <img src={contextData.user.avatar} alt='avatar' className='w-16 h-16 rounded-full' />
+								:
+								<img src='https://fullstack.edu.vn/static/media/fallback-avatar.155cdb2376c5d99ea151.jpg' alt='avatar' className='w-16 h-16 rounded-full' />
+						}
+
+						<h4 className='mt-2 text-xl'>
+							Tran Huu Vinh
+						</h4>
+					</div>
+					<Divider className='m-0' />
+				</>
+			);
+		}
 	}, [contextData])
 
 	const renderUser = useMemo(() => {
@@ -65,13 +87,19 @@ const Navbar = ({ logo }) => {
 										View All
 									</Link>
 								</div>
-								<div>
+								<div className='max-h-[490px] overflow-y-auto'>
+									<MyCourseItem />
+									<MyCourseItem />
+									<MyCourseItem />
+									<MyCourseItem />
+									<MyCourseItem />
+									<MyCourseItem />
 									<MyCourseItem />
 								</div>
 							</div>
 						}
 					>
-						<Button>My Course</Button>
+						<Button className='btn-hidden'>My Course</Button>
 					</Popover>
 					<Dropdown
 						menu={{
@@ -86,18 +114,14 @@ const Navbar = ({ logo }) => {
 										:
 										<Avatar src="https://fullstack.edu.vn/static/media/fallback-avatar.155cdb2376c5d99ea151.jpg" size='large' alt="avtar" />
 								}
-
 							</div>
 						</Space>
 					</Dropdown>
 				</div>
-
 			)
 		} else {
 			return (
-				<button className='btn-custom'
-					onClick={handleClickLogout}
-				>
+				<button className='btn-custom px-2 py-1' onClick={handleClickLogout}>
 					<Link to="/login" className='no-underline '>Login</Link>
 				</button>
 			)
@@ -106,7 +130,10 @@ const Navbar = ({ logo }) => {
 
 	return (
 		<header className='nav-header'>
-			<a href='/'>
+			<button onClick={toggleShow} className='lg:hidden float-right px-2 py-1.5'>
+				<FontAwesomeIcon icon={faBars} />
+			</button>
+			<a href='/' className='logo-customize'>
 				<img src={logo} className='w-[170px]' alt='logo' />
 			</a>
 			<nav className='nav-nav'>
@@ -129,9 +156,11 @@ const Navbar = ({ logo }) => {
 					})
 				}
 			</nav>
-			<button onClick={toggleShow} className='lg:hidden float-right'>
-				<FontAwesomeIcon icon={faBars} />
-			</button>
+			<div className='search-wrapper'>
+				<div className='search-icon'>
+				</div>
+				<input type='text' placeholder='search course, video, blog,...' className='search-input-nav' value={searchValue} onChange={handleChange} />
+			</div>
 			{
 				renderUser
 			}
@@ -140,14 +169,24 @@ const Navbar = ({ logo }) => {
 					<Offcanvas.Title></Offcanvas.Title>
 				</Offcanvas.Header>
 				<Offcanvas.Body>
-					<div>
-						<img src='https://danviet.mediacdn.vn/296231569849192448/2022/7/10/1657467881994186713673-0-0-1250-2000-crop-16574679259871419731430.jpg' alt='avatar' className='w-16 h-16 rounded-full' />
-						<Link to='/page/user/profile'>
-							<h4 className='mt-2'>
-								Tran Huu Vinh
-							</h4>
+					{
+						renderUserMobile
+					}
+					<div className='flex flex-col justify-between'>
+						<Link to='/page/user/profile' className='link-item m-0'>
+							<FontAwesomeIcon icon={faUser} />
+							<span className='ml-3'>
+								Profile
+							</span>
+						</Link>
+						<Link to='/page/user/profile' className='link-item m-0'>
+							<FontAwesomeIcon icon={faLightbulb} />
+							<span className='ml-3'>
+								My Course
+							</span>
 						</Link>
 					</div>
+					<Divider className='m-0' />
 					<div className='flex flex-col justify-between'>
 						<div className='flex flex-col mt-3'>
 							{
@@ -157,7 +196,7 @@ const Navbar = ({ logo }) => {
 											to={item.path}
 											key={index}
 											className={({ isActive }) =>
-												isActive ? "link-item active-item" : "link-item"
+												isActive ? "link-item m-0 active-item" : "link-item m-0"
 											}
 										>
 											{item.icon}
@@ -169,10 +208,11 @@ const Navbar = ({ logo }) => {
 								})
 							}
 						</div>
-						<button onClick={handleClickLogout}>
-							<Link to='/login'>
+						<Divider className='m-0' />
+						<button onClick={handleClickLogout} className='px-3 py-2.5 w-full text-left'>
+							<Link to='/login' className='no-underline text-zinc-400 font-semibold w-full'>
 								<FontAwesomeIcon icon={faArrowRightFromBracket} />
-								<span>
+								<span className='ml-3'>
 									Logout
 								</span>
 							</Link>
@@ -181,7 +221,6 @@ const Navbar = ({ logo }) => {
 					</div>
 				</Offcanvas.Body>
 			</Offcanvas>
-
 		</header>
 	)
 }

@@ -1,5 +1,4 @@
 import Daskboard from "../Admin/Dashboard/Daskboard";
-import Contact from "../Page/Contact/Contact";
 import CoursePage from "../Page/CoursePage/CoursePage";
 import HomePage from "../Home/HomePage";
 import ProfilePage from "../Page/ProfilePage/ProfilePage";
@@ -29,10 +28,6 @@ export const routers = [
 	{
 		path: 'course/:id',
 		component: CoureDetail
-	},
-	{
-		path: 'contact',
-		component: Contact
 	},
 	{
 		path: 'user/profile',

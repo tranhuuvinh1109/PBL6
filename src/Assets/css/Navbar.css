@@ -9,8 +9,9 @@
 }
 .link-item {
   font-weight: 600;
-  margin: 0 1rem;
-  color: var(--textColor);
+  margin: 0 4px;
+  /* color: var(--textColor); */
+  color: rgb(161 161 170);
   text-decoration: none;
   padding: 10px 12px;
 }
@@ -92,4 +93,40 @@
   .nav-header {
     padding: 0;
   }
+}
+@media screen and (max-width: 1024px) {
+  .logo-customize {
+    display: none;
+  }
+}
+.search-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid #e8e8e8;
+  border-radius: 20px;
+  height: 40px;
+  padding: 0 16px 0 8px;
+  transition: border-color .2s ease-in-out;
+  width: 340px;
+}
+.search-icon {
+  background-color: #fff;
+  background-image: url('https://fullstack.edu.vn/static/media/search.9bd3926522ea0937310c.svg');
+  background-position: 50%;
+  background-repeat: no-repeat;
+  background-size: 18px;
+  border-radius: 50%;
+  height: 32px;
+  opacity: .7;
+  transition: opacity .2s ease-in-out;
+  width: 30px;
+}
+.search-input-nav {
+  border: none;
+  caret-color: #444;
+  flex: 1 1;
+  height: 100%;
+  outline: none;
+  padding: 0 4px;
 }
