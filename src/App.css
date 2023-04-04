@@ -251,3 +251,26 @@ a {
 p{
   margin: 0;
 }
+
+.search-loading {
+  animation: spinner 1s linear infinite;
+}
+
+@keyframes spinner {
+  from {
+      transform: rotate(0);
+  }
+
+  to {
+      transform: rotate(360deg)
+  }
+}
+
+.search-result {
+  width: 404px;
+  padding: 8px;
+  max-height: 400px;
+  overflow-x: hidden;
+  overflow-y: scroll;
+
+}

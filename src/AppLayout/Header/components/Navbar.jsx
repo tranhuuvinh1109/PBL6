@@ -7,6 +7,7 @@ import { faArrowRightFromBracket, faUser, faBars, faHouse, faBlog, faLightbulb, 
 import { AppContext } from '../../../App';
 import Offcanvas from 'react-bootstrap/Offcanvas';
 import MyCourseItem from './MyCourseItem';
+import Search from '../../../components/Search/Search';
 
 const listNavbar = [
 	{
@@ -27,7 +28,6 @@ const listNavbar = [
 ]
 const Navbar = ({ logo }) => {
 	const [show, setShow] = useState(false);
-	const [searchValue, setSearchValue] = useState('');
 	const handleClose = () => setShow(false);
 	const toggleShow = () => setShow((s) => !s);
 	const contextData = useContext(AppContext)
@@ -35,11 +35,6 @@ const Navbar = ({ logo }) => {
 		contextData.setUser(undefined);
 		localStorage.setItem('userID', '');
 	}, [contextData]);
-
-	const handleChange = (e) => {
-		e.preventDefault();
-		setSearchValue(e.target.value);
-	}
 
 	const renderUserMobile = useMemo(() => {
 		if (contextData.user) {
@@ -170,11 +165,7 @@ const Navbar = ({ logo }) => {
 					})
 				}
 			</nav>
-			<div className='search-wrapper'>
-				<div className='search-icon'>
-				</div>
-				<input type='text' placeholder='search course, video, blog,...' className='search-input-nav' value={searchValue} onChange={handleChange} />
-			</div>
+			<Search />
 			{
 				renderUser
 			}
