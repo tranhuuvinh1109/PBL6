@@ -1140,9 +1140,6 @@ textarea[resize='horizontal'] {
   border-color: rgba(50, 151, 211, .25);
 }
 
-.header {
-  position: relative;
-}
 
 .input-group {
   transition: all .15s ease;

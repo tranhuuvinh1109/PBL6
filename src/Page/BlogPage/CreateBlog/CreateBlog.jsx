@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import { Col, Container, Row } from "react-bootstrap";
 import ReactQuill from "react-quill";
 import parse from 'html-react-parser';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faUpload, faCircleXmark } from "@fortawesome/free-solid-svg-icons"
 
 const CreateBlog = () => {
 	const [selectedFile, setSelectedFile] = useState();
@@ -28,33 +30,32 @@ const CreateBlog = () => {
 	}, [selectedFile])
 
 	return (
-		<Container>
+		<Container className="mt-20">
 			<Row>
-				<Col xs={ 6 } className="text-left">
+				<Col xs={6} className="text-left min-h-[480px]">
 					<div>
-						<label htmlFor="title" className="w-4/12">Title :</label>
-						<input type="text" className="border-input w-8/12" id="title" name="title" value={ blog.title } onChange={ handleChange } />
+						<input type="text" className="border-input rounded-2xl py-2 px-4 w-full" placeholder="Title" name="title" value={blog.title} onChange={handleChange} />
 					</div>
-					<div>
-						<label htmlFor="image" className="w-4/12">Image :</label>
-						<input type="file" name="image" className="w-8/12" onChange={ handleChangeFile } />
+					<div className="mt-8">
+						<label htmlFor="image" className="cursor-pointer p-4 border-red-400 text-red-400 border-2 border-solid rounded-2xl hover:text-red-600 hover:border-red-600">
+							<FontAwesomeIcon icon={faUpload} className="mr-2" /> Choose file to upload
+						</label>
+						<input type="file" accept=".png, .jpg, .jpeg" name="image" id="image" className="hidden" onChange={handleChangeFile} />
 					</div>
-					<div>
-						<label htmlFor="description" className="w-4/12">Description :</label>
-						<ReactQuill theme="snow" value={ description }
-							onChange={ (e) => {
+					<div className="mt-8">
+						<ReactQuill theme="snow" value={description}
+							placeholder="Write content at here"
+							className="rounded-2xl"
+							onChange={(e) => {
 								setDescription(e);
-							} }
+							}}
 						/>
 					</div>
-					<button className="btn-custom px-3 py-1" onClick={ () => {
-						setSelectedFile({ ...selectedFile, preview: '' })
-						console.log(blog)
-					} }>
+					<button className="btn-custom px-3 py-1 mt-8">
 						done
 					</button>
 				</Col>
-				<Col xs={ 6 } className="text-left">
+				<Col xs={6} className="text-left">
 					<h5>
 						Preview blog
 					</h5>
@@ -70,9 +71,19 @@ const CreateBlog = () => {
 									Title
 								</h5>
 						}
-						{
-							selectedFile?.preview && <img src={ selectedFile.preview } alt="selected" className="mt-2 rounded-xl" />
-						}
+						<div className="image-preview w-full max-h-96 min-h-60">
+							{
+								selectedFile && <div id="imagePreview" style={{ backgroundImage: `url(${selectedFile.preview})` }}>
+									<button className="btn-x px-2 py-1.5"
+										onClick={() => {
+											setSelectedFile({ ...selectedFile, preview: '' })
+										}}
+									>
+										<FontAwesomeIcon icon={faCircleXmark} fontSize={18} className="text-slate-500 hover:text-slate-600" />
+									</button>
+								</div>
+							}
+						</div>
 						{
 							description ? <div className="mt-2">
 								{

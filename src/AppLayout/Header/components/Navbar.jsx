@@ -2,8 +2,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { useCallback, useContext, useMemo, useState } from 'react';
 import '../../../Assets/css/Navbar.css';
 import { NavLink, Link } from 'react-router-dom';
-import { Avatar, Button, Divider, Dropdown, Popover, Space } from 'antd';
-import { faArrowRightFromBracket, faUser, faBars, faHouse, faBlog, faLightbulb } from '@fortawesome/free-solid-svg-icons'
+import { Avatar, Button, Divider, Popover } from 'antd';
+import { faArrowRightFromBracket, faUser, faBars, faHouse, faBlog, faLightbulb, faBookmark } from '@fortawesome/free-solid-svg-icons'
 import { AppContext } from '../../../App';
 import Offcanvas from 'react-bootstrap/Offcanvas';
 import MyCourseItem from './MyCourseItem';
@@ -51,10 +51,13 @@ const Navbar = ({ logo }) => {
 								:
 								<img src='https://fullstack.edu.vn/static/media/fallback-avatar.155cdb2376c5d99ea151.jpg' alt='avatar' className='w-16 h-16 rounded-full' />
 						}
-
-						<h4 className='mt-2 text-xl'>
-							Tran Huu Vinh
-						</h4>
+						{
+							contextData.user?.name && <h4 className='mt-2 text-xl'>
+								{
+									contextData.user?.name
+								}
+							</h4>
+						}
 					</div>
 					<Divider className='m-0' />
 				</>
@@ -63,16 +66,6 @@ const Navbar = ({ logo }) => {
 	}, [contextData])
 
 	const renderUser = useMemo(() => {
-		const items = [
-			{
-				label: <Link to='/page/user/profile' className='no-underline '><FontAwesomeIcon icon={faUser} fontSize={16} /><span className='text-base font-semibold ml-2.5'>Profile</span></Link>,
-				key: '0',
-			},
-			{
-				label: <Link to='/login' onClick={handleClickLogout} className='no-underline '><FontAwesomeIcon icon={faArrowRightFromBracket} fontSize={16} /><span className='text-base font-semibold ml-2.5'>Logout</span></Link>,
-				key: '1',
-			}
-		];
 		if (contextData.user) {
 			return (
 				<div className='flex items-center'>
@@ -101,22 +94,43 @@ const Navbar = ({ logo }) => {
 					>
 						<Button className='btn-hidden'>My Course</Button>
 					</Popover>
-					<Dropdown
-						menu={{
-							items,
-						}}
-						trigger={['click']}
-					>
-						<Space>
-							<div className='p-1 rounded-full cursor-pointer hover:opacity-80 hidden lg:block'>
-								{
-									contextData.user?.avatar ? <Avatar size='large' src={contextData?.user.avatar} alt='avatar' />
-										:
-										<Avatar src="https://fullstack.edu.vn/static/media/fallback-avatar.155cdb2376c5d99ea151.jpg" size='large' alt="avtar" />
-								}
+					<Popover placement="bottomRight" trigger="click"
+						content={
+							<div className='px-6 py-2'>
+								<div>
+									<div className='flex justify-center  items-center pt-2 pb-3'>
+										{
+											contextData.user?.avatar ? <img className='w-14 h-14 object-cover rounded-full mr-1.5' src={contextData?.user.avatar} alt='avatar' />
+												:
+												<img src="https://fullstack.edu.vn/static/media/fallback-avatar.155cdb2376c5d99ea151.jpg" className='w-14 h-14 object-cover rounded-full mr-1.5' alt="avtar" />
+										}
+										<div>
+											{
+												contextData.user?.name && <h6 className='m-0'>{contextData.user.name}</h6>
+											}
+											{
+												contextData.user?.email && <span>{contextData.user.email}</span>
+											}
+										</div>
+									</div>
+									<Divider className='m-0' />
+									<Link to='/page/user/profile' className='no-underline '><p className='py-2.5 m-0 text-slate-400 hover:text-slate-600'><FontAwesomeIcon icon={faUser} fontSize={16} /><span className='text-base font-semibold ml-2.5'>Profile</span></p></Link>
+									<Divider className='m-0' />
+									<Link to='/page/user/profile' className='no-underline '><p className='py-2.5 m-0 text-slate-400 hover:text-slate-600'><FontAwesomeIcon icon={faBookmark} fontSize={16} /><span className='text-base font-semibold ml-2.5'>Bookmark</span></p></Link>
+									<Divider className='m-0' />
+									<Link to='/login' onClick={handleClickLogout} className='no-underline '><p className='py-2.5 m-0 text-slate-400 hover:text-slate-600'><FontAwesomeIcon icon={faArrowRightFromBracket} fontSize={16} /><span className='text-base font-semibold ml-2.5'>Logout</span></p></Link>
+								</div>
 							</div>
-						</Space>
-					</Dropdown>
+						}
+					>
+						<div className='p-1 rounded-full cursor-pointer hover:opacity-80 hidden lg:block'>
+							{
+								contextData.user?.avatar ? <Avatar size='large' src={contextData?.user.avatar} alt='avatar' />
+									:
+									<Avatar src="https://fullstack.edu.vn/static/media/fallback-avatar.155cdb2376c5d99ea151.jpg" size='large' alt="avtar" />
+							}
+						</div>
+					</Popover>
 				</div>
 			)
 		} else {

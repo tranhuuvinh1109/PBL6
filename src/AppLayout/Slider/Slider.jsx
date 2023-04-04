@@ -32,7 +32,6 @@ const Slider = () => {
 					alt="Third slide"
 				/>
 				<Carousel.Caption>
-					<h5>Third slide label</h5>
 				</Carousel.Caption>
 			</Carousel.Item>
 		</Carousel>
