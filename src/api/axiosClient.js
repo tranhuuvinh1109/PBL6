@@ -4,6 +4,7 @@ import axios from 'axios';
 const axiosClient = axios.create({
 	// baseURL: 'https://6406ffdd77c1a905a0e9c15f.mockapi.io/api/v1'
 	baseURL: 'http://127.0.0.1:8000/api'
+	// baseURL: 'https://agonizing-star-production.up.railway.app/api'
 
 	// 'https://jsonplaceholder.typicode.com' 
 });

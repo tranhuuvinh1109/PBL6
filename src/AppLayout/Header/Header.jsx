@@ -8,7 +8,7 @@ import Navbar from "./components/Navbar";
 
 const Header = () => {
 	return (
-		<header className="">
+		<header className="mb-20">
 			<header className="header navbar-area header-after">
 				<Container>
 					<Row className="items-center">

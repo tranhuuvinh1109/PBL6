@@ -3,14 +3,17 @@ import useDebounce from "../../hook/useDebounce";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSpinner, faXmark } from "@fortawesome/free-solid-svg-icons";
 import Tippy from "@tippyjs/react";
-import { Divider } from "antd";
+import { Divider, Popover } from "antd";
 import { searchAPI } from "../../api/searchApi";
+import CourseResult from "./components/CourseResult";
+import Wrapper from "../Wrapper/Wrapper";
 
 const Search = () => {
 	const [searchValue, setSearchValue] = useState('');
 	const [searchResult, setSearchResult] = useState([]);
 	const [showResult, setShowResult] = useState(true);
 	const [loading, setLoading] = useState(false);
+	const popoverRef = useRef();
 
 	const inputRef = useRef();
 	const debounced = useDebounce(searchValue, 500);
@@ -28,6 +31,13 @@ const Search = () => {
 		setSearchResult([]);
 		inputRef.current.focus();
 	};
+
+
+	const handleHidePopover = () => {
+		console.log(11)
+		setSearchResult([]);
+	};
+
 
 	useEffect(() => {
 		if (!debounced.trim()) {
@@ -64,25 +74,36 @@ const Search = () => {
 		)
 	}, [debounced])
 	return (
-		<Tippy
-			interactive
-			visible={!!searchValue}
-			render={attrs => (
-				<div className="bg-red-300 search-result" tabIndex="-1" {...attrs}>
-					{
-						searchResult &&
-						<>
-							<Divider>
-								Accounts
-							</Divider>
-							<h1 onClick={() => console.log(showResult && searchResult?.length > 0, !!searchValue)}>
-								dsddd
-							</h1>
-						</>
-					}
-				</div>
-			)}
-			onClickOutside={handleHideResult}
+		<Popover
+			// onVisibleChange={setVisible}
+			onClickOutside={handleHidePopover}
+			visible={showResult && searchResult?.length > 0}
+			content={
+				<Wrapper>
+					<div className="bg-red-300 search-result" tabIndex="-1">
+						{
+							searchResult &&
+							<>
+								<Divider>
+									Accounts
+								</Divider>
+								{
+									searchResult.map(
+										(e) => {
+											return (
+												<CourseResult data={e} />
+											)
+										}
+									)
+								}
+								<h1 onClick={() => console.log(showResult && searchResult?.length > 0, !!searchValue)}>
+									dsddd
+								</h1>
+							</>
+						}
+					</div>
+				</Wrapper>
+			}
 		>
 			<div className='search-wrapper'>
 				<div className='search-icon'>
@@ -101,7 +122,7 @@ const Search = () => {
 				}
 
 			</div>
-		</Tippy>
+		</Popover>
 	)
 }
 
