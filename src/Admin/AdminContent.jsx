@@ -1,6 +1,7 @@
 import logo from '../logo.svg';
-import { PieChartOutlined, DesktopOutlined } from '@ant-design/icons';
 import { Avatar, Breadcrumb, Layout, Menu, Popover, theme } from 'antd';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faHouse, faBlog, faLightbulb } from '@fortawesome/free-solid-svg-icons'
 import React, { useContext } from 'react';
 import { Outlet, useNavigate } from 'react-router-dom';
 import UserClickContent from './components/UserClickContent';
@@ -10,19 +11,19 @@ const { Content, Sider } = Layout;
 
 const listMenu = [
 	{
-		title: 'Dashboard',
-		icon: <DesktopOutlined />,
-		url: 'dashboard'
+		title: 'Daskboard',
+		icon: <FontAwesomeIcon icon={ faHouse } />,
+		url: 'daskboard'
 	},
 	{
 		title: 'Course',
-		icon: <PieChartOutlined />,
+		icon: <FontAwesomeIcon icon={ faLightbulb } />,
 		url: 'course'
 	},
 	{
-		title: 'Event',
-		icon: <DesktopOutlined />,
-		url: 'event'
+		title: 'Blog',
+		icon: <FontAwesomeIcon icon={ faBlog } />,
+		url: 'blog'
 	},
 ]
 
@@ -38,33 +39,33 @@ const AdminContent = () => {
 	if (!isAdmin) {
 		return <div>
 			Bạn không có quyền truy cập vào trang quản trị
-			<button className='btn-custom ml-4 px-4 py-2' onClick={() => navigate(-1)}>Back</button>
+			<button className='btn-custom ml-4 px-4 py-2' onClick={ () => navigate(-1) }>Back</button>
 		</div>;
 	}
 
 	return (
 		<Layout
-			style={{
+			style={ {
 				minHeight: '100vh',
-			}}
+			} }
 		>
 			<Sider
 				theme='light'
 			>
 				<div
-					style={{
+					style={ {
 						height: 32,
 						margin: 16,
-					}}
+					} }
 				>
-					<img src={logo} alt='logo' />
+					<img src={ logo } alt='logo' />
 
 				</div>
-				<Menu theme="light" defaultSelectedKeys={['0']} mode="inline">
+				<Menu theme="light" defaultSelectedKeys={ ['0'] } mode="inline">
 					{
 						listMenu.map((item, index) => {
 							return (
-								<Menu.Item icon={item.icon} key={index} onClick={() => navigate(`${item.url}`)}>
+								<Menu.Item icon={ item.icon } key={ index } onClick={ () => navigate(`${item.url}`) }>
 									{
 										item.title
 									}
@@ -76,7 +77,7 @@ const AdminContent = () => {
 			</Sider>
 			<Layout className="site-layout">
 				<div className='bg-white h-16 relative'>
-					<Popover content={UserClickContent} trigger="click">
+					<Popover content={ UserClickContent } trigger="click">
 						<div className='float-right px-2 min-w-[200px] text-left bg-red-400 userClick'>
 							<div className=''>
 								<Avatar src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NXx8dXNlcnxlbnwwfHwwfHw%3D&w=1000&q=80" size='large' alt="user" />
@@ -88,22 +89,22 @@ const AdminContent = () => {
 					</Popover>
 				</div>
 				<Content
-					style={{
+					style={ {
 						margin: '0 16px',
-					}}
+					} }
 				>
 					<Breadcrumb
-						style={{
+						style={ {
 							margin: '16px 0',
-						}}
+						} }
 					>
 					</Breadcrumb>
 					<div
-						style={{
+						style={ {
 							padding: 24,
 							minHeight: 360,
 							background: colorBgContainer,
-						}}
+						} }
 					>
 						<Outlet />
 					</div>

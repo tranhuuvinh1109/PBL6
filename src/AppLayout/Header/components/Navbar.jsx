@@ -13,17 +13,17 @@ const listNavbar = [
 	{
 		title: 'Home',
 		path: '/',
-		icon: <FontAwesomeIcon icon={faHouse} />
+		icon: <FontAwesomeIcon icon={ faHouse } />
 	},
 	{
 		title: 'Course',
 		path: '/page/course',
-		icon: <FontAwesomeIcon icon={faLightbulb} />
+		icon: <FontAwesomeIcon icon={ faLightbulb } />
 	},
 	{
 		title: 'Blog',
 		path: '/page/blog',
-		icon: <FontAwesomeIcon icon={faBlog} />
+		icon: <FontAwesomeIcon icon={ faBlog } />
 	},
 ]
 const Navbar = ({ logo }) => {
@@ -42,7 +42,7 @@ const Navbar = ({ logo }) => {
 				<>
 					<div>
 						{
-							contextData.user?.avatar ? <img src={contextData.user.avatar} alt='avatar' className='w-16 h-16 rounded-full' />
+							contextData.user?.avatar ? <img src={ contextData.user.avatar } alt='avatar' className='w-16 h-16 rounded-full' />
 								:
 								<img src='https://fullstack.edu.vn/static/media/fallback-avatar.155cdb2376c5d99ea151.jpg' alt='avatar' className='w-16 h-16 rounded-full' />
 						}
@@ -71,7 +71,7 @@ const Navbar = ({ logo }) => {
 									<h6>
 										My Course
 									</h6>
-									<Link to={'my-course'} >
+									<Link to={ 'my-course' } >
 										View All
 									</Link>
 								</div>
@@ -95,32 +95,32 @@ const Navbar = ({ logo }) => {
 								<div>
 									<div className='flex justify-center  items-center pt-2 pb-3'>
 										{
-											contextData.user?.avatar ? <img className='w-14 h-14 object-cover rounded-full mr-1.5' src={contextData?.user.avatar} alt='avatar' />
+											contextData.user?.avatar ? <img className='w-14 h-14 object-cover rounded-full mr-1.5' src={ contextData?.user.avatar } alt='avatar' />
 												:
 												<img src="https://fullstack.edu.vn/static/media/fallback-avatar.155cdb2376c5d99ea151.jpg" className='w-14 h-14 object-cover rounded-full mr-1.5' alt="avtar" />
 										}
 										<div>
 											{
-												contextData.user?.name && <h6 className='m-0'>{contextData.user.name}</h6>
+												contextData.user?.name && <h6 className='m-0'>{ contextData.user.name }</h6>
 											}
 											{
-												contextData.user?.email && <span>{contextData.user.email}</span>
+												contextData.user?.email && <span>{ contextData.user.email }</span>
 											}
 										</div>
 									</div>
 									<Divider className='m-0' />
-									<Link to='/page/user/profile' className='no-underline '><p className='py-2.5 m-0 text-slate-400 hover:text-slate-600'><FontAwesomeIcon icon={faUser} fontSize={16} /><span className='text-base font-semibold ml-2.5'>Profile</span></p></Link>
+									<Link to='/page/user/profile' className='no-underline '><p className='py-2.5 m-0 text-slate-400 hover:text-slate-600'><FontAwesomeIcon icon={ faUser } fontSize={ 16 } /><span className='text-base font-semibold ml-2.5'>Profile</span></p></Link>
 									<Divider className='m-0' />
-									<Link to='/page/user/profile' className='no-underline '><p className='py-2.5 m-0 text-slate-400 hover:text-slate-600'><FontAwesomeIcon icon={faBookmark} fontSize={16} /><span className='text-base font-semibold ml-2.5'>Bookmark</span></p></Link>
+									<Link to='/page/user/profile' className='no-underline '><p className='py-2.5 m-0 text-slate-400 hover:text-slate-600'><FontAwesomeIcon icon={ faBookmark } fontSize={ 16 } /><span className='text-base font-semibold ml-2.5'>Bookmark</span></p></Link>
 									<Divider className='m-0' />
-									<Link to='/login' onClick={handleClickLogout} className='no-underline '><p className='py-2.5 m-0 text-slate-400 hover:text-slate-600'><FontAwesomeIcon icon={faArrowRightFromBracket} fontSize={16} /><span className='text-base font-semibold ml-2.5'>Logout</span></p></Link>
+									<Link to='/login' onClick={ handleClickLogout } className='no-underline '><p className='py-2.5 m-0 text-slate-400 hover:text-slate-600'><FontAwesomeIcon icon={ faArrowRightFromBracket } fontSize={ 16 } /><span className='text-base font-semibold ml-2.5'>Logout</span></p></Link>
 								</div>
 							</div>
 						}
 					>
 						<div className='p-1 rounded-full cursor-pointer hover:opacity-80 hidden lg:block'>
 							{
-								contextData.user?.avatar ? <Avatar size='large' src={contextData?.user.avatar} alt='avatar' />
+								contextData.user?.avatar ? <Avatar size='large' src={ contextData?.user.avatar } alt='avatar' />
 									:
 									<Avatar src="https://fullstack.edu.vn/static/media/fallback-avatar.155cdb2376c5d99ea151.jpg" size='large' alt="avtar" />
 							}
@@ -130,7 +130,7 @@ const Navbar = ({ logo }) => {
 			)
 		} else {
 			return (
-				<button className='btn-custom px-2 py-1' onClick={handleClickLogout}>
+				<button className='btn-custom px-2 py-1' onClick={ handleClickLogout }>
 					<Link to="/login" className='no-underline '>Login</Link>
 				</button>
 			)
@@ -139,26 +139,26 @@ const Navbar = ({ logo }) => {
 
 	return (
 		<header className='nav-header'>
-			<button onClick={toggleShow} className='lg:hidden float-right px-2 py-1.5'>
-				<FontAwesomeIcon icon={faBars} />
+			<button onClick={ toggleShow } className='lg:hidden float-right px-2 py-1.5'>
+				<FontAwesomeIcon icon={ faBars } />
 			</button>
 			<a href='/' className='logo-customize'>
-				<img src={logo} className='w-[170px]' alt='logo' />
+				<img src={ logo } className='w-[170px]' alt='logo' />
 			</a>
 			<nav className='nav-nav'>
 				{
 					listNavbar.map((item, index) => {
 						return (
 							<NavLink
-								to={item.path}
-								key={index}
-								className={({ isActive }) =>
+								to={ item.path }
+								key={ index }
+								className={ ({ isActive }) =>
 									isActive ? "link-item active-item" : "link-item"
 								}
 							>
-								{item.icon}
+								{ item.icon }
 								<span className='ml-2'>
-									{item.title}
+									{ item.title }
 								</span>
 							</NavLink>
 						)
@@ -169,7 +169,7 @@ const Navbar = ({ logo }) => {
 			{
 				renderUser
 			}
-			<Offcanvas show={show} onHide={handleClose}>
+			<Offcanvas show={ show } onHide={ handleClose }>
 				<Offcanvas.Header closeButton>
 					<Offcanvas.Title></Offcanvas.Title>
 				</Offcanvas.Header>
@@ -179,13 +179,13 @@ const Navbar = ({ logo }) => {
 					}
 					<div className='flex flex-col justify-between'>
 						<Link to='/page/user/profile' className='link-item m-0'>
-							<FontAwesomeIcon icon={faUser} />
+							<FontAwesomeIcon icon={ faUser } />
 							<span className='ml-3'>
 								Profile
 							</span>
 						</Link>
 						<Link to='/page/user/profile' className='link-item m-0'>
-							<FontAwesomeIcon icon={faLightbulb} />
+							<FontAwesomeIcon icon={ faLightbulb } />
 							<span className='ml-3'>
 								My Course
 							</span>
@@ -198,15 +198,15 @@ const Navbar = ({ logo }) => {
 								listNavbar.map((item, index) => {
 									return (
 										<NavLink
-											to={item.path}
-											key={index}
-											className={({ isActive }) =>
+											to={ item.path }
+											key={ index }
+											className={ ({ isActive }) =>
 												isActive ? "link-item m-0 active-item" : "link-item m-0"
 											}
 										>
-											{item.icon}
+											{ item.icon }
 											<span className='ml-3'>
-												{item.title}
+												{ item.title }
 											</span>
 										</NavLink>
 									)
@@ -214,9 +214,9 @@ const Navbar = ({ logo }) => {
 							}
 						</div>
 						<Divider className='m-0' />
-						<button onClick={handleClickLogout} className='px-3 py-2.5 w-full text-left'>
+						<button onClick={ handleClickLogout } className='px-3 py-2.5 w-full text-left'>
 							<Link to='/login' className='no-underline text-zinc-400 font-semibold w-full'>
-								<FontAwesomeIcon icon={faArrowRightFromBracket} />
+								<FontAwesomeIcon icon={ faArrowRightFromBracket } />
 								<span className='ml-3'>
 									Logout
 								</span>

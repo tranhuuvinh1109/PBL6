@@ -1,45 +1,14 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { SearchOutlined } from '@ant-design/icons';
 import { Button, Input, Space, Table } from 'antd';
 import { useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Highlighter from 'react-highlight-words';
-const data = [
-	{
-		id: '1',
-		name: 'John Brown',
-		price: 32,
-		description: 'New York No. 1 Lake Park',
-		teacher: 'John',
-		category: 'English',
-	},
-	{
-		id: '2',
-		name: 'Joe Black',
-		price: 42,
-		description: 'London No. 1 Lake Park',
-		teacher: 'Joe',
-		category: 'Japanese',
-	},
-	{
-		id: '3',
-		name: 'Jim Green',
-		price: 32,
-		description: 'Sydney No. 1 Lake Park',
-		teacher: 'Jim',
-		category: 'Vietnamese',
-	},
-	{
-		id: '4',
-		name: 'Jim Red',
-		price: 32,
-		description: 'London No. 2 Lake Park',
-		teacher: 'Jim',
-		category: 'Spanish',
-	},
-];
+import { AppContext } from '../../App';
+
 const CourseManagement = () => {
 	const navigate = useNavigate();
+	const context = useContext(AppContext);
 
 	const [searchText, setSearchText] = useState('');
 	const [searchedColumn, setSearchedColumn] = useState('');
@@ -56,62 +25,62 @@ const CourseManagement = () => {
 	const getColumnSearchProps = (dataIndex) => ({
 		filterDropdown: ({ setSelectedKeys, selectedKeys, confirm, clearFilters, close }) => (
 			<div
-				style={{
+				style={ {
 					padding: 8,
-				}}
-				onKeyDown={(e) => e.stopPropagation()}
+				} }
+				onKeyDown={ (e) => e.stopPropagation() }
 			>
 				<Input
-					ref={searchInput}
-					placeholder={`Search ${dataIndex}`}
-					value={selectedKeys[0]}
-					onChange={(e) => setSelectedKeys(e.target.value ? [e.target.value] : [])}
-					onPressEnter={() => handleSearch(selectedKeys, confirm, dataIndex)}
-					style={{
+					ref={ searchInput }
+					placeholder={ `Search ${dataIndex}` }
+					value={ selectedKeys[0] }
+					onChange={ (e) => setSelectedKeys(e.target.value ? [e.target.value] : []) }
+					onPressEnter={ () => handleSearch(selectedKeys, confirm, dataIndex) }
+					style={ {
 						marginBottom: 8,
 						display: 'block',
-					}}
+					} }
 				/>
 				<Space>
 					<Button
 						type="primary"
-						onClick={() => handleSearch(selectedKeys, confirm, dataIndex)}
-						icon={<SearchOutlined />}
+						onClick={ () => handleSearch(selectedKeys, confirm, dataIndex) }
+						icon={ <SearchOutlined /> }
 						size="small"
-						style={{
+						style={ {
 							width: 90,
-						}}
+						} }
 					>
 						Search
 					</Button>
 					<Button
-						onClick={() => clearFilters && handleReset(clearFilters)}
+						onClick={ () => clearFilters && handleReset(clearFilters) }
 						size="small"
-						style={{
+						style={ {
 							width: 90,
-						}}
+						} }
 					>
 						Reset
 					</Button>
 					<Button
 						type="link"
 						size="small"
-						onClick={() => {
+						onClick={ () => {
 							confirm({
 								closeDropdown: false,
 							});
 							setSearchText(selectedKeys[0]);
 							setSearchedColumn(dataIndex);
-						}}
+						} }
 					>
 						Filter
 					</Button>
 					<Button
 						type="link"
 						size="small"
-						onClick={() => {
+						onClick={ () => {
 							close();
-						}}
+						} }
 					>
 						close
 					</Button>
@@ -120,9 +89,9 @@ const CourseManagement = () => {
 		),
 		filterIcon: (filtered) => (
 			<SearchOutlined
-				style={{
+				style={ {
 					color: filtered ? '#1890ff' : undefined,
-				}}
+				} }
 			/>
 		),
 		onFilter: (value, record) =>
@@ -135,13 +104,13 @@ const CourseManagement = () => {
 		render: (text) =>
 			searchedColumn === dataIndex ? (
 				<Highlighter
-					highlightStyle={{
+					highlightStyle={ {
 						backgroundColor: '#ffc069',
 						padding: 0,
-					}}
-					searchWords={[searchText]}
+					} }
+					searchWords={ [searchText] }
 					autoEscape
-					textToHighlight={text ? text.toString() : ''}
+					textToHighlight={ text ? text.toString() : '' }
 				/>
 			) : (
 				text
@@ -158,6 +127,17 @@ const CourseManagement = () => {
 				console.log(1111, a, b)
 			},
 			sortDirections: ['descend', 'ascend'],
+		},
+		{
+			title: 'Image',
+			dataIndex: 'image',
+			key: 'image',
+			render: (image) => (
+				<img
+					src={ image }
+					alt="Product"
+					style={ { width: '100%' } }
+				/>)
 		},
 		{
 			title: 'Name Course',
@@ -192,7 +172,7 @@ const CourseManagement = () => {
 			title: 'Description',
 			dataIndex: 'description',
 			key: 'description',
-			width: '40%',
+			width: '30%',
 			...getColumnSearchProps('description'),
 		},
 	];
@@ -202,11 +182,17 @@ const CourseManagement = () => {
 				<h1>
 					Course Daskboard
 				</h1>
-				<Button className='btn-custom' onClick={() => navigate('create')}>
+				<Button className='btn-custom' onClick={ () => navigate('create') }>
 					Create Course
 				</Button>
 			</div>
-			<Table columns={columns} dataSource={data} className='mt-4' />;
+			<Table columns={ columns } dataSource={ context.listCourse } className='mt-4' onRow={ (record, rowIndex) => {
+				return {
+					onClick: () => {
+						navigate(`/page/course/${record.id}`)
+					},
+				};
+			} } />;
 		</div>
 	)
 }

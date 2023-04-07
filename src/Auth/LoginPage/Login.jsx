@@ -15,8 +15,27 @@ const Login = () => {
 	const navigator = useNavigate();
 	const context = useContext(AppContext)
 	const onFinish = async (values) => {
+		// await fetch('https://agonizing-star-production.up.railway.app/api/login', {
+		// 	method: 'POST',
+		// 	headers: {
+		// 		'Accept': 'application/json',
+		// 		'Content-Type': 'application/json'
+		// 	},
+		// 	body: JSON.stringify(values)
+		// }).then((res) => {
+		// 	// console.log(res); // Log the response object
+		// 	return res.json(); // Return the parsed JSON
+		// }).then((data) => {
+		// 	console.log(data);
+		// }).catch(function (err) {
+		// 	console.log(err)
+		// })
+
+
+
 		if (values.email && values.password) {
 			try {
+
 				const res = await authAPI.login(values)
 				if (res.status === 200) {
 					context.setUser(res.data.data);
@@ -26,6 +45,7 @@ const Login = () => {
 				}
 			} catch (error) {
 				console.log(error)
+				toast.error('Nhap email passwordaaaaa')
 			}
 		} else {
 			toast.error('Nhap email password')
@@ -37,7 +57,7 @@ const Login = () => {
 				<div className="left">
 					<div className="top_link text-left text-[greenCustom]">
 						<Link to='/' className='no-underline'>
-							<FontAwesomeIcon icon={faCircleArrowLeft} />
+							<FontAwesomeIcon icon={ faCircleArrowLeft } />
 							<span className='ml-1.5'>Return home</span>
 						</Link>
 					</div>
@@ -47,22 +67,22 @@ const Login = () => {
 							size='small'
 							name="normal_login"
 							className="login-form"
-							initialValues={{ remember: true }}
-							onFinish={onFinish}
+							initialValues={ { remember: true } }
+							onFinish={ onFinish }
 						>
 							<Form.Item
 								name="email"
-								rules={[{ required: true, message: 'Please input your Email!' }]}
+								rules={ [{ required: true, message: 'Please input your Email!' }] }
 							>
-								<Input prefix={<UserOutlined className="site-form-item-icon" />} placeholder="Email" />
+								<Input prefix={ <UserOutlined className="site-form-item-icon" /> } placeholder="Email" />
 							</Form.Item>
 							<Form.Item
 								name="password"
-								rules={[{ required: true, message: 'Please input your Password!' }]}
+								rules={ [{ required: true, message: 'Please input your Password!' }] }
 							>
 								<Input
-									style={{ margin: 0 }}
-									prefix={<LockOutlined className="site-form-item-icon" />}
+									style={ { margin: 0 } }
+									prefix={ <LockOutlined className="site-form-item-icon" /> }
 									type="password"
 									placeholder="Password"
 								/>

@@ -4,13 +4,13 @@ import HomePage from "../Home/HomePage";
 import ProfilePage from "../Page/ProfilePage/ProfilePage";
 import Learning from "../Page/LearningPage/Learning";
 import CourseManagement from "../Admin/CourseManagement/CourseManagement";
-import EventManagement from "../Admin/EventManagement/EventManagement";
 import CreateCourse from "../Admin/CourseManagement/CreateCourse/CreateCourse";
 import BlogPage from "../Page/BlogPage/BlogPage";
 import CreateBlog from "../Page/BlogPage/CreateBlog/CreateBlog";
 import BlogDetail from "../Page/BlogDetail/BlogDetail";
 import CoureDetail from "../Page/CourseDetail/CourseDetail";
 import MyCourse from "../Page/MyCourse/MyCourse";
+import BlogManagement from "../Admin/BlogManagement/BlogManagement";
 
 export const routers = [
 	{
@@ -58,8 +58,8 @@ export const adminRouter = [
 		component: Daskboard
 	},
 	{
-		path: 'event',
-		component: EventManagement
+		path: 'blog',
+		component: BlogManagement
 	},
 	{
 		path: 'course',

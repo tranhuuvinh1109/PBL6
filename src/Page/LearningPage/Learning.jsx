@@ -11,7 +11,7 @@ import parse from 'html-react-parser';
 import { db } from '../../Firebase/firebaseClient';
 import { AppContext } from '../../App';
 import { authAPI } from '../../api/authApi';
-import ReactPlayer from 'react-player'
+import ReactPlayer from 'react-player';
 
 const { Panel } = Collapse;
 
@@ -68,7 +68,7 @@ const Learning = () => {
 			if (findItem[0]?.video) {
 				return (
 					<div className='w-full rounded-xl overflow-hidden'>
-						<ReactPlayer url={findItem[0].video} controls={true} width={'100%'} height={'100%'} />
+						<ReactPlayer url={ findItem[0].video } controls={ true } width={ '100%' } height={ '500px' } />
 					</div>
 				)
 			}
@@ -89,7 +89,7 @@ const Learning = () => {
 	const renderLeson = useMemo(() => {
 		if (infor?.lessons) {
 			return infor.lessons?.map((item) => {
-				return <LessonItem lesson={item} key={item.id} setActived={setActived} isActive={actived === item.id} />
+				return <LessonItem lesson={ item } key={ item.id } setActived={ setActived } isActive={ actived === item.id } />
 			})
 		}
 	}, [actived, infor])
@@ -112,7 +112,7 @@ const Learning = () => {
 
 	const renderComment = useMemo(() => {
 		return commentsData?.map((comment, index) => {
-			return <CommentItem comment={comment} key={index} />
+			return <CommentItem comment={ comment } key={ index } />
 		})
 	}, [commentsData])
 
@@ -140,12 +140,12 @@ const Learning = () => {
 		<div>
 			<Container>
 				<Row>
-					<Col xs={12} lg={8}>
+					<Col xs={ 12 } lg={ 8 }>
 						{
 							renderVideo
 						}
 					</Col>
-					<Col xs={12} lg={4}>
+					<Col xs={ 12 } lg={ 4 }>
 						<Collapse accordion className='lg:mt-[46px]'>
 							<Panel header="Lesson content" key="1" >
 								<div className='max-h-96  overflow-y-auto'>
@@ -160,13 +160,13 @@ const Learning = () => {
 			</Container>
 			<Container>
 				<Row>
-					<Col xs={12} lg={8} className='text-left'>
-						<h4 onClick={() => console.log(actived, infor)}>Grammar</h4>
+					<Col xs={ 12 } lg={ 8 } className='text-left'>
+						<h4 onClick={ () => console.log(actived, infor) }>Grammar</h4>
 						{
 							infor && renderGrammar
 						}
 					</Col>
-					<Col xs={12} lg={4} className="">
+					<Col xs={ 12 } lg={ 4 } className="">
 						<h4>
 							Comment
 						</h4>
@@ -181,9 +181,9 @@ const Learning = () => {
 								<Avatar src="https://image.nhandan.vn/1200x630/Uploaded/2023/yqjwcqjlq/2022_11_24/ronaldo-portugal-copy-1844.jpg" size="large" />
 							</div>
 							<div className='ml-2 mt-1 w-full'>
-								<input type="text" placeholder="Enter Comment" name='contentComment' value={contentComment} onChange={handleChange} className='py-2 px-2 w-10/12 border-gray-300' />
-								<button className='w-2/12 btn' title='Send' onClick={handleSubmitComment}>
-									<FontAwesomeIcon icon={faPaperPlane} />
+								<input type="text" placeholder="Enter Comment" name='contentComment' value={ contentComment } onChange={ handleChange } className='py-2 px-2 w-10/12 border-gray-300' />
+								<button className='w-2/12 btn' title='Send' onClick={ handleSubmitComment }>
+									<FontAwesomeIcon icon={ faPaperPlane } />
 								</button>
 							</div>
 						</div>
