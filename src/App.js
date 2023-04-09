@@ -10,28 +10,41 @@ import { adminRouter, routers, privateRouter } from './Router';
 import NotFound from './Page/NotFound/NotFound';
 import AdminContent from './Admin/AdminContent';
 // import ScrollToTop from "react-scroll-to-top";
-import { Toaster } from 'react-hot-toast';
+import { Toaster, toast } from 'react-hot-toast';
 import { authAPI } from './api/authApi';
 import { courseAPI } from './api/courseAPI';
+import Register from './Auth/RegisterPage/Register';
 
 
 export const AppContext = createContext({});
 
 function App () {
+  const [isLoading, setIsLoading] = useState(false);
   const [listCourse, setListCourse] = useState([]);
   const [user, setUser] = useState();
   const getUser = async () => {
-    const res = await authAPI.getUserByToken();
+    setIsLoading(true);
+    const userId = localStorage.getItem('userID');
+    const res = await authAPI.getUserByToken(userId);
     if (res.status === 200) {
       setUser(res.data.data)
-      localStorage.setItem('userID', res.data.refresh_token)
+      console.log(res.data.data, isLoading)
+      localStorage.setItem('userID', res.data.data.id)
+      // localStorage.setItem('userID', res.data.refresh_token)
+    } else {
+      toast.error("Get user error");
     }
+    setIsLoading(false);
   }
   const GetCourse = async () => {
+    setIsLoading(true);
     const res = await courseAPI.getCourse();
     if (res.status === 200) {
       setListCourse(res.data.data);
+    } else {
+      toast.error("Get Course error");
     }
+    setIsLoading(false);
   }
   useEffect(() => {
     GetCourse();
@@ -43,7 +56,7 @@ function App () {
 
 
   return (
-    <AppContext.Provider value={{ user, setUser, listCourse, setListCourse }} >
+    <AppContext.Provider value={{ user, setUser, listCourse, setListCourse, isLoading, setIsLoading }} >
       <div className="App">
         {/* <ScrollToTop smooth color="#6f00ff" /> */}
         <Toaster
@@ -53,6 +66,7 @@ function App () {
           <Routes>
             <Route path='/' element={<HomePage />} />
             <Route path='/login' element={<Login />} />
+            <Route path='/register' element={<Register />} />
             <Route path="/" element={<AppContent />}>
               {routers.map((route) => (
                 <Route

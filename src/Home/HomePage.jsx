@@ -8,19 +8,26 @@ import Achievement from './components/Achievement/Achievement';
 import NewsLetter from './components/NewsLetter/NewsLetter';
 import { AppContext } from '../App';
 import ScrollToTop from "react-scroll-to-top";
+import Loading from '../components/Loading/Loading';
 
 const HomePage = () => {
 	const context = useContext(AppContext)
 	return (
 		<>
-			<Header />
-			<Slider />
-			<About />
-			<Course listCourse={context.listCourse} />
-			<Achievement />
-			<NewsLetter />
-			<ScrollToTop smooth />
-			<Footer />
+			{
+				context.isLoading ? <Loading />
+					:
+					<>
+						<Header />
+						<Slider />
+						<About />
+						<Course listCourse={ context.listCourse } />
+						<Achievement />
+						<NewsLetter />
+						<ScrollToTop smooth />
+						<Footer />
+					</>
+			}
 		</>
 	)
 }

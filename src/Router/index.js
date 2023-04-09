@@ -11,6 +11,7 @@ import BlogDetail from "../Page/BlogDetail/BlogDetail";
 import CoureDetail from "../Page/CourseDetail/CourseDetail";
 import MyCourse from "../Page/MyCourse/MyCourse";
 import BlogManagement from "../Admin/BlogManagement/BlogManagement";
+import UserPage from "../Page/UserPage/UserPage";
 
 
 export const privateRouter = [
@@ -53,7 +54,11 @@ export const routers = [
 	{
 		path: 'blog/:id',
 		component: BlogDetail
-	}
+	},
+	{
+		path: 'user/:id',
+		component: UserPage
+	},
 ];
 
 

@@ -28,7 +28,7 @@ const CoureDetail = () => {
 	}
 
 	const handleClickRegister = () => {
-		navigate(`/page/learning/${infor?.id}`);
+		navigate(`/learning/${infor?.id}`);
 		// if (context?.user) {
 		// 	const params = {
 		// 		userId: context.user.id,
@@ -67,7 +67,7 @@ const CoureDetail = () => {
 	return (
 		<Container fluid="md" className="text-left mb-20 mt-20 min-h-[630px]">
 			<Row>
-				<Col xs={12} lg={8}>
+				<Col xs={ 12 } lg={ 8 }>
 					<h1 className="text-left">
 						{
 							infor?.name
@@ -86,9 +86,9 @@ const CoureDetail = () => {
 									{
 										infor?.plans?.map((item) => {
 											return (
-												<Col xs={12} lg={6} md={6}>
+												<Col xs={ 12 } lg={ 6 } md={ 6 }>
 													<div className="py-2">
-														<FontAwesomeIcon icon={faCheck} className='mr-2 text-red-400' />
+														<FontAwesomeIcon icon={ faCheck } className='mr-2 text-red-400' />
 														<span>
 															{
 																item?.title
@@ -109,14 +109,14 @@ const CoureDetail = () => {
 							{
 								infor?.lessons?.map((item) => {
 									return (
-										<LessonItem key={item.id} infor={item} />
+										<LessonItem key={ item.id } infor={ item } />
 									)
 								})
 							}
 						</Panel>
 					</Collapse>
 				</Col>
-				<Col xs={12} lg={4}>
+				<Col xs={ 12 } lg={ 4 }>
 					{
 						renderVideo
 					}
@@ -127,7 +127,7 @@ const CoureDetail = () => {
 								infor?.price
 							}
 						</h3>
-						<button className="bg-red-400 text-white py-1.5 px-3 rounded-full min-w-[150px] hover:bg-red-300" onClick={handleClickRegister}>
+						<button className="bg-red-400 text-white py-1.5 px-3 rounded-full min-w-[150px] hover:bg-red-300" onClick={ handleClickRegister }>
 							Register
 						</button>
 					</div>
