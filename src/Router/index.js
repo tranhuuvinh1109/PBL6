@@ -12,6 +12,26 @@ import CoureDetail from "../Page/CourseDetail/CourseDetail";
 import MyCourse from "../Page/MyCourse/MyCourse";
 import BlogManagement from "../Admin/BlogManagement/BlogManagement";
 
+
+export const privateRouter = [
+	{
+		path: 'user/profile',
+		component: ProfilePage
+	},
+	{
+		path: 'learning/:id',
+		component: Learning
+	},
+	{
+		path: 'blog/create',
+		component: CreateBlog
+	},
+	{
+		path: 'my-course',
+		component: MyCourse
+	},
+]
+
 export const routers = [
 	{
 		path: 'home',
@@ -29,26 +49,11 @@ export const routers = [
 		path: 'course/:id',
 		component: CoureDetail
 	},
-	{
-		path: 'user/profile',
-		component: ProfilePage
-	},
-	{
-		path: 'learning/:id',
-		component: Learning
-	},
-	{
-		path: 'blog/create',
-		component: CreateBlog
-	},
+
 	{
 		path: 'blog/:id',
 		component: BlogDetail
-	},
-	{
-		path: 'my-course',
-		component: MyCourse
-	},
+	}
 ];
 
 

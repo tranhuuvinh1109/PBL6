@@ -17,12 +17,12 @@ const listNavbar = [
 	},
 	{
 		title: 'Course',
-		path: '/page/course',
+		path: '/course',
 		icon: <FontAwesomeIcon icon={ faLightbulb } />
 	},
 	{
 		title: 'Blog',
-		path: '/page/blog',
+		path: '/blog',
 		icon: <FontAwesomeIcon icon={ faBlog } />
 	},
 ]

@@ -51,6 +51,11 @@ const Learning = () => {
 		const res = await courseAPI.getCourseDetail(id)
 		if (res.status === 200) {
 			setInfor(res.data.data)
+			if (res.data.data.lessons.length > 0) {
+				setActived(res.data.data.lessons[0].id)
+			} else {
+				console.log("...fail", res.data.data)
+			}
 		}
 	}
 
@@ -123,7 +128,7 @@ const Learning = () => {
 	}, [comments, convertomment]);
 
 	useEffect(() => {
-		GetInformationCourse(id)
+
 		const unsubscribe = db
 			.collection('lessons')
 			.doc(id + "-" + actived)
@@ -135,6 +140,12 @@ const Learning = () => {
 			unsubscribe();
 		};
 	}, [id, actived]);
+
+	useEffect(() => {
+		GetInformationCourse(id)
+	}, [id])
+
+
 
 	return (
 		<div>

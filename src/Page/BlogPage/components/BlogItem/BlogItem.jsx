@@ -14,13 +14,13 @@ const BlogItem = () => {
 						Thor
 					</span>
 				</div>
-				<FontAwesomeIcon icon={faBookmark} />
+				<FontAwesomeIcon icon={ faBookmark } />
 			</div>
 			<div>
 
 				<div className="flex">
 					<div className="w-9/12">
-						<Link to={`/page/blog/1`}>
+						<Link to={ `/blog/1` }>
 							<h3>
 								Learn JavaScript while Playing Games — Gamify Your Learning
 							</h3>

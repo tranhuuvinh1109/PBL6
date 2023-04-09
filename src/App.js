@@ -6,7 +6,7 @@ import Login from './Auth/LoginPage/Login';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { PrivateRouter } from './Router/PrivateRouter';
 import AppContent from './AppLayout/Content/Content';
-import { adminRouter, routers } from './Router';
+import { adminRouter, routers, privateRouter } from './Router';
 import NotFound from './Page/NotFound/NotFound';
 import AdminContent from './Admin/AdminContent';
 // import ScrollToTop from "react-scroll-to-top";
@@ -53,13 +53,26 @@ function App () {
           <Routes>
             <Route path='/' element={<HomePage />} />
             <Route path='/login' element={<Login />} />
-            <Route path='page' element={<PrivateRouter path='/login' outlet={<AppContent />} />} >
-              {
-                routers.map(route => {
-                  return <Route key={route.path} element={<route.component />} path={route.path} />
-                })
-              }
-              <Route path='*' element={<NotFound />} />
+            <Route path="/" element={<AppContent />}>
+              {routers.map((route) => (
+                <Route
+                  key={route.path}
+                  path={route.path}
+                  element={<route.component />}
+                />
+              ))}
+              <Route path="*" element={<NotFound />} />
+            </Route>
+
+            <Route path="/" element={<PrivateRouter outlet={<AppContent />} path='/login' />}>
+              {privateRouter.map((route) => (
+                <Route
+                  key={route.path}
+                  path={route.path}
+                  element={<route.component />}
+                />
+              ))}
+              <Route path="*" element={<NotFound />} />
             </Route>
             <Route path='admin' element={<PrivateRouter path='/login' outlet={<AdminContent />} />} >
               {
