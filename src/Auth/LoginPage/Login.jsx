@@ -46,49 +46,62 @@ const Login = () => {
 		<div className="login">
 			<div className="login_box rounded-lg shadow-2xl">
 				<div className="login_content">
-					<div className="top_link text-left text-[greenCustom]">
-						<Link to='/' className='no-underline'>
-							<FontAwesomeIcon icon={ faCircleArrowLeft } />
-							<span className='ml-1.5'>Return home</span>
-						</Link>
-					</div>
-					<h3 className='mt-5'>SIGN IN</h3>
-					<div className="mt-10">
-						<form
-							onSubmit={ handleSubmit }
-						>
-							<div className='field-input'>
-								<label htmlFor='email'>
-									Email:
+					<div className='login_content_left'>
+						<div className="top-link text-left text-[greenCustom] ">
+							<Link to='/' className='no-underline return-home'>
+								<FontAwesomeIcon icon={ faCircleArrowLeft } />
+								<span className='ml-1.5'>Return home</span>
+							</Link>
+							<div className='top-link-title'>
+								<h2>
+									Education
+								</h2>
+								<h4>
+									Learn to work
+								</h4>
+							</div>
+						</div>
+						<div className="field-body">
+							<form
+								onSubmit={ handleSubmit }
+								className='field-content'
+							>
+								<h3 className=''>SIGN IN</h3>
+								<div>
+									<div className='field-input-wrapper'>
+										<input type='text' placeholder='Email' className='w-full' id='email' name='email' value={ data.email } onChange={ handChange } />
+									</div>
+									<div className='field-input-wrapper'>
+										<input type='password' placeholder='Password' className='w-full' id='password' name='password' value={ data.password } onChange={ handChange } />
+									</div>
+								</div>
+								<div >
+									<button type="submit" className='btn-login'>Login</button>
+								</div>
+								<div>
+									<span>New here?</span> <Link to='/register'>Create new account</Link>
+								</div>
+							</form>
+							{/* <div className='field-input'>
+								<label htmlFor='username'>
+									Username:
 								</label>
-								<input type='text' id='email' name='email' value={ data.email } onChange={ handChange } />
-							</div>
-							<div className='field-input'>
-								<label htmlFor='password'>
-									Password:
-								</label>
-								<input type='text' id='password' name='password' value={ data.password } onChange={ handChange } />
-							</div>
-							<div >
-								<button type="submit" className='btn-custom'>Đăng nhập</button>
-								Or <Link to='/register'>Create new account</Link>
-							</div>
-						</form>
-						{/* <div className='field-input'>
-							<label htmlFor='username'>
-								Username:
-							</label>
-							<input type='text' id='username' name='username' value={ data.username } onChange={ handChange } />
-						</div> */}
+								<input type='text' id='username' name='username' value={ data.username } onChange={ handChange } />
+							</div> */}
 
+						</div>
+					</div>
+					<div className='login_content_right'>
+						<div className='login_content_right_title'>
+							<h2>
+								Education
+							</h2>
+							<h4>
+								Learn to work
+							</h4>
+						</div>
 					</div>
 				</div>
-				{/* <div className="right hidden md:block">
-					<div className="right-text">
-						<h2>JLPT</h2>
-						<h5>Teaching Japanese to everyone</h5>
-					</div>
-				</div> */}
 			</div>
 		</div>
 	)

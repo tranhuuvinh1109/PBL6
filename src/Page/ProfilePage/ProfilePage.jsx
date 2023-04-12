@@ -1,7 +1,11 @@
-import React from "react";
+import React, { useContext } from "react";
+import { AppContext } from "../../App.js";
 import { Container, Row, Col } from "react-bootstrap";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPenToSquare } from "@fortawesome/free-solid-svg-icons"
 import './style.css';
 const ProfilePage = () => {
+	const context = useContext(AppContext);
 	return (
 		<>
 			<div className="header pb-8 pt-5 pt-lg-8 flex align-center header-pro" >
@@ -16,13 +20,18 @@ const ProfilePage = () => {
 			</div>
 			<Container className="mt-profile">
 				<Row>
-					<Col xl={4} className='mb-xl-0'>
+					<Col xl={ 4 } className='mb-xl-0'>
 						<div className="card card-profile shadow">
 							<Row className="justify-center">
-								<Col lg={3} className="order-lg-2">
-									<div className="card-profile-image">
-										<img src="https://demos.creative-tim.com/argon-dashboard/assets-old/img/theme/team-4.jpg" className="rounded-circle" alt="team" />
-									</div>
+								<Col lg={ 6 } className="order-lg-2">
+									{
+										context.user?.avatar ? <div className="image-preview-profile rounded-full" style={ { backgroundImage: `url(${context.user.avatar})` } } />
+											:
+											<div className="image-preview-profile rounded-full" style={ { backgroundImage: `url(https://fullstack.edu.vn/static/media/fallback-avatar.155cdb2376c5d99ea151.jpg)` } } />
+									}
+
+									{/* <img src="https://demos.creative-tim.com/argon-dashboard/assets-old/img/theme/team-4.jpg" className="rounded-circle" alt="team" /> */ }
+									{/* <FontAwesomeIcon icon={ faPenToSquare } /> */ }
 								</Col>
 							</Row>
 
@@ -72,14 +81,14 @@ const ProfilePage = () => {
 						</div>
 					</Col>
 
-					<Col xl={8} className="order-xl-1">
+					<Col xl={ 8 } className="order-xl-1">
 						<div className="card shadow">
 							<div className="card-header bg-white border-0">
 								<Row className="items-center">
-									<Col xs={8}>
+									<Col xs={ 8 }>
 										<h3 className="mb-0 text-left text-lg">My account</h3>
 									</Col>
-									<Col xs={4} className="text-right">
+									<Col xs={ 4 } className="text-right">
 										<button className="btn btn-sm btn-primary">Settings</button>
 									</Col>
 
@@ -91,14 +100,14 @@ const ProfilePage = () => {
 									<h6 className="heading-small text-muted mb-4">User information</h6>
 									<div className="pl-lg-4">
 										<Row>
-											<Col lg={6}>
+											<Col lg={ 6 }>
 												<div className="form-group focused">
 													<label className="form-control-label" htmlFor="input-username">Username</label>
 													<input type="text" id="input-username" className="form-control form-control-alternative" placeholder="Username" value="lucky.jesse" />
 												</div>
 											</Col>
 
-											<Col lg={6}>
+											<Col lg={ 6 }>
 												<div className="form-group">
 													<label className="form-control-label" htmlFor="input-email">Email address</label>
 													<input type="email" id="input-email" className="form-control form-control-alternative" placeholder="jesse@example.com" />
@@ -107,14 +116,14 @@ const ProfilePage = () => {
 										</Row>
 
 										<Row>
-											<Col lg={6}>
+											<Col lg={ 6 }>
 												<div className="form-group focused">
 													<label className="form-control-label" htmlFor="input-first-name">First name</label>
 													<input type="text" id="input-first-name" className="form-control form-control-alternative" placeholder="First name" value="Lucky" />
 												</div>
 											</Col>
 
-											<Col lg={6}>
+											<Col lg={ 6 }>
 												<div className="form-group focused">
 													<label className="form-control-label" htmlFor="input-last-name">Last name</label>
 													<input type="text" id="input-last-name" className="form-control form-control-alternative" placeholder="Last name" value="Jesse" />
@@ -128,7 +137,7 @@ const ProfilePage = () => {
 									<h6 className="heading-small text-muted mb-4">Contact information</h6>
 									<div className="pl-lg-4">
 										<Row>
-											<Col md={12}>
+											<Col md={ 12 }>
 												<div className="form-group focused">
 													<label className="form-control-label" htmlFor="input-address">Address</label>
 													<input id="input-address" className="form-control form-control-alternative" placeholder="Home Address" value="Bld Mihail Kogalniceanu, nr. 8 Bl 1, Sc 1, Ap 09" type="text" />
@@ -137,21 +146,21 @@ const ProfilePage = () => {
 										</Row>
 
 										<Row>
-											<Col lg={4}>
+											<Col lg={ 4 }>
 												<div className="form-group focused">
 													<label className="form-control-label" htmlFor="input-city">City</label>
 													<input type="text" id="input-city" className="form-control form-control-alternative" placeholder="City" value="New York" />
 												</div>
 											</Col>
 
-											<Col lg={4}>
+											<Col lg={ 4 }>
 												<div className="form-group focused">
 													<label className="form-control-label" htmlFor="input-country">Country</label>
 													<input type="text" id="input-country" className="form-control form-control-alternative" placeholder="Country" value="United States" />
 												</div>
 											</Col>
 
-											<Col lg={4}>
+											<Col lg={ 4 }>
 												<div className="form-group">
 													<label className="form-control-label" htmlFor="input-country">Postal code</label>
 													<input type="number" id="input-postal-code" className="form-control form-control-alternative" placeholder="Postal code" />
@@ -166,7 +175,7 @@ const ProfilePage = () => {
 									<div className="pl-lg-4">
 										<div className="form-group focused">
 											<label>About Me</label>
-											<textarea rows={4} className="form-control form-control-alternative" placeholder="A few words about you ...">A beautiful Dashboard for Bootstrap 4. It is Free and Open Source.</textarea>
+											<textarea rows={ 4 } className="form-control form-control-alternative" placeholder="A few words about you ...">A beautiful Dashboard for Bootstrap 4. It is Free and Open Source.</textarea>
 										</div>
 									</div>
 								</form>

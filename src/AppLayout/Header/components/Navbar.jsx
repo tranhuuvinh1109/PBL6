@@ -109,9 +109,9 @@ const Navbar = ({ logo }) => {
 										</div>
 									</div>
 									<Divider className='m-0' />
-									<Link to='/page/user/profile' className='no-underline '><p className='py-2.5 m-0 text-slate-400 hover:text-slate-600'><FontAwesomeIcon icon={ faUser } fontSize={ 16 } /><span className='text-base font-semibold ml-2.5'>Profile</span></p></Link>
+									<Link to='/user/profile' className='no-underline '><p className='py-2.5 m-0 text-slate-400 hover:text-slate-600'><FontAwesomeIcon icon={ faUser } fontSize={ 16 } /><span className='text-base font-semibold ml-2.5'>Profile</span></p></Link>
 									<Divider className='m-0' />
-									<Link to='/page/user/profile' className='no-underline '><p className='py-2.5 m-0 text-slate-400 hover:text-slate-600'><FontAwesomeIcon icon={ faBookmark } fontSize={ 16 } /><span className='text-base font-semibold ml-2.5'>Bookmark</span></p></Link>
+									<Link to='/bookmark' className='no-underline '><p className='py-2.5 m-0 text-slate-400 hover:text-slate-600'><FontAwesomeIcon icon={ faBookmark } fontSize={ 16 } /><span className='text-base font-semibold ml-2.5'>Bookmark</span></p></Link>
 									<Divider className='m-0' />
 									<Link to='/login' onClick={ handleClickLogout } className='no-underline '><p className='py-2.5 m-0 text-slate-400 hover:text-slate-600'><FontAwesomeIcon icon={ faArrowRightFromBracket } fontSize={ 16 } /><span className='text-base font-semibold ml-2.5'>Logout</span></p></Link>
 								</div>
@@ -184,7 +184,7 @@ const Navbar = ({ logo }) => {
 								Profile
 							</span>
 						</Link>
-						<Link to='/page/user/profile' className='link-item m-0'>
+						<Link to='/user/profile' className='link-item m-0'>
 							<FontAwesomeIcon icon={ faLightbulb } />
 							<span className='ml-3'>
 								My Course
