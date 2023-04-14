@@ -25,9 +25,15 @@ const ProfilePage = () => {
 							<Row className="justify-center">
 								<Col lg={ 6 } className="order-lg-2">
 									{
-										context.user?.avatar ? <div className="image-preview-profile rounded-full" style={ { backgroundImage: `url(${context.user.avatar})` } } />
+										context.user?.avatar ? <div className="image-preview-profile rounded-full" style={ { backgroundImage: `url(${context.user.avatar})` } } >
+											<button className="btn-change text-white">
+												<FontAwesomeIcon icon={ faPenToSquare } className="icon-change" />
+											</button>
+										</div>
 											:
-											<div className="image-preview-profile rounded-full" style={ { backgroundImage: `url(https://fullstack.edu.vn/static/media/fallback-avatar.155cdb2376c5d99ea151.jpg)` } } />
+											<div className="image-preview-profile rounded-full" style={ { backgroundImage: `url(https://fullstack.edu.vn/static/media/fallback-avatar.155cdb2376c5d99ea151.jpg)` } }>
+												<FontAwesomeIcon icon={ faPenToSquare } className="icon-change" />
+											</div>
 									}
 
 									{/* <img src="https://demos.creative-tim.com/argon-dashboard/assets-old/img/theme/team-4.jpg" className="rounded-circle" alt="team" /> */ }
@@ -63,11 +69,10 @@ const ProfilePage = () => {
 								</Row>
 								<div className="text-center">
 									<h3 className="text-lg">
-										Jessica Jones<span className="font-light">, 27</span>
+										{
+											context?.user?.name
+										}
 									</h3>
-									<div className="text-sm">
-										<i className="ni location_pin"></i>Bucharest, Romania
-									</div>
 									<h3 className="mt-4 text-lg">
 										Solution Manager - Creative Tim Officer
 									</h3>
@@ -103,14 +108,14 @@ const ProfilePage = () => {
 											<Col lg={ 6 }>
 												<div className="form-group focused">
 													<label className="form-control-label" htmlFor="input-username">Username</label>
-													<input type="text" id="input-username" className="form-control form-control-alternative" placeholder="Username" value="lucky.jesse" />
+													<input type="text" id="input-username" className="form-control form-control-alternative" placeholder="Username" value={ context?.user?.name } readOnly={ true } />
 												</div>
 											</Col>
 
 											<Col lg={ 6 }>
 												<div className="form-group">
 													<label className="form-control-label" htmlFor="input-email">Email address</label>
-													<input type="email" id="input-email" className="form-control form-control-alternative" placeholder="jesse@example.com" />
+													<input type="email" id="input-email" className="form-control form-control-alternative" placeholder="email@example.com" value={ context?.user?.email } readOnly={ true } />
 												</div>
 											</Col>
 										</Row>
@@ -118,57 +123,11 @@ const ProfilePage = () => {
 										<Row>
 											<Col lg={ 6 }>
 												<div className="form-group focused">
-													<label className="form-control-label" htmlFor="input-first-name">First name</label>
-													<input type="text" id="input-first-name" className="form-control form-control-alternative" placeholder="First name" value="Lucky" />
-												</div>
-											</Col>
-
-											<Col lg={ 6 }>
-												<div className="form-group focused">
-													<label className="form-control-label" htmlFor="input-last-name">Last name</label>
-													<input type="text" id="input-last-name" className="form-control form-control-alternative" placeholder="Last name" value="Jesse" />
-												</div>
-											</Col>
-
-										</Row>
-
-									</div>
-									<hr className="my-4" />
-									<h6 className="heading-small text-muted mb-4">Contact information</h6>
-									<div className="pl-lg-4">
-										<Row>
-											<Col md={ 12 }>
-												<div className="form-group focused">
-													<label className="form-control-label" htmlFor="input-address">Address</label>
-													<input id="input-address" className="form-control form-control-alternative" placeholder="Home Address" value="Bld Mihail Kogalniceanu, nr. 8 Bl 1, Sc 1, Ap 09" type="text" />
+													<label className="form-control-label" htmlFor="input-phone">Phone</label>
+													<input type="text" id="input-phone" className="form-control form-control-alternative" placeholder="Phone" value={ context?.user?.phone } readOnly={ true } />
 												</div>
 											</Col>
 										</Row>
-
-										<Row>
-											<Col lg={ 4 }>
-												<div className="form-group focused">
-													<label className="form-control-label" htmlFor="input-city">City</label>
-													<input type="text" id="input-city" className="form-control form-control-alternative" placeholder="City" value="New York" />
-												</div>
-											</Col>
-
-											<Col lg={ 4 }>
-												<div className="form-group focused">
-													<label className="form-control-label" htmlFor="input-country">Country</label>
-													<input type="text" id="input-country" className="form-control form-control-alternative" placeholder="Country" value="United States" />
-												</div>
-											</Col>
-
-											<Col lg={ 4 }>
-												<div className="form-group">
-													<label className="form-control-label" htmlFor="input-country">Postal code</label>
-													<input type="number" id="input-postal-code" className="form-control form-control-alternative" placeholder="Postal code" />
-												</div>
-											</Col>
-
-										</Row>
-
 									</div>
 									<hr className="my-4" />
 									<h6 className="heading-small text-muted mb-4">About me</h6>

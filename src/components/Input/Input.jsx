@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-const InputCustom = ({ name, id, type, placeholder, required, value, onChange, onBlur, ...props }) => {
+const InputCustom = ({ name, id, type, placeholder, required, value, onChange, onBlur, readOnly = false, ...props }) => {
 	const [error, setError] = useState('');
 
 	const handleBlur = () => {
@@ -16,6 +16,7 @@ const InputCustom = ({ name, id, type, placeholder, required, value, onChange, o
 	return (
 		<div className='field-input-wrapper' { ...props }>
 			<input
+				readOnly={ readOnly }
 				name={ name }
 				type={ type }
 				value={ value }

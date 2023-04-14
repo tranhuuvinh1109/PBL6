@@ -11,9 +11,9 @@ const Course = ({ listCourse }) => {
 
 					<Row>
 						{
-							listCourse?.map((course, index) => {
+							listCourse && listCourse?.map((course, index) => {
 								return (
-									<CourseItem key={index} data={course} />
+									<CourseItem key={ index } data={ course } />
 								)
 							})
 						}

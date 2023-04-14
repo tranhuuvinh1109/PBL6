@@ -14,6 +14,7 @@ import { Toaster, toast } from 'react-hot-toast';
 import { authAPI } from './api/authApi';
 import { courseAPI } from './api/courseAPI';
 import Register from './Auth/RegisterPage/Register';
+import { categoryAPI } from './api/categoryApi';
 
 
 export const AppContext = createContext({});
@@ -21,42 +22,79 @@ export const AppContext = createContext({});
 function App () {
   const [isLoading, setIsLoading] = useState(false);
   const [listCourse, setListCourse] = useState([]);
+  const [listCategory, setListCategory] = useState([]);
   const [user, setUser] = useState();
   const getUser = async () => {
-    setIsLoading(true);
-    const userId = localStorage.getItem('userID');
-    const res = await authAPI.getUserByToken(userId);
-    if (res.status === 200) {
-      setUser(res.data.data)
-      console.log(res.data.data, isLoading)
-      localStorage.setItem('userID', res.data.data.id)
-      // localStorage.setItem('userID', res.data.refresh_token)
-    } else {
-      toast.error("Get user error");
+    try {
+      setIsLoading(true);
+      const userId = localStorage.getItem('userID');
+      const res = await authAPI.getUserByToken(userId);
+      if (res.status === 200) {
+        setUser(res.data.data)
+        console.log(res.data.data, isLoading)
+        localStorage.setItem('userID', res.data.data.id)
+        // localStorage.setItem('userID', res.data.refresh_token)
+      }
+      else {
+        throw new Error("Get Category failed");
+      }
     }
-    setIsLoading(false);
-  }
+    catch (err) {
+      toast.error(err.message);
+    }
+    finally {
+      setIsLoading(false);
+    }
+  };
   const GetCourse = async () => {
-    setIsLoading(true);
-    const res = await courseAPI.getCourse();
-    if (res.status === 200) {
-      setListCourse(res.data.data);
-    } else {
-      toast.error("Get Course error");
+    try {
+      setIsLoading(true);
+      const res = await courseAPI.getCourse();
+      if (res.status === 200) {
+        setListCourse(res.data.data);
+      }
+      else {
+        throw new Error("Get Category failed");
+      }
     }
-    setIsLoading(false);
+    catch (err) {
+      toast.error(err.message);
+    }
+    finally {
+      setIsLoading(false);
+    }
+  };
+  const getCategory = async () => {
+    try {
+      setIsLoading(true);
+      const res = await categoryAPI.getAll();
+      if (res.status === 200) {
+        setListCategory(res.data.data);
+      }
+      else {
+        throw new Error("Get Category failed");
+      }
+    }
+    catch (err) {
+      toast.error(err.message);
+    }
+    finally {
+      setIsLoading(false);
+    }
   }
+
   useEffect(() => {
     GetCourse();
+    getCategory();
     const token = localStorage.getItem('userID');
     if (token) {
       getUser();
     }
-  }, [])
+  }, []);
 
 
   return (
-    <AppContext.Provider value={{ user, setUser, listCourse, setListCourse, isLoading, setIsLoading }} >
+    <AppContext.Provider value={{ user, setUser, listCourse, setListCourse, isLoading, setIsLoading, listCategory }} >
       <div className="App">
         {/* <ScrollToTop smooth color="#6f00ff" /> */}
         <Toaster

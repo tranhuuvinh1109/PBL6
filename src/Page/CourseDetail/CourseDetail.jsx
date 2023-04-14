@@ -8,23 +8,23 @@ import LessonItem from "./components/LessonItem";
 import { useNavigate } from 'react-router-dom'
 import Loading from "../../components/Loading/Loading";
 import { courseAPI } from "../../api/courseAPI";
-// import { AppContext } from '../../App';
-// import toast from 'react-hot-toast';
 
 const { Panel } = Collapse;
 
 const CoureDetail = () => {
 	const { id } = useParams();
-	// const context = useContext(AppContext);
 	const navigate = useNavigate();
 	const [infor, setInfor] = useState();
+	const [loading, setLoading] = useState(false);
 
 	const GetInformationCourse = async (id) => {
+		setLoading(true);
 		const res = await courseAPI.getCourseDetail(id)
 		if (res.status === 200) {
 			setInfor(res.data.data)
 		}
-		return;
+		setLoading(false);
+
 	}
 
 	const handleClickRegister = () => {
@@ -66,74 +66,78 @@ const CoureDetail = () => {
 	}, [id])
 	return (
 		<Container fluid="md" className="text-left mb-20 mt-20 min-h-[630px]">
-			<Row>
-				<Col xs={ 12 } lg={ 8 }>
-					<h1 className="text-left">
-						{
-							infor?.name
-						}
-					</h1>
-					<p>
-						Để có kiến thức nền tảng để học tốt tiếng nhật
-					</p>
-					<div className="mt-5">
-						<h5>
-							Bạn sẽ học được gì?
-						</h5>
-						<div>
-							<Container>
-								<Row>
+			{
+				loading ? <Loading />
+					:
+					<Row>
+						<Col xs={ 12 } lg={ 8 }>
+							<h1 className="text-left">
+								{
+									infor?.name
+								}
+							</h1>
+							<p>
+								Để có kiến thức nền tảng để học tốt tiếng nhật
+							</p>
+							<div className="mt-5">
+								<h5>
+									Bạn sẽ học được gì?
+								</h5>
+								<div>
+									<Container>
+										<Row>
+											{
+												infor?.plans?.map((item) => {
+													return (
+														<Col xs={ 12 } lg={ 6 } md={ 6 }>
+															<div className="py-2">
+																<FontAwesomeIcon icon={ faCheck } className='mr-2 text-red-400' />
+																<span>
+																	{
+																		item?.title
+																	}
+																</span>
+															</div>
+														</Col>
+													)
+												})
+											}
+										</Row>
+									</Container>
+								</div>
+							</div>
+
+							<Collapse accordion className="mt-4">
+								<Panel header="Lesson content" key="1">
 									{
-										infor?.plans?.map((item) => {
+										infor?.lessons?.map((item) => {
 											return (
-												<Col xs={ 12 } lg={ 6 } md={ 6 }>
-													<div className="py-2">
-														<FontAwesomeIcon icon={ faCheck } className='mr-2 text-red-400' />
-														<span>
-															{
-																item?.title
-															}
-														</span>
-													</div>
-												</Col>
+												<LessonItem key={ item.id } infor={ item } />
 											)
 										})
 									}
-								</Row>
-							</Container>
-						</div>
-					</div>
-
-					<Collapse accordion className="mt-4">
-						<Panel header="Lesson content" key="1">
+								</Panel>
+							</Collapse>
+						</Col>
+						<Col xs={ 12 } lg={ 4 }>
 							{
-								infor?.lessons?.map((item) => {
-									return (
-										<LessonItem key={ item.id } infor={ item } />
-									)
-								})
+								renderVideo
 							}
-						</Panel>
-					</Collapse>
-				</Col>
-				<Col xs={ 12 } lg={ 4 }>
-					{
-						renderVideo
-					}
 
-					<div className="mt-4 flex justify-between">
-						<h3 className="text-red-400">
-							{
-								infor?.price
-							}
-						</h3>
-						<button className="bg-red-400 text-white py-1.5 px-3 rounded-full min-w-[150px] hover:bg-red-300" onClick={ handleClickRegister }>
-							Register
-						</button>
-					</div>
+							<div className="mt-4 flex justify-between">
+								<h3 className="text-red-400">
+									{
+										infor?.price
+									}
+								</h3>
+								<button className="bg-red-400 text-white py-1.5 px-3 rounded-full min-w-[150px] hover:bg-red-300" onClick={ handleClickRegister }>
+									Register
+								</button>
+							</div>
 
-				</Col>
-			</Row>
+						</Col>
+					</Row>
+			}
 		</Container>
 
 	)

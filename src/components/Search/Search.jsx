@@ -34,7 +34,6 @@ const Search = () => {
 
 
 	const handleHidePopover = () => {
-		console.log(11)
 		setSearchResult([]);
 	};
 
@@ -76,8 +75,8 @@ const Search = () => {
 	return (
 		<Popover
 			// onVisibleChange={setVisible}
-			onClickOutside={handleHidePopover}
-			visible={showResult && searchResult?.length > 0}
+			onClickOutside={ handleHidePopover }
+			visible={ showResult && searchResult?.length > 0 }
 			content={
 				<Wrapper>
 					<div className="bg-red-300 search-result" tabIndex="-1">
@@ -91,12 +90,12 @@ const Search = () => {
 									searchResult.map(
 										(e) => {
 											return (
-												<CourseResult data={e} />
+												<CourseResult data={ e } />
 											)
 										}
 									)
 								}
-								<h1 onClick={() => console.log(showResult && searchResult?.length > 0, !!searchValue)}>
+								<h1 onClick={ () => console.log(showResult && searchResult?.length > 0, !!searchValue) }>
 									dsddd
 								</h1>
 							</>
@@ -108,16 +107,16 @@ const Search = () => {
 			<div className='search-wrapper'>
 				<div className='search-icon'>
 				</div>
-				<input type='text' placeholder='search course, video, blog,...' className='search-input-nav' value={searchValue} onChange={handleChange} ref={inputRef} />
+				<input type='text' placeholder='search course, video, blog,...' className='search-input-nav' value={ searchValue } onChange={ handleChange } ref={ inputRef } />
 				{
-					!!searchValue && !loading && <button className='px-1.5 text-slate-400 hover:text-slate-600 btn-time' onClick={handleClear}>
-						<FontAwesomeIcon icon={faXmark} />
+					!!searchValue && !loading && <button className='px-1.5 text-slate-400 hover:text-slate-600 btn-time' onClick={ handleClear }>
+						<FontAwesomeIcon icon={ faXmark } />
 					</button>
 				}
 
 				{
 					loading && <span className='px-1 text-slate-400 search-loading'>
-						<FontAwesomeIcon icon={faSpinner} />
+						<FontAwesomeIcon icon={ faSpinner } />
 					</span>
 				}
 

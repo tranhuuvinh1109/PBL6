@@ -25,6 +25,7 @@ const Login = () => {
 	const handleSubmit = async (e) => {
 		e.preventDefault();
 		if (data.email && data.password) {
+			context.setIsLoading(true);
 			try {
 				const res = await authAPI.login(data)
 				if (res.status === 200) {
@@ -33,10 +34,15 @@ const Login = () => {
 					localStorage.setItem('userID', res.data.data.id);
 					// localStorage.setItem('userID', res.data.refresh_token);
 					toast.success('Login Successfully')
+				} else {
+					throw new Error("Login failed");
 				}
 			} catch (error) {
 				console.log(error)
-				toast.error('Nhap email passwordaaaaa')
+				toast.error(error.message)
+			}
+			finally {
+				context.setIsLoading(false);
 			}
 		} else {
 			toast.error('Nhap email password')
