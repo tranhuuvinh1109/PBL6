@@ -1,7 +1,7 @@
 import logo from '../logo.svg';
 import { Avatar, Breadcrumb, Layout, Menu, Popover, theme } from 'antd';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faHouse, faBlog, faLightbulb } from '@fortawesome/free-solid-svg-icons'
+import { faHouse, faBlog, faLightbulb, faChartLine } from '@fortawesome/free-solid-svg-icons'
 import React, { useContext } from 'react';
 import { Outlet, useNavigate } from 'react-router-dom';
 import UserClickContent from './components/UserClickContent';
@@ -12,7 +12,7 @@ const { Content, Sider } = Layout;
 const listMenu = [
 	{
 		title: 'Daskboard',
-		icon: <FontAwesomeIcon icon={ faHouse } />,
+		icon: <FontAwesomeIcon icon={ faChartLine } />,
 		url: 'daskboard'
 	},
 	{
@@ -24,6 +24,11 @@ const listMenu = [
 		title: 'Blog',
 		icon: <FontAwesomeIcon icon={ faBlog } />,
 		url: 'blog'
+	},
+	{
+		title: 'Home',
+		icon: <FontAwesomeIcon icon={ faHouse } />,
+		url: '/'
 	},
 ]
 
@@ -80,10 +85,17 @@ const AdminContent = () => {
 					<Popover content={ UserClickContent } trigger="click">
 						<div className='float-right px-2 min-w-[200px] text-left bg-red-400 userClick'>
 							<div className=''>
-								<Avatar src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NXx8dXNlcnxlbnwwfHwwfHw%3D&w=1000&q=80" size='large' alt="user" />
-								<span className='ml-1.5 text-base text-base font-semibold'>
-									Admin
-								</span>
+								{
+									context?.user && <>
+										<Avatar src={ context.user.avatar } size='large' alt="user" />
+										<span className='ml-1.5 text-base text-base font-semibold'>
+											{
+												context.user.name
+											}
+										</span>
+									</>
+								}
+
 							</div>
 						</div>
 					</Popover>

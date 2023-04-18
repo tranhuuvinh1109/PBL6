@@ -19,12 +19,14 @@ const HomePage = () => {
 					:
 					<>
 						<Header />
-						<Slider />
-						<About />
-						<Course listCourse={ context.listCourse } />
-						<Achievement />
-						<NewsLetter />
-						<ScrollToTop smooth />
+						<div className='mt-32'>
+							<Slider />
+							<About />
+							<Course listCourse={ context.listCourse } />
+							<Achievement />
+							<NewsLetter />
+							<ScrollToTop smooth />
+						</div>
 						<Footer />
 					</>
 			}

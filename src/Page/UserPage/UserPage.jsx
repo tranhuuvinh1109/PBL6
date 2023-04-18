@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { Container, Row, Col } from "react-bootstrap";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPenToSquare } from "@fortawesome/free-solid-svg-icons"
 import './style.css';
 import { useParams } from "react-router-dom";
 import { toast } from "react-hot-toast";
@@ -61,15 +59,9 @@ const UserPage = () => {
 										<Row className="justify-center">
 											<Col lg={ 6 } className="order-lg-2">
 												{
-													userData?.avatar ? <div className="image-preview-profile rounded-full" style={ { backgroundImage: `url(${userData.avatar})` } } >
-														<button className="btn-change text-white">
-															<FontAwesomeIcon icon={ faPenToSquare } className="icon-change" />
-														</button>
-													</div>
+													userData?.avatar ? <div className="image-preview-profile rounded-full" style={ { backgroundImage: `url(${userData.avatar})` } } ></div>
 														:
-														<div className="image-preview-profile rounded-full" style={ { backgroundImage: `url(https://fullstack.edu.vn/static/media/fallback-avatar.155cdb2376c5d99ea151.jpg)` } }>
-															<FontAwesomeIcon icon={ faPenToSquare } className="icon-change" />
-														</div>
+														<div className="image-preview-profile rounded-full" style={ { backgroundImage: `url(https://fullstack.edu.vn/static/media/fallback-avatar.155cdb2376c5d99ea151.jpg)` } }></div>
 												}
 
 												{/* <img src="https://demos.creative-tim.com/argon-dashboard/assets-old/img/theme/team-4.jpg" className="rounded-circle" alt="team" /> */ }
@@ -142,16 +134,20 @@ const UserPage = () => {
 												<div className="pl-lg-4">
 													<Row>
 														<Col lg={ 6 }>
-															<div className="form-group focused">
-																<label className="form-control-label" htmlFor="input-username">Username</label>
-																<input type="text" id="input-username" className="form-control form-control-alternative" placeholder="Username" value={ userData?.name } readOnly={ true } />
-															</div>
+															{
+																userData?.phone && <h5>
+																	{ userData?.phone }
+																</h5>
+															}
 														</Col>
 
 														<Col lg={ 6 }>
 															<div className="form-group">
-																<label className="form-control-label" htmlFor="input-email">Email address</label>
-																<input type="email" id="input-email" className="form-control form-control-alternative" placeholder="email@example.com" value={ userData?.email } readOnly={ true } />
+																{
+																	userData?.email && <h5>
+																		{ userData?.email }
+																	</h5>
+																}
 															</div>
 														</Col>
 													</Row>
@@ -159,8 +155,11 @@ const UserPage = () => {
 													<Row>
 														<Col lg={ 6 }>
 															<div className="form-group focused">
-																<label className="form-control-label" htmlFor="input-phone">Phone</label>
-																<input type="text" id="input-phone" className="form-control form-control-alternative" placeholder="Phone" value={ userData?.phone } readOnly={ true } />
+																{
+																	userData?.name && <h5>
+																		{ userData?.name }
+																	</h5>
+																}
 															</div>
 														</Col>
 													</Row>

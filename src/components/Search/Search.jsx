@@ -2,7 +2,6 @@ import React, { useRef, useState, useEffect } from "react";
 import useDebounce from "../../hook/useDebounce";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSpinner, faXmark } from "@fortawesome/free-solid-svg-icons";
-import Tippy from "@tippyjs/react";
 import { Divider, Popover } from "antd";
 import { searchAPI } from "../../api/searchApi";
 import CourseResult from "./components/CourseResult";
@@ -13,17 +12,12 @@ const Search = () => {
 	const [searchResult, setSearchResult] = useState([]);
 	const [showResult, setShowResult] = useState(true);
 	const [loading, setLoading] = useState(false);
-	const popoverRef = useRef();
 
 	const inputRef = useRef();
 	const debounced = useDebounce(searchValue, 500);
 
 	const handleChange = (e) => {
 		setSearchValue(e.target.value);
-	};
-	const handleHideResult = () => {
-		console.log(11)
-		setShowResult(false);
 	};
 
 	const handleClear = () => {

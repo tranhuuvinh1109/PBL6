@@ -1,20 +1,22 @@
 import React, { useEffect, useState } from 'react';
 import { InputNumber, Input, Divider } from 'antd';
-import { getStorageClient } from '../../../Firebase/firebaseClient';
-import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { faXmark, faPlus, faPencil } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import { courseAPI } from '../../../api/courseAPI';
 import { toast } from 'react-hot-toast';
-import Loading from '../../../components/Loading/Loading';
+import uploadFileWithProgress from '../../../Firebase/uploadFileWithProgress';
+import ProgressUpload from '../../components/ProgressUpload/ProgressUpload';
+import { useNavigate } from 'react-router-dom';
 
 
 const { TextArea } = Input;
 const CreateCourse = () => {
+	const navigate = useNavigate();
 	const [selectedFile, setSelectedFile] = useState(null);
 	const [isLoading, setIsLoading] = useState(false);
+	const [progress, setProgress] = useState(0);
 	const [arrLesson, setArrLesson] = useState([{
 		id: 1,
 		name: "",
@@ -68,28 +70,7 @@ const CreateCourse = () => {
 		file.preview = URL.createObjectURL(file);
 		setSelectedFile(file);
 	}
-	const handleFileUpload = async () => {
-		const randomNum = new Date().getTime();
-		const newName = 'course' + randomNum;
-		if (selectedFile.preview) {
-			const storageRef = ref(getStorageClient, `images/course`);
-			const fileRef = ref(storageRef, newName);
 
-			return await uploadBytes(fileRef, selectedFile)
-				.then((snapshot) => {
-					getDownloadURL(snapshot.ref).then((downloadURL) => {
-						console.log("Upload successful, download URL:", downloadURL);
-						setImageUrl(downloadURL);
-						return true;
-					});
-				})
-				.catch((error) => {
-					console.log("Upload failed:", error);
-					return false;
-				});
-
-		}
-	}
 	const hanldeChange = (event) => {
 		setCourse({ ...course, [event.target.name]: event.target.value })
 	}
@@ -108,43 +89,39 @@ const CreateCourse = () => {
 
 	const handleSubmit = async () => {
 		setIsLoading(true);
-		const randomNum = new Date().getTime();
-		const newName = 'course' + randomNum;
 		if (selectedFile.preview) {
-			const storageRef = ref(getStorageClient, `images/course`);
-			const fileRef = ref(storageRef, newName);
+			const randomNum = new Date().getTime();
+			const newName = course.name + randomNum;
 
-			await uploadBytes(fileRef, selectedFile)
-				.then((snapshot) => {
-					getDownloadURL(snapshot.ref).then(async (downloadURL) => {
-						setImageUrl(downloadURL);
-						const res = await courseAPI.postCourse({
-							name: course.name,
-							description: course.description,
-							teacher: 1,
-							image: imageUrl,
-							lessons: arrLesson,
-							plans: arrPlan,
-							price: course.price,
-						});
-						if (res.status === 200) {
-							toast.success('submit successful');
-							console.log('submit successful', res.data);
-						} else {
-							toast.error('submit fail');
-							console.log('submit fail', res);
-						}
-					});
-				})
-				.catch((error) => {
-					toast.error('Upload image failed');
-					console.log("Upload failed:", error);
+			const url = await uploadFileWithProgress(
+				selectedFile,
+				`images/course`,
+				newName,
+				setProgress
+			);
+			if (url) {
+				console.log(1, url);
+				setImageUrl(url);
+				const res = await courseAPI.postCourse({
+					name: course.name,
+					description: course.description,
+					teacher: 1,
+					image: url,
+					lessons: arrLesson,
+					plans: arrPlan,
+					price: course.price,
 				});
-		} else {
-			toast.error('Image upload failed. Aborting submission');
-			console.log('Image upload failed. Aborting submission.');
+				if (res.status === 200) {
+					toast.success('submit successful');
+					navigate('/admin/course')
+				} else {
+					toast.error('submit fail');
+				}
+			} else {
+				toast.error('Upload image failed');
+			}
+			setIsLoading(false);
 		}
-		setIsLoading(false);
 	}
 
 	const removeLesson = (id) => {
@@ -182,7 +159,7 @@ const CreateCourse = () => {
 	}, [selectedFile])
 	return (<>
 		{
-			isLoading ? <Loading />
+			isLoading ? <ProgressUpload progress={ progress } />
 				:
 				<div className='text-left'>
 					<div className='flex w-full'>
@@ -210,6 +187,7 @@ const CreateCourse = () => {
 											</div>
 											<div className='w-6/12'>
 												<label htmlFor={ `linkVideo-${item.id}` } className='w-2/12'>Link Video:</label>
+												{/* <input type='file' id={ `linkVideo-${item.id}` } name={ `video-${item.id}` } onChange={ handleChangeFile } /> */ }
 												<Input id={ `linkVideo-${item.id}` } name={ `video-${item.id}` } className='w-8/12' onChange={ handleChangeLesson } value={ item.video } />
 												<button onClick={ () => removeLesson(item.id) } className='btn-custom w-1/12 ml-2'>
 													<FontAwesomeIcon icon={ faXmark } />
@@ -291,9 +269,6 @@ const CreateCourse = () => {
 					<div>
 						<button className='btn-custom px-3 py-2' onClick={ handleSubmit }>
 							DONE
-						</button>
-						<button className='btn-custom px-3 py-2' onClick={ handleFileUpload }>
-							UPLOAD
 						</button>
 						{ imageUrl && <img src={ imageUrl } alt="Uploaded" /> }
 					</div>

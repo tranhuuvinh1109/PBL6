@@ -136,7 +136,8 @@ const CourseManagement = () => {
 				<img
 					src={ image }
 					alt="Product"
-					style={ { width: '100%' } }
+					className='object-cover'
+					style={ { width: '100%', height: '100px' } }
 				/>)
 		},
 		{
@@ -189,7 +190,7 @@ const CourseManagement = () => {
 			<Table columns={ columns } dataSource={ context.listCourse } className='mt-4' onRow={ (record, rowIndex) => {
 				return {
 					onClick: () => {
-						navigate(`/page/course/${record.id}`)
+						navigate(`/course/${record.id}`)
 					},
 				};
 			} } />;

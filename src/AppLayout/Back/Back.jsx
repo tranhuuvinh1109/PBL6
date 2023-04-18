@@ -8,11 +8,11 @@ const Back = () => {
 	const navigate = useNavigate();
 
 	return (
-		<Container className="text-left" style={{ marginTop: '100px' }}>
-			<button className="btn-custom"
-				onClick={() => navigate(-1)}
+		<Container className="text-left">
+			<button className="btn-back"
+				onClick={ () => navigate(-1) }
 			>
-				<FontAwesomeIcon icon={faChevronLeft} /> Back
+				<FontAwesomeIcon icon={ faChevronLeft } /> Back
 			</button>
 		</Container>
 	)

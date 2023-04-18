@@ -15,7 +15,9 @@ const AppContent = () => {
 					<>
 						<Header />
 						{/* main content */ }
-						<Outlet />
+						<div className='mt-20'>
+							<Outlet />
+						</div>
 						{/* end main content */ }
 						<Footer />
 					</>
