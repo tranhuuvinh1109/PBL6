@@ -21,6 +21,7 @@ export const AppContext = createContext({});
 
 function App () {
   const [isLoading, setIsLoading] = useState(false);
+  const [isAdmin, setIsAdmin] = useState(false);
   const [listCourse, setListCourse] = useState([]);
   const [listCategory, setListCategory] = useState([]);
   const [user, setUser] = useState();
@@ -30,13 +31,17 @@ function App () {
       const userId = localStorage.getItem('userID');
       const res = await authAPI.getUserByToken(userId);
       if (res.status === 200) {
-        setUser(res.data.data)
-        console.log(res.data.data, isLoading)
-        localStorage.setItem('userID', res.data.data.id)
+        setUser(res.data.data);
+        if (res.data.data.role === 2) {
+          setIsAdmin(true);
+        } else {
+          setIsAdmin(false);
+        }
+        localStorage.setItem('userID', res.data.data.id);
         // localStorage.setItem('userID', res.data.refresh_token)
       }
       else {
-        throw new Error("Get Category failed");
+        throw new Error("Get user failed");
       }
     }
     catch (err) {
@@ -54,7 +59,7 @@ function App () {
         setListCourse(res.data.data);
       }
       else {
-        throw new Error("Get Category failed");
+        throw new Error("Get Course failed");
       }
     }
     catch (err) {
@@ -94,7 +99,7 @@ function App () {
 
 
   return (
-    <AppContext.Provider value={{ user, setUser, listCourse, setListCourse, isLoading, setIsLoading, listCategory }} >
+    <AppContext.Provider value={{ user, setUser, listCourse, setListCourse, isLoading, setIsLoading, listCategory, isAdmin, setIsAdmin }} >
       <div className="App">
         {/* <ScrollToTop smooth color="#6f00ff" /> */}
         <Toaster

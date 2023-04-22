@@ -1,7 +1,7 @@
 import React from "react";
 import { Container, Row, Col } from "react-bootstrap";
 import '../../Assets/css//Footer.css';
-import logo from '../../logo.svg';
+import logo from '../../logo.png';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFacebook, faInstagram, faTelegram } from '@fortawesome/free-brands-svg-icons';
 import { faCalendarDays, faEnvelope } from '@fortawesome/free-solid-svg-icons';

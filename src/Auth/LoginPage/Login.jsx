@@ -33,7 +33,12 @@ const Login = () => {
 					navigator('/');
 					localStorage.setItem('userID', res.data.data.id);
 					// localStorage.setItem('userID', res.data.refresh_token);
-					toast.success('Login Successfully')
+					toast.success('Login Successfully');
+					if (res.data.data.role === 2) {
+						context.setIsAdmin(true);
+					} else {
+						context.setIsAdmin(false);
+					}
 				} else {
 					throw new Error("Login failed");
 				}

@@ -351,3 +351,20 @@ p{
     padding: 8px;
   }
 }
+
+.overlay-progress {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  background-color: rgba(0, 0, 0, 0.05);
+  z-index: 999999;
+}
+
+.ant-btn-primary {
+  background-color: #0EDC8D;
+}
+.ant-btn-primary:hover {
+  background-color: #59e9b2 !important;
+}

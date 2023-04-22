@@ -25,6 +25,7 @@ module.exports = {
       },
       height: {
         '75px': '75px',
+        '70px': '70px',
       },
       maxWidth: {
         '14rem': '14rem',
@@ -39,6 +40,9 @@ module.exports = {
       },
       maxHeight: {
         '490px': '490px',
+      },
+      zIndex: {
+        '100000': '100000',
       }
     },
   },

@@ -64,7 +64,7 @@ export const routers = [
 
 export const adminRouter = [
 	{
-		path: 'daskboard',
+		path: '',
 		component: Daskboard
 	},
 	{
@@ -79,9 +79,4 @@ export const adminRouter = [
 		path: 'course/create',
 		component: CreateCourse
 	},
-
-	// {
-	// 	path: 'contact',
-	// 	component: Contact
-	// }
 ];

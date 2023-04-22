@@ -1,4 +1,4 @@
-import logo from '../logo.svg';
+import logo from '../logo.png';
 import { Avatar, Breadcrumb, Layout, Menu, Popover, theme } from 'antd';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHouse, faBlog, faLightbulb, faChartLine } from '@fortawesome/free-solid-svg-icons'
@@ -13,7 +13,7 @@ const listMenu = [
 	{
 		title: 'Daskboard',
 		icon: <FontAwesomeIcon icon={ faChartLine } />,
-		url: 'daskboard'
+		url: ''
 	},
 	{
 		title: 'Course',
@@ -59,18 +59,19 @@ const AdminContent = () => {
 			>
 				<div
 					style={ {
-						height: 32,
-						margin: 16,
+						height: 68,
+						marginLeft: 20,
+						marginTop: 4
 					} }
 				>
-					<img src={ logo } alt='logo' />
+					<img src={ logo } alt='logo' className='w-16 h-16 rounded-lg object-cover object-center' />
 
 				</div>
 				<Menu theme="light" defaultSelectedKeys={ ['0'] } mode="inline">
 					{
-						listMenu.map((item, index) => {
+						listMenu.map((item) => {
 							return (
-								<Menu.Item icon={ item.icon } key={ index } onClick={ () => navigate(`${item.url}`) }>
+								<Menu.Item icon={ item.icon } key={ item.title } onClick={ () => navigate(`${item.url}`) }>
 									{
 										item.title
 									}

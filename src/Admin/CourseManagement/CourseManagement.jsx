@@ -1,10 +1,15 @@
-import React, { useContext } from 'react';
+import React, { useContext, useCallback } from 'react';
 import { SearchOutlined } from '@ant-design/icons';
-import { Button, Input, Space, Table } from 'antd';
+import { Button, Input, Space, Table, Popconfirm } from 'antd';
 import { useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Highlighter from 'react-highlight-words';
 import { AppContext } from '../../App';
+import { useMemo } from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPenToSquare, faTrashCan } from '@fortawesome/free-solid-svg-icons';
+import { courseAPI } from '../../api/courseAPI';
+import { toast } from 'react-hot-toast';
 
 const CourseManagement = () => {
 	const navigate = useNavigate();
@@ -121,7 +126,7 @@ const CourseManagement = () => {
 			title: 'ID',
 			dataIndex: 'id',
 			key: 'id',
-			width: '10%',
+			width: '5%',
 			...getColumnSearchProps('id'),
 			sorter: (a, b) => {
 				console.log(1111, a, b)
@@ -132,6 +137,7 @@ const CourseManagement = () => {
 			title: 'Image',
 			dataIndex: 'image',
 			key: 'image',
+			width: '15%',
 			render: (image) => (
 				<img
 					src={ image }
@@ -159,14 +165,14 @@ const CourseManagement = () => {
 			title: 'Price',
 			dataIndex: 'price',
 			key: 'price',
-			width: '10%',
+			width: '5%',
 			...getColumnSearchProps('price'),
 		},
 		{
 			title: 'Teacher',
 			dataIndex: 'teacher',
 			key: 'teacher',
-			width: '10%',
+			width: '5%',
 			...getColumnSearchProps('teacher'),
 		},
 		{
@@ -176,7 +182,51 @@ const CourseManagement = () => {
 			width: '30%',
 			...getColumnSearchProps('description'),
 		},
+		{
+			title: '',
+			dataIndex: 'edit',
+			key: 'edit',
+			width: '5%',
+		},
+		{
+			title: '',
+			dataIndex: 'delete',
+			key: 'delete',
+			width: '5%',
+		},
 	];
+	const confirm = useCallback(async (id) => {
+		const res = await courseAPI.deleteCourse(id);
+		if (res.status === 200) {
+			context.setListCourse(res.data.data);
+			toast.success('Delete Course Successfully');
+		} else {
+			toast.error('Delete Course Fail');
+			console.log(res.data);
+		}
+	}, [context]);
+
+	const dataSource = useMemo(() => {
+		if (context.listCourse) {
+			return context.listCourse.map((course) => {
+				return {
+					...course,
+					edit: <button onClick={ () => navigate(`edit/${course.id}`) }><FontAwesomeIcon icon={ faPenToSquare } /></button>,
+					delete: <Popconfirm
+						placement="topRight"
+						title='Are you sure to delete this course?'
+						description='Delete the course'
+						onConfirm={ () => confirm(course.id) }
+						okText="Yes"
+						cancelText="No"
+					>
+						<button><FontAwesomeIcon icon={ faTrashCan } /></button>
+					</Popconfirm>
+				}
+			})
+		}
+		return [];
+	}, [context.listCourse, confirm, navigate])
 	return (
 		<div>
 			<div className='flex justify-between'>
@@ -187,13 +237,7 @@ const CourseManagement = () => {
 					Create Course
 				</Button>
 			</div>
-			<Table columns={ columns } dataSource={ context.listCourse } className='mt-4' onRow={ (record, rowIndex) => {
-				return {
-					onClick: () => {
-						navigate(`/course/${record.id}`)
-					},
-				};
-			} } />;
+			<Table columns={ columns } dataSource={ dataSource } className='mt-4' />;
 		</div>
 	)
 }

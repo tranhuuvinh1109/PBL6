@@ -3,8 +3,10 @@ import { Progress } from 'antd';
 
 const ProgressUpload = ({ progress }) => {
 	return (
-		<div>
-			<Progress type="dashboard" percent={progress} size="small" />
+		<div className='overlay-progress'>
+			<div className="h-screen flex items-center justify-center z-[100000]">
+				<Progress type="dashboard" percent={progress} size="small" strokeColor='rgb(52 211 153)' />
+			</div>
 		</div>
 	)
 }

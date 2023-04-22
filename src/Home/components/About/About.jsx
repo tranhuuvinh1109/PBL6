@@ -15,9 +15,6 @@ const About = () => {
 								<p className="wow fadeInUp" data-wow-delay=".6s">Learn to work</p>
 								<p className="qote wow fadeInUp" data-wow-delay=".8s"></p>
 								<div className="button wow fadeInUp" data-wow-delay="1s">
-									<a href="about-us.html" className="btn">Read More</a>
-									<a href="https://www.youtube.com/watch?v=r44RKWyfcFw&fbclid=IwAR21beSJORalzmzokxDRcGfkZA1AtRTE__l5N4r09HcGS5Y6vOluyouM9EM"
-										className="glightbox video btn"> Play Video<i className="lni lni-play"></i></a>
 								</div>
 							</div>
 						</div>

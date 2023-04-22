@@ -3,7 +3,7 @@ import React, { useCallback, useContext, useMemo, useState } from 'react';
 import '../../../Assets/css/Navbar.css';
 import { NavLink, Link } from 'react-router-dom';
 import { Avatar, Button, Divider, Popover } from 'antd';
-import { faArrowRightFromBracket, faUser, faBars, faHouse, faBlog, faLightbulb, faBookmark } from '@fortawesome/free-solid-svg-icons'
+import { faArrowRightFromBracket, faUser, faBars, faHouse, faBlog, faLightbulb, faBookmark, faChartLine } from '@fortawesome/free-solid-svg-icons'
 import { AppContext } from '../../../App';
 import Offcanvas from 'react-bootstrap/Offcanvas';
 import MyCourseItem from './MyCourseItem';
@@ -33,6 +33,7 @@ const Navbar = ({ logo }) => {
 	const contextData = useContext(AppContext)
 	const handleClickLogout = useCallback(() => {
 		contextData.setUser(undefined);
+		contextData.setIsAdmin(false);
 		localStorage.setItem('userID', '');
 	}, [contextData]);
 
@@ -58,7 +59,8 @@ const Navbar = ({ logo }) => {
 				</>
 			);
 		}
-	}, [contextData])
+	}, [contextData]);
+
 
 	const renderUser = useMemo(() => {
 		if (contextData.user) {
@@ -76,13 +78,13 @@ const Navbar = ({ logo }) => {
 									</Link>
 								</div>
 								<div className='max-h-[490px] overflow-y-auto'>
-									<MyCourseItem />
-									<MyCourseItem />
-									<MyCourseItem />
-									<MyCourseItem />
-									<MyCourseItem />
-									<MyCourseItem />
-									<MyCourseItem />
+									{
+										contextData?.listCourse?.map((e) => {
+											return (
+												<MyCourseItem course={ e } />
+											)
+										})
+									}
 								</div>
 							</div>
 						}
@@ -111,6 +113,12 @@ const Navbar = ({ logo }) => {
 									<Divider className='m-0' />
 									<Link to='/user/profile' className='no-underline '><p className='py-2.5 m-0 text-slate-400 hover:text-slate-600'><FontAwesomeIcon icon={ faUser } fontSize={ 16 } /><span className='text-base font-semibold ml-2.5'>Profile</span></p></Link>
 									<Divider className='m-0' />
+									{
+										contextData.isAdmin && <>
+											<Link to='/admin' className='no-underline '><p className='py-2.5 m-0 text-slate-400 hover:text-slate-600'><FontAwesomeIcon icon={ faChartLine } fontSize={ 16 } /><span className='text-base font-semibold ml-2.5'>Daskboard</span></p></Link>
+											<Divider className='m-0' />
+										</>
+									}
 									<Link to='/bookmark' className='no-underline '><p className='py-2.5 m-0 text-slate-400 hover:text-slate-600'><FontAwesomeIcon icon={ faBookmark } fontSize={ 16 } /><span className='text-base font-semibold ml-2.5'>Bookmark</span></p></Link>
 									<Divider className='m-0' />
 									<Link to='/login' onClick={ handleClickLogout } className='no-underline '><p className='py-2.5 m-0 text-slate-400 hover:text-slate-600'><FontAwesomeIcon icon={ faArrowRightFromBracket } fontSize={ 16 } /><span className='text-base font-semibold ml-2.5'>Logout</span></p></Link>
@@ -143,7 +151,7 @@ const Navbar = ({ logo }) => {
 				<FontAwesomeIcon icon={ faBars } />
 			</button>
 			<a href='/' className='logo-customize'>
-				<img src={ logo } className='w-[170px]' alt='logo' />
+				<img src={ logo } className='w-16 h-16 rounded-lg object-center object-cover' alt='logo' />
 			</a>
 			<nav className='nav-nav'>
 				{

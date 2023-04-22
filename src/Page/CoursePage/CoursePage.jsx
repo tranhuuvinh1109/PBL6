@@ -1,7 +1,6 @@
 import React, { useContext, useMemo } from 'react';
 import { AppContext } from '../../App';
 import Course from '../../components/Course/Course';
-import ReactPaginate from 'react-paginate';
 
 // const marks = {
 // 	0: '0',
@@ -23,9 +22,6 @@ const CoursePage = () => {
 		}
 	}, [context.listCourse]);
 
-	const handlePageClick = (selectedPage) => {
-		console.log(selectedPage)
-	};
 
 
 	return (
@@ -34,14 +30,6 @@ const CoursePage = () => {
 				filterCourse &&
 				<Course listCourse={ filterCourse } />
 			}
-			<ReactPaginate
-				pageCount={ 3 }
-				marginPagesDisplayed={ 2 }
-				pageRangeDisplayed={ 5 }
-				onPageChange={ handlePageClick }
-				containerClassName={ 'pagination' }
-				activeClassName={ 'active' }
-			/>
 		</>
 	)
 }
