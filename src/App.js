@@ -1,9 +1,9 @@
 
 import './App.css';
-import React, { createContext, useEffect, useState } from 'react';
+import React, { createContext, useEffect, useState, useCallback } from 'react';
 import HomePage from './Home/HomePage';
 import Login from './Auth/LoginPage/Login';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { Routes, Route, useNavigate } from 'react-router-dom';
 import { PrivateRouter } from './Router/PrivateRouter';
 import AppContent from './AppLayout/Content/Content';
 import { adminRouter, routers, privateRouter } from './Router';
@@ -20,43 +20,48 @@ import { categoryAPI } from './api/categoryApi';
 export const AppContext = createContext({});
 
 function App () {
+  const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
   const [isAdmin, setIsAdmin] = useState(false);
   const [listCourse, setListCourse] = useState([]);
   const [listCategory, setListCategory] = useState([]);
   const [user, setUser] = useState();
-  const getUser = async () => {
+  const getUser = useCallback(async () => {
     try {
       setIsLoading(true);
-      const userId = localStorage.getItem('userID');
-      const res = await authAPI.getUserByToken(userId);
-      if (res.status === 200) {
-        setUser(res.data.data);
-        if (res.data.data.role === 2) {
-          setIsAdmin(true);
-        } else {
-          setIsAdmin(false);
+      const token = localStorage.getItem('userID');
+      if (token) {
+        const res = await authAPI.getUserByToken({ access_token: token });
+        if (res.status === 200) {
+          setUser(res.data.data);
+          if (res.data.data.role === 0) {
+            setIsAdmin(true);
+          } else {
+            setIsAdmin(false);
+          }
+          localStorage.setItem('userID', token);
         }
-        localStorage.setItem('userID', res.data.data.id);
-        // localStorage.setItem('userID', res.data.refresh_token)
       }
       else {
+        navigate('/login');
         throw new Error("Get user failed");
       }
     }
-    catch (err) {
-      toast.error(err.message);
+    catch {
+      toast.error("Please login again");
+      navigate('/login');
     }
     finally {
       setIsLoading(false);
     }
-  };
+  }, []);
   const GetCourse = async () => {
     try {
       setIsLoading(true);
       const res = await courseAPI.getCourse();
       if (res.status === 200) {
-        setListCourse(res.data.data);
+        console.log(111, res.data);
+        setListCourse(res.data);
       }
       else {
         throw new Error("Get Course failed");
@@ -95,7 +100,7 @@ function App () {
     if (token) {
       getUser();
     }
-  }, []);
+  }, [getUser]);
 
 
   return (
@@ -105,42 +110,40 @@ function App () {
         <Toaster
           position="top-center"
           reverseOrder={false} />
-        <BrowserRouter>
-          <Routes>
-            <Route path='/' element={<HomePage />} />
-            <Route path='/login' element={<Login />} />
-            <Route path='/register' element={<Register />} />
-            <Route path="/" element={<AppContent />}>
-              {routers.map((route) => (
-                <Route
-                  key={route.path}
-                  path={route.path}
-                  element={<route.component />}
-                />
-              ))}
-              <Route path="*" element={<NotFound />} />
-            </Route>
+        <Routes>
+          <Route path='/' element={<HomePage />} />
+          <Route path='/login' element={<Login />} />
+          <Route path='/register' element={<Register />} />
+          <Route path="/" element={<AppContent />}>
+            {routers.map((route) => (
+              <Route
+                key={route.path}
+                path={route.path}
+                element={<route.component />}
+              />
+            ))}
+            <Route path="*" element={<NotFound />} />
+          </Route>
 
-            <Route path="/" element={<PrivateRouter outlet={<AppContent />} path='/login' />}>
-              {privateRouter.map((route) => (
-                <Route
-                  key={route.path}
-                  path={route.path}
-                  element={<route.component />}
-                />
-              ))}
-              <Route path="*" element={<NotFound />} />
-            </Route>
-            <Route path='admin' element={<PrivateRouter path='/login' outlet={<AdminContent />} />} >
-              {
-                adminRouter.map(route => {
-                  return <Route key={route.path} element={<route.component />} path={route.path} />
-                })
-              }
-              <Route path='*' element={<NotFound />} />
-            </Route>
-          </Routes>
-        </BrowserRouter>
+          <Route path="/" element={<PrivateRouter outlet={<AppContent />} path='/login' />}>
+            {privateRouter.map((route) => (
+              <Route
+                key={route.path}
+                path={route.path}
+                element={<route.component />}
+              />
+            ))}
+            <Route path="*" element={<NotFound />} />
+          </Route>
+          <Route path='admin' element={<PrivateRouter path='/login' outlet={<AdminContent />} />} >
+            {
+              adminRouter.map(route => {
+                return <Route key={route.path} element={<route.component />} path={route.path} />
+              })
+            }
+            <Route path='*' element={<NotFound />} />
+          </Route>
+        </Routes>
       </div>
     </AppContext.Provider>
 

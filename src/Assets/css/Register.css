@@ -1,150 +1,126 @@
-.login {
+.register-container {
   height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
 }
-.login_box {
-  padding: 16px;
-}
-.login_content {
+.register-content {
   width: 1000px;
   min-height: 550px;
   display: flex;
+  box-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.25);
+  border-radius: 10px;
 }
-.login_content_left {
-  display: flex;
-  flex-direction: column;
-  padding: 0 16px;
-	width: 40%;
+
+.register-form {
+  width: 50%;
+  overflow: hidden;
+}
+.return-home {
+  margin-top: 18px;
+  text-align: left;
+}
+
+.form-title {
+  text-align: left;
+  line-height: 1.66;
+  margin-top: 18px;
+  padding: 0;
+  font-weight: 700;
+  color: #222;
+  font-family: Poppins;
+  font-size: 36px;
+  margin-bottom: 30px;
+}
+.form-content {
+  margin: 0 80px;
+}
+.form-group {
   position: relative;
-
+  margin-bottom: 0px;
+  overflow: hidden;
 }
-.top-link {
+.mb-20px{
+  margin-bottom: 20px;
+}
+.form-group label {
   position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%) ;
+  color: #222;
+  margin-left: 8px;
 }
-.top-link-title {
-  display: none;
+.form-group input {
+  width: 100%;
+  display: block;
+  border: none;
+  border-bottom: 1px solid #999;
+  padding: 6px 30px;
+  font-family: Poppins;
+  box-sizing: border-box;
 }
-.login_content_right {
-  width: 60%;
-  background: linear-gradient(212.38deg, rgba(242, 57, 127, 0.7) 0%, #69ebb9 100%),url(https://static.seattletimes.com/wp-content/uploads/2019/01/web-typing-ergonomics-1020x680.jpg);
-  background-position: center;
-  background-repeat: no-repeat;
-  border-radius: 0.5rem;
-}
-.field-body {
-  flex: 1;
+.form-group-agree {
+  margin-bottom: 20px;
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
+}
+.form-group-agree input {
+  width: 16px;
+  height: 16px;
+}
+.form-group-agree span {
+  font-size: 14px;
+}
+.agree-input {
 
 }
-.field-input-wrapper {
-  margin-bottom: 10px;
-	text-align: left;
+.agree-label{
+
 }
-.field-input-wrapper input {
-	width: 100%;
-  padding: 4px 10px;
-  border: 1px solid #938b8b;
-  border-radius: 8px;
-}
-.input-error {
-	border-color: red !important;
-}
-.field-content {
+.form-button {
   display: flex;
-  flex-direction: column;
   justify-content: space-between;
+  align-items: center;
 }
-.btn-login {
-  width: 100%;
-  padding: 8px 0;
-  background-color: #69ebb9;
-  border-radius: 50px;
-  color: #fff;
-  margin-bottom: 16px;
-}
-.btn-login:hover {
-  background-color: #45eaaa;
-}
-.login_content_right {
+.register-image {
+  width: 50%;
   display: flex;
   justify-content: center;
   align-items: center;
-}
-.login_content_right_title {
-  text-align: center;
-  color: #fff;
-}
-.top-link-title {
-  color: #fff;
-  text-align: center;
 }
 .btn-register {
-  width: 100%;
-  padding: 8px 0;
-  background-color: #69ebb9;
-  border-radius: 50px;
-  color: #fff;
-  margin-bottom: 16px;
+  padding: 8px 20px;
+  border-radius: 10px;
+  background-color: #0edc8d;
+  color: #ffffff;
 }
 .btn-register:hover {
-  background-color: #45eaaa;
+  opacity: 0.8;
 }
-@media (max-width: 1010px) {
-  .login_box {
-    width: 90%;
+.back-home {
+  text-align: left;
+  margin-top: 30px;
+  margin-left: 20px;
+}
+.input-error {
+  border: 1px solid red !important;
+}
+@media (max-width: 1080px) {
+  .register-content {
+    width: 80%;
   }
-  .login_content {
-    width: 100%;
+  .form-content {
+    margin: 0 30px;
   }
 }
 
 @media (max-width: 640px) {
-  .login {
-    overflow: hidden;
-  }
-  .login_box {
-    flex: 1;
-    padding: 0;
-  }
-  .login_content {
+  .register-form {
     width: 100%;
-    height: 100vh;
   }
-  .login_content_left {
-    width: 100%;
-    padding: 0;
-    justify-content: space-between;
-  }
-  .login_content_right {
+  .register-image {
     display: none;
-  }
-  .field-body {
-    flex: 2;
-  }
-  .field-content {
-    height: 80%;
-  }
-  .top-link {
-    position: relative;
-    flex: 1;
-    width: 100%;
-    background: linear-gradient(212.38deg, rgba(242, 57, 127, 0.7) 0%, #69ebb9 100%),url(https://static.seattletimes.com/wp-content/uploads/2019/01/web-typing-ergonomics-1020x680.jpg);
-    background-position: center;
-    background-repeat: no-repeat;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-  .return-home {
-    position: absolute;
-    top: 0;
-    left: 0;
-  }
-  .top-link-title {
-    display: block;
   }
 }

@@ -4,7 +4,7 @@ const useCheckAdmin = (user) => {
 	const [isAdmin, setIsAdmin] = useState(false);
 
 	useEffect(() => {
-		if (user && user.role === 2) {
+		if (user && user.role === 0) {
 			setIsAdmin(true);
 		} else {
 			setIsAdmin(false);

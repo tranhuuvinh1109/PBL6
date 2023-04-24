@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-const InputCustom = ({ name, id, type, placeholder, required, value, onChange, onBlur, readOnly = false, ...props }) => {
+const InputCustom = ({ name, id, icon, type, placeholder, required, value, onChange, onBlur, readOnly = false, ...props }) => {
 	const [error, setError] = useState('');
 
 	const handleBlur = () => {
@@ -14,19 +14,25 @@ const InputCustom = ({ name, id, type, placeholder, required, value, onChange, o
 	};
 
 	return (
-		<div className='field-input-wrapper' { ...props }>
-			<input
-				readOnly={ readOnly }
-				name={ name }
-				type={ type }
-				value={ value }
-				onChange={ onChange }
-				placeholder={ placeholder }
-				onBlur={ handleBlur }
-				className={ error ? 'input-error' : '' }
-			/>
-			{ error && <p className='text-xs text-red-500 w-full mt-1'>{ error }</p> }
+		<div className='mb-20px'>
+			<div className={ error ? 'form-error form-group' : 'form-group' } { ...props }>
+				<label htmlFor={ id }>
+					{ icon }
+				</label>
+				<input
+					readOnly={ readOnly }
+					name={ name }
+					type={ type }
+					value={ value }
+					onChange={ onChange }
+					placeholder={ placeholder }
+					onBlur={ handleBlur }
+					className={ error ? 'input-error' : '' }
+				/>
+			</div>
+			{ error && <p className='text-xs text-red-500 w-full m-0'>{ error }</p> }
 		</div>
+
 	);
 }
 

@@ -27,14 +27,17 @@ const Login = () => {
 		if (data.email && data.password) {
 			context.setIsLoading(true);
 			try {
-				const res = await authAPI.login(data)
+				const res = await authAPI.login({
+					username: data.email,
+					password: data.password
+				})
 				if (res.status === 200) {
 					context.setUser(res.data.data);
 					navigator('/');
-					localStorage.setItem('userID', res.data.data.id);
+					localStorage.setItem('userID', res.data.access_token);
 					// localStorage.setItem('userID', res.data.refresh_token);
 					toast.success('Login Successfully');
-					if (res.data.data.role === 2) {
+					if (res.data.data.role === 0) {
 						context.setIsAdmin(true);
 					} else {
 						context.setIsAdmin(false);

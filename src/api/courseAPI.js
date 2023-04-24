@@ -1,7 +1,7 @@
 import axiosClient from './axiosClient';
 
 export const courseAPI = {
-	getCourse: () => axiosClient.get('/course'),
+	getCourse: () => axiosClient.get('/course/all'),
 	getCourseDetail: (id) => axiosClient.get(`/course/${id}`),
 	registerCourse: (param) => axiosClient.post(`/purchased_course`, param),
 	checkRegisteredCourse: (param) => axiosClient.post(`/check_registered_course`, param),
