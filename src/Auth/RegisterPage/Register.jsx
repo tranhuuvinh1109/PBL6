@@ -1,4 +1,5 @@
 import '../../Assets/css/Register.css';
+import registerImage from '../../Assets/images/signup-image.jpg';
 import React, { useState, useContext } from 'react';
 import { Link } from "react-router-dom";
 import { faCircleArrowLeft, faUser, faLock, faAt } from '@fortawesome/free-solid-svg-icons'
@@ -10,7 +11,8 @@ import { authAPI } from '../../api/authApi';
 import { Radio } from 'antd';
 import InputCustom from '../../components/Input/Input';
 
-
+// const pattern = /^[a-zA-Z0-9]+@(?:[a-zA-Z0-9]+\.)+[A-Za-z]+$/;
+// const checkUsername = /[A-Z]/;
 const formField = [
 	{
 		id: 'username',
@@ -53,12 +55,10 @@ const Register = () => {
 		username: '',
 		email: '',
 		password: '',
-		phone: '',
 		gender: 0,
-		avatar: '',
 		confirmPassword: ''
 	});
-	const handChange = (e) => {
+	const handleChange = (e) => {
 		e.preventDefault();
 		setData({ ...data, [e.target.name]: e.target.value });
 	};
@@ -66,23 +66,27 @@ const Register = () => {
 	const handleSubmit = async (e) => {
 		e.preventDefault();
 		context.setIsLoading(true);
-		if (data.password === data.confirmPassword) {
-			const res = await authAPI.register({
-				username: data.username,
-				gender: data.gender,
-				email: data.email,
-				password: data.password,
-				avatar: data.avatar
-			});
-			if (res.status === 200) {
-				toast.success('submit successful');
-				navigate('/login');
-			} else {
-				toast.error('submit fail');
+		if (agree) {
+			if (data.password === data.confirmPassword) {
+				const res = await authAPI.register({
+					username: data.username,
+					gender: data.gender,
+					email: data.email,
+					password: data.password,
+					avatar: data.avatar
+				});
+				if (res.status === 200) {
+					toast.success('submit successful');
+					navigate('/login');
+				} else {
+					toast.error('submit fail');
+				}
 			}
-		}
-		else {
-			toast.error("Password does not match confirm password, Please check again");
+			else {
+				toast.error("Password does not match confirm password, Please check again");
+			}
+		} else {
+			toast.error("Please read Terms of service");
 		}
 		context.setIsLoading(false);
 	};
@@ -106,11 +110,11 @@ const Register = () => {
 						{
 							formField.map((field) => {
 								return (
-									<InputCustom key={ field.id } type={ field.type } icon={ field.icon } id={ field.id } placeholder={ field.placeholder } required={ field.required } name={ field.name } value={ data[field.name] } onChange={ handChange } onBlur={ () => { } } />
+									<InputCustom key={ field.id } type={ field.type } icon={ field.icon } id={ field.id } placeholder={ field.placeholder } required={ field.required } name={ field.name } value={ data[field.name] } onChange={ handleChange } onBlur={ () => { } } />
 								)
 							})
 						}
-						<Radio.Group onChange={ handChange } value={ data.gender } name='gender' className='w-full  mb-20px flex  justify-between'>
+						<Radio.Group onChange={ handleChange } value={ data.gender } name='gender' className='w-full  mb-20px flex  justify-between'>
 							<Radio value={ 0 }>Male</Radio>
 							<Radio value={ 1 }>FeMale</Radio>
 						</Radio.Group>
@@ -127,10 +131,9 @@ const Register = () => {
 							<Link to={ '/login' }>You had account, login</Link>
 						</div>
 					</div>
-					{/* </form> */ }
 				</div>
 				<div className='register-image'>
-					<img src='https://colorlib.com/etc/regform/colorlib-regform-7/images/signup-image.jpg' alt='sing' />
+					<img src={ registerImage } alt='register' />
 				</div>
 			</div>
 		</div>

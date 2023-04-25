@@ -1,41 +1,37 @@
 import React, { useContext, useState } from 'react';
 import '../../Assets/css/Login.css';
 import { Link } from "react-router-dom";
-import { faCircleArrowLeft } from '@fortawesome/free-solid-svg-icons'
+import { faCircleArrowLeft, faUser, faLock } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useNavigate } from "react-router-dom";
 import toast from 'react-hot-toast';
 import { AppContext } from '../../App';
 import { authAPI } from '../../api/authApi';
+import InputCustom from '../../components/Input/Input';
 
 
 const Login = () => {
 	const navigator = useNavigate();
 	const [data, setData] = useState({
 		username: '',
-		email: '',
 		password: ''
 	})
 	const context = useContext(AppContext)
 
-	const handChange = (e) => {
+	const handleChange = (e) => {
 		e.preventDefault();
 		setData({ ...data, [e.target.name]: e.target.value });
 	}
 	const handleSubmit = async (e) => {
 		e.preventDefault();
-		if (data.email && data.password) {
+		if (data.username && data.password) {
 			context.setIsLoading(true);
 			try {
-				const res = await authAPI.login({
-					username: data.email,
-					password: data.password
-				})
+				const res = await authAPI.login(data);
 				if (res.status === 200) {
 					context.setUser(res.data.data);
 					navigator('/');
 					localStorage.setItem('userID', res.data.access_token);
-					// localStorage.setItem('userID', res.data.refresh_token);
 					toast.success('Login Successfully');
 					if (res.data.data.role === 0) {
 						context.setIsAdmin(true);
@@ -46,14 +42,13 @@ const Login = () => {
 					throw new Error("Login failed");
 				}
 			} catch (error) {
-				console.log(error)
-				toast.error(error.message)
+				toast.error(error.message);
 			}
 			finally {
 				context.setIsLoading(false);
 			}
 		} else {
-			toast.error('Nhap email password')
+			toast.error('Nhap email password');
 		}
 	};
 	return (
@@ -82,12 +77,8 @@ const Login = () => {
 							>
 								<h3 className=''>SIGN IN</h3>
 								<div>
-									<div className='field-input-wrapper'>
-										<input type='text' placeholder='Email' className='w-full' id='email' name='email' value={ data.email } onChange={ handChange } />
-									</div>
-									<div className='field-input-wrapper'>
-										<input type='password' placeholder='Password' className='w-full' id='password' name='password' value={ data.password } onChange={ handChange } />
-									</div>
+									<InputCustom type='text' icon={ <FontAwesomeIcon icon={ faUser } fontSize={ 14 } /> } id='username' placeholder='Your Name' required={ true } name='username' value={ data.username } onChange={ handleChange } onBlur={ () => { } } />
+									<InputCustom type='password' icon={ <FontAwesomeIcon icon={ faLock } fontSize={ 14 } /> } id='password' placeholder='Password' required={ true } name='password' value={ data.password } onChange={ handleChange } onBlur={ () => { } } />
 								</div>
 								<div >
 									<button type="submit" className='btn-login'>Login</button>
