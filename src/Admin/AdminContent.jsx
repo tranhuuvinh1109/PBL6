@@ -5,8 +5,8 @@ import { faHouse, faBlog, faLightbulb, faChartLine } from '@fortawesome/free-sol
 import React, { useContext } from 'react';
 import { Outlet, useNavigate } from 'react-router-dom';
 import UserClickContent from './components/UserClickContent';
-import { AppContext } from '../App';
 import useCheckAdmin from '../hook/useCheckAdmin';
+import { AppContext } from '../App';
 const { Content, Sider } = Layout;
 
 const listMenu = [
@@ -38,8 +38,7 @@ const AdminContent = () => {
 	const {
 		token: { colorBgContainer },
 	} = theme.useToken();
-
-	const isAdmin = useCheckAdmin(context?.user);
+	const isAdmin = useCheckAdmin(context);
 
 	if (!isAdmin) {
 		return <div>
@@ -91,7 +90,7 @@ const AdminContent = () => {
 										<Avatar src={ context.user.avatar } size='large' alt="user" />
 										<span className='ml-1.5 text-base text-base font-semibold'>
 											{
-												context.user.name
+												context.user.username
 											}
 										</span>
 									</>

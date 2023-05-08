@@ -48,9 +48,9 @@ const Navbar = ({ logo }) => {
 								<img src='https://fullstack.edu.vn/static/media/fallback-avatar.155cdb2376c5d99ea151.jpg' alt='avatar' className='w-16 h-16 rounded-full' />
 						}
 						{
-							contextData.user?.name && <h4 className='mt-2 text-xl'>
+							contextData.user?.username && <h4 className='mt-2 text-xl'>
 								{
-									contextData.user?.name
+									contextData.user?.username
 								}
 							</h4>
 						}
@@ -79,9 +79,9 @@ const Navbar = ({ logo }) => {
 								</div>
 								<div className='max-h-[490px] overflow-y-auto'>
 									{
-										contextData?.listCourse?.map((e) => {
+										contextData?.listCourse?.map((e, index) => {
 											return (
-												<MyCourseItem course={ e } />
+												<MyCourseItem course={ e } key={ index } />
 											)
 										})
 									}
@@ -103,7 +103,7 @@ const Navbar = ({ logo }) => {
 										}
 										<div>
 											{
-												contextData.user?.name && <h6 className='m-0'>{ contextData.user.name }</h6>
+												contextData.user?.username && <h6 className='m-0'>{ contextData.user.username }</h6>
 											}
 											{
 												contextData.user?.email && <span>{ contextData.user.email }</span>

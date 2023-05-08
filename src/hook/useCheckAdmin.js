@@ -1,15 +1,16 @@
 import { useState, useEffect } from 'react';
 
-const useCheckAdmin = (user) => {
+const useCheckAdmin = (context) => {
 	const [isAdmin, setIsAdmin] = useState(false);
 
 	useEffect(() => {
-		if (user && user.role === 0) {
+
+		if (!context.loading && context.user && context.user.role === 0) {
 			setIsAdmin(true);
 		} else {
 			setIsAdmin(false);
 		}
-	}, [user]);
+	}, [context.loading, context.user]);
 
 	return isAdmin;
 }

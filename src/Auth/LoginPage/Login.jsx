@@ -30,7 +30,6 @@ const Login = () => {
 				const res = await authAPI.login(data);
 				if (res.status === 200) {
 					context.setUser(res.data.data);
-					navigator('/');
 					localStorage.setItem('userID', res.data.access_token);
 					toast.success('Login Successfully');
 					if (res.data.data.role === 0) {
@@ -38,6 +37,7 @@ const Login = () => {
 					} else {
 						context.setIsAdmin(false);
 					}
+					navigator('/');
 				} else {
 					throw new Error("Login failed");
 				}
@@ -87,13 +87,6 @@ const Login = () => {
 									<span>New here?</span> <Link to='/register'>Create new account</Link>
 								</div>
 							</form>
-							{/* <div className='field-input'>
-								<label htmlFor='username'>
-									Username:
-								</label>
-								<input type='text' id='username' name='username' value={ data.username } onChange={ handChange } />
-							</div> */}
-
 						</div>
 					</div>
 					<div className='login_content_right'>

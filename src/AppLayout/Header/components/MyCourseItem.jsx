@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 const MyCourseItem = ({ course }) => {
 	return (
 		<div className="flex mt-2">
-			<Link to={ `course/${course.id}` }>
+			<Link to={ `course/${course.id}` } key={ course.id }>
 				<img src={ course.image } alt="course" className="rounded-lg w-[120px] h-[70px] object-cover" />
 			</Link>
 			<div className="ml-3">

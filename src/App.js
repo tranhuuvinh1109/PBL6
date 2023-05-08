@@ -33,18 +33,18 @@ function App () {
       if (token) {
         const res = await authAPI.getUserByToken({ access_token: token });
         if (res.status === 200) {
-          setUser(res.data.data);
-          if (res.data.data.role === 0) {
+          setUser(res.data);
+          if (res.data.role === 0) {
             setIsAdmin(true);
           } else {
             setIsAdmin(false);
+            navigate('/');
           }
           localStorage.setItem('userID', token);
         }
       }
       else {
         navigate('/login');
-        throw new Error("Get user failed");
       }
     }
     catch {
@@ -60,7 +60,6 @@ function App () {
       setIsLoading(true);
       const res = await courseAPI.getCourse();
       if (res.status === 200) {
-        console.log(111, res.data);
         setListCourse(res.data);
       }
       else {
@@ -136,6 +135,7 @@ function App () {
             <Route path="*" element={<NotFound />} />
           </Route>
           <Route path='admin' element={<PrivateRouter path='/login' outlet={<AdminContent />} />} >
+            {/* <Route path='admin' element={<AdminContent />} > */}
             {
               adminRouter.map(route => {
                 return <Route key={route.path} element={<route.component />} path={route.path} />

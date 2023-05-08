@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { InputNumber, Input, Divider } from 'antd';
-import { faXmark, faPlus, faPencil } from '@fortawesome/free-solid-svg-icons';
+import { faXmark, faPlus, faPencil, faCloudArrowUp } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
@@ -9,7 +9,6 @@ import { toast } from 'react-hot-toast';
 import uploadFileWithProgress from '../../../Firebase/uploadFileWithProgress';
 import ProgressUpload from '../../components/ProgressUpload/ProgressUpload';
 import { useNavigate } from 'react-router-dom';
-
 
 const { TextArea } = Input;
 const CreateCourse = () => {
@@ -90,6 +89,7 @@ const CreateCourse = () => {
 	const handleSubmit = async () => {
 		setIsLoading(true);
 		if (selectedFile.preview) {
+			const videoDownloadURL = [];
 			const randomNum = new Date().getTime();
 			const newName = course.name + randomNum;
 
@@ -99,29 +99,40 @@ const CreateCourse = () => {
 				newName,
 				setProgress
 			);
-			if (url) {
-				console.log(1, url);
-				setImageUrl(url);
-				const res = await courseAPI.postCourse({
-					name: course.name,
-					description: course.description,
-					teacher: 1,
-					image: url,
-					lessons: arrLesson,
-					plans: arrPlan,
-					price: course.price,
-				});
-				if (res.status === 200) {
-					toast.success('submit successful');
-					navigate('/admin/course')
+			arrLesson.map(async (lesson, index) => {
+				const videoUpload = await uploadFileWithProgress(lesson.video, 'videos/course', lesson.name, setProgress);
+				videoDownloadURL.push(videoUpload);
+				console.log(122, videoUpload)
+				const temp = [...arrLesson];
+				temp[index].video.videoDownloadURL = videoUpload;
+				setArrLesson(temp);
+			})
+			if (videoDownloadURL.length > 0) {
+				console.log(videoDownloadURL, arrLesson);
+
+				if (url) {
+					setImageUrl(url);
+					const res = await courseAPI.postCourse({
+						name: course.name,
+						description: course.description,
+						teacher: 1,
+						image: url,
+						lessons: arrLesson,
+						plans: arrPlan,
+						price: course.price,
+					});
+					if (res.status === 200) {
+						toast.success('submit successful');
+						navigate('/admin/course')
+					} else {
+						toast.error('submit fail');
+					}
 				} else {
-					toast.error('submit fail');
+					toast.error('Upload image failed');
 				}
-			} else {
-				toast.error('Upload image failed');
 			}
-			setIsLoading(false);
 		}
+		setIsLoading(false);
 	}
 
 	const removeLesson = (id) => {
@@ -152,6 +163,17 @@ const CreateCourse = () => {
 		}
 	}
 
+	const handleChangeVideo = (e) => {
+		const file = e.target.files[0];
+		file.preview = URL.createObjectURL(file);
+
+		const id = +e.target.id.split("-")[1];
+		const temp = [...arrLesson];
+		const itemChange = temp.findIndex(item => item.id === id);
+		temp[itemChange].video = file;
+		setArrLesson(temp);
+	}
+
 	useEffect(() => {
 		return () => {
 			selectedFile && URL.revokeObjectURL(selectedFile.preview);
@@ -177,19 +199,31 @@ const CreateCourse = () => {
 					{ arrLesson.map((item) => {
 						return (
 							<div className='mb-4' key={ item.id }>
-								<div className='flex'>
-									<div className='mb-2 w-6/12'>
-										<label htmlFor={ `lessonName-${item.id}` } className='w-2/12'>Lesson Name:</label>
-										<Input id={ `lessonName-${item.id}` } name={ `name-${item.id}` } className='w-8/12' onChange={ handleChangeLesson } value={ item.name } />
+								<div className='mb-2 flex justify-between'>
+									<div className='w-9/12'>
+										<label htmlFor={ `lessonName-${item.id}` } onClick={ () => console.log(arrLesson) }>Lesson Name:</label>
+										<Input id={ `lessonName-${item.id}` } name={ `name-${item.id}` } className='w-8/12 ml-3' onChange={ handleChangeLesson } value={ item.name } />
 									</div>
-									<div className='w-6/12'>
-										<label htmlFor={ `linkVideo-${item.id}` } className='w-2/12'>Link Video:</label>
-										{/* <input type='file' id={ `linkVideo-${item.id}` } name={ `video-${item.id}` } onChange={ handleChangeFile } /> */ }
-										<Input id={ `linkVideo-${item.id}` } name={ `video-${item.id}` } className='w-8/12' onChange={ handleChangeLesson } value={ item.video } />
-										<button onClick={ () => removeLesson(item.id) } className='btn-custom w-1/12 ml-2'>
+									<div>
+										<button onClick={ () => removeLesson(item.id) } className='btn-custom px-4 py-2'>
 											<FontAwesomeIcon icon={ faXmark } />
 										</button>
 									</div>
+								</div>
+								<div className='mb-2 flex ' >
+									<div>
+										<label htmlFor={ `linkVideo-${item.id}` } className='cursor-pointer px-4 py-1 border-red-400 text-red-400 border-2 border-solid rounded-2xl hover:text-red-600 hover:border-red-600'>
+											<FontAwesomeIcon icon={ faCloudArrowUp } />
+											<span className='ml-1.5'>Upload Video Lesson</span>
+										</label>
+										<input type='file' id={ `linkVideo-${item.id}` } name={ `video-${item.id}` } onChange={ handleChangeVideo } className='hidden' />
+									</div>
+									{
+										item.video.preview && <div className='ml-4'>
+											<video src={ item.video.preview } width="500" height="300" controls className='rounded-lg' />
+										</div>
+									}
+
 								</div>
 								<div className='w-full'>
 									<label htmlFor={ `grammar-${item.id}` } className='w-1/12'>Grammar:</label>
