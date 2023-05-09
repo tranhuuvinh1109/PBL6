@@ -216,7 +216,7 @@ const CreateCourse = () => {
 											<FontAwesomeIcon icon={ faCloudArrowUp } />
 											<span className='ml-1.5'>Upload Video Lesson</span>
 										</label>
-										<input type='file' id={ `linkVideo-${item.id}` } name={ `video-${item.id}` } onChange={ handleChangeVideo } className='hidden' />
+										<input type='file' accept="video/mp4,video/x-m4v,video/*" id={ `linkVideo-${item.id}` } name={ `video-${item.id}` } onChange={ handleChangeVideo } className='hidden' />
 									</div>
 									{
 										item.video.preview && <div className='ml-4'>
