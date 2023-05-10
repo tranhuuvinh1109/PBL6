@@ -41,8 +41,11 @@ const ProfilePage = () => {
 			<Row>
 				<Col xs={ 12 } md={ 4 }>
 					<div className="pr-4">
-						<div className="user-avatar">
-							<img src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRcVOVQefdYfTaJaNwSYAW805SsSdVzu8xICw&usqp=CAU' alt="user" />
+						<div className="user-avatar-profile">
+							{
+								context?.user?.avatar && <img src={ context.user.avatar } alt="user" />
+							}
+
 						</div>
 						<div className="flex">
 							<span>Work</span><div className="flex-1 lineCustom"></div>
@@ -84,7 +87,7 @@ const ProfilePage = () => {
 								})
 							}
 						</div>
-						<div className="mt-10">
+						<div className="mt-10 tab-content">
 							{
 								renderTab
 							}

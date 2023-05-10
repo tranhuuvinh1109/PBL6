@@ -8,7 +8,7 @@ import { useNavigate } from "react-router-dom";
 import toast from 'react-hot-toast';
 import { AppContext } from '../../App';
 import { authAPI } from '../../api/authApi';
-import { Radio } from 'antd';
+import { Radio, Select } from 'antd';
 import InputCustom from '../../components/Input/Input';
 
 // const pattern = /^[a-zA-Z0-9]+@(?:[a-zA-Z0-9]+\.)+[A-Za-z]+$/;
@@ -56,11 +56,16 @@ const Register = () => {
 		email: '',
 		password: '',
 		gender: 0,
+		role: 2,
 		confirmPassword: ''
 	});
 	const handleChange = (e) => {
 		e.preventDefault();
 		setData({ ...data, [e.target.name]: e.target.value });
+	};
+
+	const handleChangeRole = (value) => {
+		setData({ ...data, role: value });
 	};
 
 	const handleSubmit = async (e) => {
@@ -118,6 +123,26 @@ const Register = () => {
 							<Radio value={ 0 }>Male</Radio>
 							<Radio value={ 1 }>FeMale</Radio>
 						</Radio.Group>
+						<div className='form-group mb-20px'>
+							<Select
+								name="role"
+								onChange={ handleChangeRole }
+								style={ {
+									width: 120,
+								} }
+								defaultValue={ 2 }
+								options={ [
+									{
+										value: 1,
+										label: 'Teacher'
+									},
+									{
+										value: 2,
+										label: 'Student'
+									}
+								] }
+							/>
+						</div>
 						<div className='form-group-agree'>
 							<input type='checkbox' name='agree' className='agree-input' id='agree' value={ agree } onChange={ e => handleChangeAgree(e) } />
 							<span className='agree-label'>

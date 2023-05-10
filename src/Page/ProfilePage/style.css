@@ -10,8 +10,12 @@
   height: 2px;
   background-color: rgba(0, 0, 0, 0.1);;
 }
-.user-avatar {
+.user-avatar-profile {
   max-height: 300px;
+  overflow: hidden;
+}
+.user-avatar-profile img {
+  width: 100%;
 }
 .wrapper-user {
   text-align: left;
@@ -29,6 +33,9 @@
 .tab-bar{
   text-align: left;
   border-bottom: 2px solid rgba(0, 0, 0, 0.1);
+}
+.tab-content {
+  min-height: 500px;
 }
 .item-tab {
   margin-right: 4px;

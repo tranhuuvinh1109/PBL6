@@ -114,7 +114,7 @@ const Navbar = ({ logo }) => {
 									<Link to='/user/profile' className='no-underline '><p className='py-2.5 m-0 text-slate-400 hover:text-slate-600'><FontAwesomeIcon icon={ faUser } fontSize={ 16 } /><span className='text-base font-semibold ml-2.5'>Profile</span></p></Link>
 									<Divider className='m-0' />
 									{
-										contextData.isAdmin && <>
+										(contextData.user.role === 0 || contextData.user.role === 1) && <>
 											<Link to='/admin' className='no-underline '><p className='py-2.5 m-0 text-slate-400 hover:text-slate-600'><FontAwesomeIcon icon={ faChartLine } fontSize={ 16 } /><span className='text-base font-semibold ml-2.5'>Daskboard</span></p></Link>
 											<Divider className='m-0' />
 										</>

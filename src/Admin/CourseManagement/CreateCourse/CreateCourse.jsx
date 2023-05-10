@@ -28,8 +28,6 @@ const CreateCourse = () => {
 		title: "",
 	}]);
 
-	const [imageUrl, setImageUrl] = useState(null);
-
 	const [course, setCourse] = useState({
 		name: '',
 		price: 0,
@@ -89,51 +87,78 @@ const CreateCourse = () => {
 	const handleSubmit = async () => {
 		setIsLoading(true);
 		if (selectedFile.preview) {
-			const videoDownloadURL = [];
-			const randomNum = new Date().getTime();
-			const newName = course.name + randomNum;
+			try {
+				const uploadImagePromise = uploadFileWithProgress(
+					selectedFile,
+					'images/course',
+					`${course.name}${new Date().getTime()}`,
+					setProgress
+				);
 
-			const url = await uploadFileWithProgress(
-				selectedFile,
-				`images/course`,
-				newName,
-				setProgress
-			);
-			arrLesson.map(async (lesson, index) => {
-				const videoUpload = await uploadFileWithProgress(lesson.video, 'videos/course', lesson.name, setProgress);
-				videoDownloadURL.push(videoUpload);
-				console.log(122, videoUpload)
-				const temp = [...arrLesson];
-				temp[index].video.videoDownloadURL = videoUpload;
-				setArrLesson(temp);
-			})
-			if (videoDownloadURL.length > 0) {
-				console.log(videoDownloadURL, arrLesson);
+				const uploadVideoPromises = arrLesson.map((lesson) =>
+					uploadFileWithProgress(
+						lesson.video,
+						'videos/course',
+						course.name + lesson.name,
+						setProgress
+					)
+				);
 
-				if (url) {
-					setImageUrl(url);
-					const res = await courseAPI.postCourse({
+				const [imageUrl, ...videoDownloadURLs] = await Promise.all([
+					uploadImagePromise,
+					...uploadVideoPromises,
+				]);
+
+				if (imageUrl && videoDownloadURLs.length === arrLesson.length) {
+					console.log('post', JSON.stringify({
 						name: course.name,
 						description: course.description,
 						teacher: 1,
-						image: url,
-						lessons: arrLesson,
+						image: imageUrl,
+						lessons: arrLesson.map((lesson, index) => ({
+							...lesson,
+							video: videoDownloadURLs[index],
+						})),
+						start: "2023-05-10",
+						end: "2023-08-10",
+						plans: arrPlan,
+						price: course.price,
+					}))
+					const res = await courseAPI.postCourse({
+						course_id: '111',
+						name: course.name,
+						description: course.description,
+						teacher: 1,
+						image: imageUrl,
+						lessons: arrLesson.map((lesson, index) => ({
+							...lesson,
+							video: videoDownloadURLs[index],
+						})),
+						start: "2023-05-10",
+						end: "2023-08-10",
 						plans: arrPlan,
 						price: course.price,
 					});
-					if (res.status === 200) {
-						toast.success('submit successful');
-						navigate('/admin/course')
+
+
+
+					if (res.status === 201) {
+						toast.success('Submit successful');
+						navigate('/admin/course');
 					} else {
-						toast.error('submit fail');
+						toast.error('Submit failed');
 					}
 				} else {
-					toast.error('Upload image failed');
+					toast.error('Upload image or video failed');
 				}
+			} catch (error) {
+				toast.error('An error occurred during the upload');
 			}
 		}
+
 		setIsLoading(false);
-	}
+	};
+
 
 	const removeLesson = (id) => {
 		if (arrLesson.length !== 1) {
@@ -301,7 +326,6 @@ const CreateCourse = () => {
 				<button className='btn-custom px-3 py-2' onClick={ handleSubmit }>
 					DONE
 				</button>
-				{ imageUrl && <img src={ imageUrl } alt="Uploaded" /> }
 			</div>
 			{
 				isLoading && <ProgressUpload progress={ progress } />
