@@ -5,8 +5,11 @@ const useCheckAdmin = (context) => {
 
 	useEffect(() => {
 
-		if (!context.loading && context.user && context.user.role === 0) {
-			setIsAdmin(true);
+		if (!context.loading && context.user) {
+			if (context.user.role === 0 || context.user.role === 1) {
+				setIsAdmin(true);
+			}
+
 		} else {
 			setIsAdmin(false);
 		}

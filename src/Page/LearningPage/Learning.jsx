@@ -3,7 +3,6 @@ import { Avatar, Collapse } from 'antd';
 import React, { useMemo, useState, useEffect, useContext } from 'react';
 import { Container, Row, Col, Spinner } from 'react-bootstrap';
 import { useParams } from "react-router-dom";
-import CommentItem from './components/CommentItem/CommentItem';
 import LessonItem from './components/LessonItem/LessonItem';
 import { faPaperPlane } from '@fortawesome/free-solid-svg-icons';
 import { courseAPI } from '../../api/courseAPI';
@@ -12,6 +11,7 @@ import { db } from '../../Firebase/firebaseClient';
 import { AppContext } from '../../App';
 import { authAPI } from '../../api/authApi';
 import ReactPlayer from 'react-player';
+import CommentItem from '../../components/CommentItem/CommentItem';
 
 const { Panel } = Collapse;
 
@@ -26,11 +26,11 @@ const Learning = () => {
 
 	const handleChange = (e) => {
 		setContentComment(e.target.value)
-	}
+	};
 
 	const handleSubmitComment = (e) => {
 		e.preventDefault();
-		if (infor) {
+		if (infor && contentComment) {
 			db.collection('lessons')
 				.doc(id + "-" + actived)
 				.collection('comments')
@@ -57,7 +57,7 @@ const Learning = () => {
 				console.log("...fail", res.data.data)
 			}
 		}
-	}
+	};
 
 	const GetInformationUser = async (id) => {
 		const res = await authAPI.getUser(id)
@@ -65,7 +65,7 @@ const Learning = () => {
 			return res.data.data
 		}
 		return {};
-	}
+	};
 
 	const renderVideo = useMemo(() => {
 		if (infor?.lessons) {
@@ -75,12 +75,12 @@ const Learning = () => {
 					<div className='w-full rounded-xl overflow-hidden'>
 						<ReactPlayer url={ findItem[0].video } controls={ true } width={ '100%' } height={ '500px' } />
 					</div>
-				)
-			}
-			return <Spinner animation="grow" />
+				);
+			};
+			return <Spinner animation="grow" />;
 		}
-		return <Spinner animation="grow" />
-	}, [actived, infor])
+		return <Spinner animation="grow" />;
+	}, [actived, infor]);
 
 	const renderGrammar = useMemo(() => {
 		if (infor?.lessons) {
@@ -89,17 +89,17 @@ const Learning = () => {
 				return parse(findItem[0].grammar);
 			}
 		}
-	}, [actived, infor])
+	}, [actived, infor]);
 
 	const renderLeson = useMemo(() => {
 		if (infor?.lessons) {
 			return infor.lessons?.map((item) => {
 				return <LessonItem lesson={ item } key={ item.id } setActived={ setActived } isActive={ actived === item.id } />
-			})
+			});
 		}
-	}, [actived, infor])
+	}, [actived, infor]);
 
-	const convertomment = useMemo(async () => {
+	const convertComment = useMemo(async () => {
 		const list = [];
 		if (comments) {
 			for (const comment of comments) {
@@ -113,22 +113,21 @@ const Learning = () => {
 			}
 		}
 		return list;
-	}, [comments])
+	}, [comments]);
 
 	const renderComment = useMemo(() => {
 		return commentsData?.map((comment, index) => {
 			return <CommentItem comment={ comment } key={ index } />
-		})
-	}, [commentsData])
+		});
+	}, [commentsData]);
 
 	useEffect(() => {
-		convertomment.then((result) => {
+		convertComment.then((result) => {
 			setCommentsData(result);
 		});
-	}, [comments, convertomment]);
+	}, [convertComment]);
 
 	useEffect(() => {
-
 		const unsubscribe = db
 			.collection('lessons')
 			.doc(id + "-" + actived)
@@ -142,8 +141,8 @@ const Learning = () => {
 	}, [id, actived]);
 
 	useEffect(() => {
-		GetInformationCourse(id)
-	}, [id])
+		GetInformationCourse(id);
+	}, [id]);
 
 
 

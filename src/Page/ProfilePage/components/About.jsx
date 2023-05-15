@@ -1,6 +1,6 @@
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPenToSquare } from '@fortawesome/free-solid-svg-icons';
+import { faPenToSquare, faCircleXmark } from '@fortawesome/free-solid-svg-icons';
 import { useContext } from 'react';
 import { AppContext } from '../../../App';
 import { useState } from 'react';
@@ -21,8 +21,12 @@ const About = () => {
 					Contact Information
 				</p>
 				<button onClick={ toggleButtonEdit }>
-					<FontAwesomeIcon icon={ faPenToSquare } />
+					{
+						edit ? <FontAwesomeIcon icon={ faCircleXmark } />
+							: <FontAwesomeIcon icon={ faPenToSquare } />
+					}
 				</button>
+
 			</div>
 			<div className='flex mb-2.5 input-wrapper'>
 				<div className='w-2/12'>
@@ -98,16 +102,20 @@ const About = () => {
 									} }
 									options={ [
 										{
-											value: 0,
+											value: 1,
 											label: 'Male',
 										},
 										{
-											value: 1,
+											value: 2,
 											label: 'FeMale',
 										},
 									] }
 								/>
-									: <p className='m-0'>Male</p>
+									: <p className='m-0'>
+										{
+											context?.user?.gender === 1 ? 'Male' : 'Female'
+										}
+									</p>
 							}
 						</div>
 					</div>

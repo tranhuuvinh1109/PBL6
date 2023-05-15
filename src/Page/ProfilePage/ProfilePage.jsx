@@ -2,7 +2,7 @@ import React, { useContext, useMemo, useState } from "react";
 import { AppContext } from "../../App.js";
 import { Container, Row, Col } from "react-bootstrap";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faMessage, faUser, faChalkboardUser, faBlog } from "@fortawesome/free-solid-svg-icons";
+import { faMessage, faUser, faChalkboardUser, faBlog, faLocationDot } from "@fortawesome/free-solid-svg-icons";
 import './style.css';
 import Blog from "./components/Blog.jsx";
 import About from "./components/About.jsx";
@@ -45,7 +45,6 @@ const ProfilePage = () => {
 							{
 								context?.user?.avatar && <img src={ context.user.avatar } alt="user" />
 							}
-
 						</div>
 						<div className="flex">
 							<span>Work</span><div className="flex-1 lineCustom"></div>
@@ -59,11 +58,19 @@ const ProfilePage = () => {
 				</Col>
 				<Col xs={ 12 } md={ 8 }>
 					<div className="wrapper-user">
-						<h6>
-							{
-								context?.user?.username
-							}
-						</h6>
+						<div className="flex">
+							<h6 className="m-0 text-base">
+								{
+									context?.user?.username
+								}
+							</h6>
+							<span className="ml-4 text-base">
+								<FontAwesomeIcon icon={ faLocationDot } className="mr-1" />
+								{
+									context?.user?.address
+								}
+							</span>
+						</div>
 						<div>
 							<button className="btn-send">
 								<FontAwesomeIcon icon={ faMessage } />

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { InputNumber, Input, Divider } from 'antd';
+import { InputNumber, Input, Divider, DatePicker } from 'antd';
 import { faXmark, faPlus, faPencil, faCloudArrowUp } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import ReactQuill from 'react-quill';
@@ -11,6 +11,9 @@ import ProgressUpload from '../../components/ProgressUpload/ProgressUpload';
 import { useNavigate } from 'react-router-dom';
 
 const { TextArea } = Input;
+const { RangePicker } = DatePicker;
+
+
 const CreateCourse = () => {
 	const navigate = useNavigate();
 	const [selectedFile, setSelectedFile] = useState(null);
@@ -136,7 +139,7 @@ const CreateCourse = () => {
 						})),
 						start: "2023-05-10",
 						end: "2023-08-10",
-						plans: arrPlan,
+						plans: arrPlan.map(item => ({ title: item.title })),
 						price: course.price,
 					});
 
@@ -215,6 +218,11 @@ const CreateCourse = () => {
 					<label htmlFor='price' className='m-0 px-4 pl-8 text-base font-medium' >Price:</label>
 					<InputNumber id='price' name='price' defaultValue={ 0 } value={ course.price } onChange={ onChange } />
 				</div>
+			</div>
+			<Divider />
+			<div>
+				<label htmlFor='startEnd' className='w-2/12 text-base font-medium' >Start - End:</label>
+				<RangePicker />
 			</div>
 			<Divider />
 
