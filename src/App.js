@@ -9,12 +9,15 @@ import AppContent from './AppLayout/Content/Content';
 import { adminRouter, routers, privateRouter } from './Router';
 import NotFound from './Page/NotFound/NotFound';
 import AdminContent from './Admin/AdminContent';
-// import ScrollToTop from "react-scroll-to-top";
 import { Toaster, toast } from 'react-hot-toast';
 import { authAPI } from './api/authApi';
 import { courseAPI } from './api/courseAPI';
 import Register from './Auth/RegisterPage/Register';
-import { categoryAPI } from './api/categoryApi';
+// import { categoryAPI } from './api/categoryApi';
+import axios from 'axios';
+
+// const apiURL = process.env.REACT_APP_API_URL;
+
 
 
 export const AppContext = createContext({});
@@ -24,86 +27,55 @@ function App () {
   const [isLoading, setIsLoading] = useState(false);
   const [isAdmin, setIsAdmin] = useState(false);
   const [listCourse, setListCourse] = useState([]);
-  const [listCategory, setListCategory] = useState([]);
+  // const [listCategory, setListCategory] = useState([]);
   const [user, setUser] = useState();
-  const getUser = useCallback(async () => {
+
+
+
+  const fetchData = useCallback(async (token) => {
+    setIsLoading(true);
     try {
-      setIsLoading(true);
-      const token = localStorage.getItem('userID');
-      if (token) {
-        const res = await authAPI.getUserByToken({ access_token: token });
-        if (res.status === 200) {
-          setUser(res.data);
-          if (res.data.role === 0) {
-            setIsAdmin(true);
-          } else {
-            setIsAdmin(false);
-            navigate('/');
-          }
-          localStorage.setItem('userID', token);
+      const [courseResponse, userResponse] = await axios.all([
+        courseAPI.getCourse(),
+        authAPI.getUserByToken(token)
+      ]);
+
+      const userData = userResponse.data;
+      const courseData = courseResponse.data;
+
+      if (userData) {
+        if (userData.role === 0) {
+          setIsAdmin(true);
+        } else {
+          setIsAdmin(false);
         }
+        setUser(userData);
       }
-      else {
-        navigate('/login');
+      if (courseData) {
+        setListCourse(courseData);
       }
-    }
-    catch {
-      toast.error("Please login again");
+      navigate('/');
+    } catch (error) {
+      toast.error(`${error}. Please login again`);
       navigate('/login');
+      throw error;
     }
     finally {
-      setIsLoading(false);
+      setIsLoading(false)
     }
   }, []);
-  const GetCourse = async () => {
-    try {
-      setIsLoading(true);
-      const res = await courseAPI.getCourse();
-      if (res.status === 200) {
-        setListCourse(res.data);
-      }
-      else {
-        throw new Error("Get Course failed");
-      }
-    }
-    catch (err) {
-      toast.error(err.message);
-    }
-    finally {
-      setIsLoading(false);
-    }
-  };
-  const getCategory = async () => {
-    try {
-      setIsLoading(true);
-      const res = await categoryAPI.getAll();
-      if (res.status === 200) {
-        setListCategory(res.data.data);
-      }
-      else {
-        throw new Error("Get Category failed");
-      }
-    }
-    catch (err) {
-      toast.error(err.message);
-    }
-    finally {
-      setIsLoading(false);
-    }
-  }
 
   useEffect(() => {
-    GetCourse();
-    getCategory();
     const token = localStorage.getItem('userID');
     if (token) {
-      getUser();
+      fetchData({ access_token: token });
+
     }
-  }, [getUser]);
+  }, [fetchData]);
 
 
   return (
-    <AppContext.Provider value={{ user, setUser, listCourse, setListCourse, isLoading, setIsLoading, listCategory, isAdmin, setIsAdmin }} >
+    <AppContext.Provider value={{ user, setUser, listCourse, setListCourse, isLoading, setIsLoading, isAdmin, setIsAdmin }} >
       <div className="App">
         {/* <ScrollToTop smooth color="#6f00ff" /> */}
         <Toaster
