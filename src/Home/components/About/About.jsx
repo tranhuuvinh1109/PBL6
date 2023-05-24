@@ -1,6 +1,8 @@
 import React from "react";
 import '../../../Assets/css/About.css';
 import { Container, Row, Col } from "react-bootstrap";
+
+const text = 'Discover LearnAnywhere - your one - stop online learning platform! With a diverse course catalog, expert instructors, flexible learning options, interactive lessons, community collaboration, and progress tracking, you can unleash your potential and learn anytime, anywhere.Join us at our website and start your educational journey today!';
 const About = () => {
 	return (
 		// <!-- Start About Us Area -->
@@ -11,8 +13,7 @@ const About = () => {
 						<div className="about-left">
 							<div className="about-title text-left">
 								<span className="wow fadeInDown" data-wow-delay=".2s">About Our Website</span>
-								<h2 className="wow fadeInUp" data-wow-delay=".4s">Welcome to Edugrids</h2>
-								<p className="wow fadeInUp" data-wow-delay=".6s">Learn to work</p>
+								<p className="wow fadeInUp mt-4" data-wow-delay=".6s">{ text }</p>
 								<p className="qote wow fadeInUp" data-wow-delay=".8s"></p>
 								<div className="button wow fadeInUp" data-wow-delay="1s">
 								</div>

@@ -98,13 +98,16 @@ const CreateCourse = () => {
 					setProgress
 				);
 
-				const uploadVideoPromises = arrLesson.map((lesson) =>
+				const uploadVideoPromises = arrLesson.map((lesson) => {
+
 					uploadFileWithProgress(
 						lesson.video,
 						'videos/course',
 						course.name + lesson.name,
 						setProgress
-					)
+					);
+					console.log(1, 'upload');
+				}
 				);
 
 				const [imageUrl, ...videoDownloadURLs] = await Promise.all([
