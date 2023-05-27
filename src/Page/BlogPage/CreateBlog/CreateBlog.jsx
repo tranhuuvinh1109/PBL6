@@ -7,15 +7,21 @@ import { faUpload, faCircleXmark } from "@fortawesome/free-solid-svg-icons"
 import { AppContext } from "../../../App";
 import { blogAPI } from "../../../api/blogApi";
 import { toast } from "react-hot-toast";
+import uploadFileWithProgress from "../../../Firebase/uploadFileWithProgress";
+import ProgressUpload from "../../../Admin/components/ProgressUpload/ProgressUpload";
+import { useNavigate } from "react-router-dom";
 
 const CreateBlog = () => {
+	const navigate = useNavigate();
 	const context = useContext(AppContext);
+	const [progress, setProgress] = useState(0);
+	const [isLoading, setIsLoading] = useState(false);
 	const [selectedFile, setSelectedFile] = useState();
-	const [description, setDescription] = useState();
+	const [content, setContent] = useState();
 	const [blog, setBlog] = useState({
 		title: '',
 		image: '',
-		description: '',
+		content: '',
 	});
 
 	const handleChange = (e) => {
@@ -24,21 +30,34 @@ const CreateBlog = () => {
 
 
 	const handleSubmit = async (data) => {
+		setIsLoading(true);
 		if (data) {
 			const params = {
 				title: blog.title,
 				image: 'none',
-				description: blog.description,
-				creator: context.user.id,
+				content: blog.content,
+				creator: '' + context.user.id,
+				created_at: '2023-05-27'
 			}
-			const res = await blogAPI.createBlog(params);
-			if (res.status === 201) {
-				toast.success("Create Blog Success")
+			const uploadImagePromise = await uploadFileWithProgress(
+				selectedFile,
+				'images/blog',
+				`${blog.title}${new Date().getTime()}`,
+				setProgress
+			);
+			if (uploadImagePromise) {
+				const res = await blogAPI.createBlog(params);
+				if (res.status === 201) {
+					toast.success("Create Blog Success");
+					navigate('/blog');
+				} else {
+					toast.error("Create Blog Fail")
+				}
 			} else {
-				console.log('fail', res.data);
-				toast.error("Create Blog Fail")
+				console.log('error creating', uploadImagePromise)
 			}
 		}
+		setIsLoading(false);
 	}
 	const handleChangeFile = (e) => {
 		const file = e.target.files[0];
@@ -65,11 +84,11 @@ const CreateBlog = () => {
 						<input type="file" accept=".png, .jpg, .jpeg" name="image" id="image" className="hidden" onChange={ handleChangeFile } />
 					</div>
 					<div className="mt-8">
-						<ReactQuill theme="snow" value={ description }
+						<ReactQuill theme="snow" value={ content }
 							placeholder="Write content at here"
 							className="rounded-2xl"
 							onChange={ (e) => {
-								setDescription(e);
+								setContent(e);
 							} }
 						/>
 					</div>
@@ -107,19 +126,22 @@ const CreateBlog = () => {
 							}
 						</div>
 						{
-							description ? <div className="mt-2">
+							content ? <div className="mt-2">
 								{
-									parse(description)
+									parse(content)
 								}
 							</div>
 								:
 								<p className="mt-2">
-									Description
+									Content
 								</p>
 						}
 					</div>
 				</Col>
 			</Row>
+			{
+				isLoading && <ProgressUpload progress={ progress } />
+			}
 		</Container>
 	)
 }

@@ -19,13 +19,13 @@ const CoureDetail = () => {
 
 	const GetInformationCourse = async (id) => {
 		setLoading(true);
-		const res = await courseAPI.getCourseDetail(id)
+		const res = await courseAPI.getCourseDetail(id);
 		if (res.status === 200) {
-			setInfor(res.data.data)
+			setInfor(res.data);
 		}
 		setLoading(false);
 
-	}
+	};
 
 	const handleClickRegister = () => {
 		navigate(`/learning/${infor?.id}`);
@@ -54,7 +54,7 @@ const CoureDetail = () => {
 		if (infor?.lessons) {
 			return (
 				<video controls className="w-full rounded-lg">
-					<source src='https://firebasestorage.googleapis.com/v0/b/moment-learning.appspot.com/o/images%2Fcourse%2Fcourse1679630847908?alt=media&token=62d4954c-ebaf-4910-b846-3739a9fc2bc2' type="video/mp4" />
+					<source src={ infor.lessons[0].video } type="video/mp4" />
 				</video>
 			)
 		}
