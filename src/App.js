@@ -51,7 +51,10 @@ function App () {
         }
         setUser(userData);
       }
+      console.log('course', courseData);
       if (courseData) {
+        console.log('course1', courseData);
+
         setListCourse(courseData);
       }
       navigate('/');

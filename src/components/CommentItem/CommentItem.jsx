@@ -5,7 +5,7 @@ const CommentItem = ({ comment }) => {
 	return (
 		<div className='flex text-left mb-3'>
 			<div>
-				<Avatar src={comment?.user?.avatar} size="large" />
+				<Avatar src={ comment?.user[0].avatar } size="large" />
 			</div>
 			<div className='ml-2'>
 				<div className='flex'>

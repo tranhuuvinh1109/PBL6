@@ -98,16 +98,13 @@ const CreateCourse = () => {
 					setProgress
 				);
 
-				const uploadVideoPromises = arrLesson.map((lesson) => {
-
+				const uploadVideoPromises = arrLesson.map((lesson) =>
 					uploadFileWithProgress(
 						lesson.video,
 						'videos/course',
 						course.name + lesson.name,
 						setProgress
-					);
-					console.log(1, 'upload');
-				}
+					)
 				);
 
 				const [imageUrl, ...videoDownloadURLs] = await Promise.all([
@@ -122,27 +119,30 @@ const CreateCourse = () => {
 						teacher: 1,
 						image: imageUrl,
 						lessons: arrLesson.map((lesson, index) => ({
-							...lesson,
+							name: lesson.name,
+							grammar: lesson.grammar,
 							video: videoDownloadURLs[index],
+							created_at: "2023-05-27"
 						})),
 						start: "2023-05-10",
 						end: "2023-08-10",
 						plans: arrPlan,
 						price: course.price,
-					}))
+					}), videoDownloadURLs)
 					const res = await courseAPI.postCourse({
-						course_id: '111',
 						name: course.name,
 						description: course.description,
-						teacher: 1,
-						image: imageUrl,
+						teacher_id: 1,
+						avatar: imageUrl,
 						lessons: arrLesson.map((lesson, index) => ({
-							...lesson,
+							name: lesson.name,
+							grammar: lesson.grammar,
 							video: videoDownloadURLs[index],
+							created_at: "2023-05-27"
 						})),
 						start: "2023-05-10",
 						end: "2023-08-10",
-						plans: arrPlan.map(item => ({ title: item.title })),
+						plans: arrPlan.map(item => ({ title: item.title, created_at: "2023-05-27" })),
 						price: course.price,
 					});
 
