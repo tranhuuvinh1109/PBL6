@@ -31,6 +31,7 @@ const Login = () => {
 				if (res.status === 200) {
 					context.setUser(res.data.data);
 					localStorage.setItem('userID', res.data.access_token);
+					console.log('data', context.listCourse);
 					toast.success('Login Successfully');
 					if (res.data.data.role === 0) {
 						context.setIsAdmin(true);
