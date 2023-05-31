@@ -11,7 +11,7 @@ import ScrollToTop from "react-scroll-to-top";
 import Loading from '../components/Loading/Loading';
 
 const HomePage = () => {
-	const context = useContext(AppContext)
+	const context = useContext(AppContext);
 	return (
 		<>
 			{
@@ -22,7 +22,7 @@ const HomePage = () => {
 						<div className='mt-32'>
 							<Slider />
 							<About />
-							<Course listCourse={ context.listCourse } />
+							<Course />
 							<Achievement />
 							<NewsLetter />
 							<ScrollToTop smooth />

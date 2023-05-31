@@ -1,9 +1,18 @@
-import React from "react";
+import React, { useContext, useMemo } from "react";
 import { Container, Row } from "react-bootstrap";
 import CourseItem from "../CourseItem/CoureItem";
 import '../../Assets/css/Course.css';
+import { AppContext } from "../../App";
 
-const Course = ({ listCourse }) => {
+const Course = () => {
+	const context = useContext(AppContext);
+	const renderListCourse = useMemo(() => {
+		return context.listCourse?.map((course, index) => {
+			return (
+				<CourseItem key={ index } data={ course } />
+			)
+		})
+	}, [context?.listCourse])
 	return (
 		<div className="courses section p-0 mt-20">
 			<Container>
@@ -11,11 +20,7 @@ const Course = ({ listCourse }) => {
 
 					<Row>
 						{
-							listCourse && listCourse?.map((course, index) => {
-								return (
-									<CourseItem key={ index } data={ course } />
-								)
-							})
+							renderListCourse
 						}
 					</Row>
 				</div>

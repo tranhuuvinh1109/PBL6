@@ -30,6 +30,15 @@ function App () {
   // const [listCategory, setListCategory] = useState([]);
   const [user, setUser] = useState();
 
+  const getListCourse = async () => {
+    const res = await courseAPI.getCourse();
+    if (res.status === 200) {
+      setListCourse(res.data);
+    } else {
+      toast.error('Get Course Error');
+      setListCourse([]);
+    }
+  }
 
 
   const fetchData = useCallback(async (token) => {
@@ -51,10 +60,7 @@ function App () {
         }
         setUser(userData);
       }
-      console.log('course', courseData);
       if (courseData) {
-        console.log('course1', courseData);
-
         setListCourse(courseData);
       }
       navigate('/');
@@ -73,6 +79,8 @@ function App () {
     if (token) {
       fetchData({ access_token: token });
 
+    } else {
+      getListCourse();
     }
   }, [fetchData]);
 

@@ -8,6 +8,7 @@ import LessonItem from "./components/LessonItem";
 import { useNavigate } from 'react-router-dom'
 import Loading from "../../components/Loading/Loading";
 import { courseAPI } from "../../api/courseAPI";
+import Payment from "../Payment/Payment";
 
 const { Panel } = Collapse;
 
@@ -130,9 +131,13 @@ const CoureDetail = () => {
 										infor?.price
 									}
 								</h3>
-								<button className="bg-red-400 text-white py-1.5 px-3 rounded-full min-w-[150px] hover:bg-red-300" onClick={ handleClickRegister }>
+								{
+									infor?.price &&
+									<Payment data={ infor } />
+								}
+								{/* <button className="bg-red-400 text-white py-1.5 px-3 rounded-full min-w-[150px] hover:bg-red-300" onClick={ handleClickRegister }>
 									Register
-								</button>
+								</button> */}
 							</div>
 
 						</Col>
