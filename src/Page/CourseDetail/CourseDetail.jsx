@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useMemo } from "react";
+import React, { useEffect, useState, useMemo, useContext } from "react";
 import { Col, Container, Row } from "react-bootstrap";
 import { useParams } from "react-router-dom";
 import { faCheck } from '@fortawesome/free-solid-svg-icons'
@@ -9,10 +9,12 @@ import { useNavigate } from 'react-router-dom'
 import Loading from "../../components/Loading/Loading";
 import { courseAPI } from "../../api/courseAPI";
 import Payment from "../Payment/Payment";
+import { AppContext } from "../../App";
 
 const { Panel } = Collapse;
 
 const CoureDetail = () => {
+	const context = useContext(AppContext);
 	const { id } = useParams();
 	const navigate = useNavigate();
 	const [infor, setInfor] = useState();
@@ -20,10 +22,21 @@ const CoureDetail = () => {
 
 	const GetInformationCourse = async (id) => {
 		setLoading(true);
+		// if (context?.user?.id) {
+		// 	console.log(111)
+		// 	const resWithCheck = await courseAPI.getCourseDetailCheck(id, context?.user?.id);
+		// 	if (resWithCheck.status === 200) {
+		// 		setInfor(resWithCheck.data);
+		// 		console.log('data id', resWithCheck, context?.user?.id)
+		// 	}
+		// } else {
+		// 	console.log(112, context?.user?.id)
 		const res = await courseAPI.getCourseDetail(id);
+		console.log('data', res);
 		if (res.status === 200) {
 			setInfor(res.data);
 		}
+		// }
 		setLoading(false);
 
 	};
@@ -78,11 +91,11 @@ const CoureDetail = () => {
 								}
 							</h1>
 							<p>
-								Để có kiến thức nền tảng để học tốt tiếng nhật
+								Learn to work
 							</p>
 							<div className="mt-5">
 								<h5>
-									Bạn sẽ học được gì?
+									What will you learn?
 								</h5>
 								<div>
 									<Container>

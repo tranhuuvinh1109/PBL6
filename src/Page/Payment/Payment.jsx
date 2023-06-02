@@ -1,9 +1,19 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
 import { Modal } from 'antd';
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import { toast } from 'react-hot-toast';
+import { AppContext } from '../../App';
+
+const apiSendMail = axios.create({
+	baseURL: 'https://vinh-be-laravel.000webhostapp.com/api',
+});
 
 const Payment = ({ data }) => {
-	const { price, name, id } = data;
+	const context = useContext(AppContext);
+	const navigate = useNavigate();
+	const { price, name, id, image } = data;
 	const [isModalOpen, setIsModalOpen] = useState(false);
 	const [show, setShow] = useState(false)
 	const [success, setSuccess] = useState(false)
@@ -30,14 +40,47 @@ const Payment = ({ data }) => {
 				return orderID
 			})
 	}
-	const onApprove = (_data, actions) => {
+	const onApprove = (data, actions) => {
+		console.log(12)
+		const param = {
+			email: 'tranhuudu113@gmail.com',
+			// email: context?.user?.email,
+			price: price,
+			img: image,
+			course: name
+		}
+		sendEmailPayment(param)
+		console.log(13)
 		return actions.order.capture().then(function (details) {
-			const { payer } = details
-			setSuccess(true)
+			const { payer } = details;
+			setSuccess(true);
+
+			navigate(`/learning/${id}`);
+
 		})
 	}
 	const onError = (_data, _actions) => {
 		setErrorMessage("An error occured with your payment")
+	}
+	const sendEmailPayment = async (data) => {
+		const res = await apiSendMail.post('/send-mail', {
+			email: data.email,
+			price: data.price,
+			course: data.course,
+			img: data.img
+		})
+		if (res.status === 200) {
+			console.log({
+				email: data.email,
+				price: data.price,
+				course: data.course,
+				img: data.img
+			})
+			toast('Purchase course successfully');
+		} else {
+			toast('Purchase course fail');
+		}
+
 	}
 
 	const showModal = () => {

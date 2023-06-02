@@ -54,10 +54,15 @@ const Register = () => {
 	const [data, setData] = useState({
 		username: '',
 		email: '',
+		age: 0,
 		password: '',
 		gender: 0,
-		role: 2,
-		confirmPassword: ''
+		google_id: 'none',
+		full_name: 'none',
+		confirmPassword: '',
+		phone: 'none',
+		address: 'none',
+		avatar: 'https://fullstack.edu.vn/static/media/fallback-avatar.155cdb2376c5d99ea151.jpg'
 	});
 	const handleChange = (e) => {
 		e.preventDefault();
@@ -73,18 +78,36 @@ const Register = () => {
 		context.setIsLoading(true);
 		if (agree) {
 			if (data.password === data.confirmPassword) {
+				console.log('submit', {
+					username: data.username,
+					gender: data.gender,
+					email: data.email,
+					password: data.password,
+					avatar: data.avatar,
+					address: data.address,
+					phone: data.phone,
+					age: data.age,
+					full_name: data.full_name,
+					google_id: data.google_id
+				});
+				console.log('data', data)
 				const res = await authAPI.register({
 					username: data.username,
 					gender: data.gender,
 					email: data.email,
 					password: data.password,
-					avatar: data.avatar
+					avatar: data.avatar,
+					address: data.address,
+					phone: data.phone,
+					age: data.age,
+					full_name: data.full_name,
+					google_id: data.google_id
 				});
 				if (res.status === 200) {
-					toast.success('submit successful');
+					toast.success('Register successful');
 					navigate('/login');
 				} else {
-					toast.error('submit fail');
+					toast.error('Register fail');
 				}
 			}
 			else {

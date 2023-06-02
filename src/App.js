@@ -78,10 +78,8 @@ function App () {
     const token = localStorage.getItem('userID');
     if (token) {
       fetchData({ access_token: token });
-
-    } else {
-      getListCourse();
     }
+    getListCourse();
   }, [fetchData]);
 
 
@@ -126,6 +124,7 @@ function App () {
             }
             <Route path='*' element={<NotFound />} />
           </Route>
+
         </Routes>
       </div>
     </AppContext.Provider>
