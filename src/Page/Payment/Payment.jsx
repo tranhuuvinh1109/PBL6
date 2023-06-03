@@ -7,10 +7,13 @@ import { toast } from 'react-hot-toast';
 import { AppContext } from '../../App';
 
 const apiSendMail = axios.create({
-	baseURL: 'https://vinh-be-laravel.000webhostapp.com/api',
+	baseURL: "https://bemomentlearning-production.up.railway.app/api",
+	headers: {
+		"Content-Type": "application/json"
+	}
 });
 
-const Payment = ({ data }) => {
+const Payment = ({ data, res }) => {
 	const context = useContext(AppContext);
 	const navigate = useNavigate();
 	const { price, name, id, image } = data;
@@ -27,7 +30,8 @@ const Payment = ({ data }) => {
 					description: `You have successfully paid for ${name} course for ${price}`,
 					amount: {
 						currency_code: 'USD',
-						value: price
+						value: 1
+						// value: price
 					},
 				},
 			],
@@ -69,13 +73,7 @@ const Payment = ({ data }) => {
 			course: data.course,
 			img: data.img
 		})
-		if (res.status === 200) {
-			console.log({
-				email: data.email,
-				price: data.price,
-				course: data.course,
-				img: data.img
-			})
+		if (res.status === 201) {
 			toast('Purchase course successfully');
 		} else {
 			toast('Purchase course fail');

@@ -19,25 +19,34 @@ const CoureDetail = () => {
 	const navigate = useNavigate();
 	const [infor, setInfor] = useState();
 	const [loading, setLoading] = useState(false);
+	const [register, setRegister] = useState(false);
 
 	const GetInformationCourse = async (id) => {
 		setLoading(true);
-		// if (context?.user?.id) {
-		// 	console.log(111)
-		// 	const resWithCheck = await courseAPI.getCourseDetailCheck(id, context?.user?.id);
-		// 	if (resWithCheck.status === 200) {
-		// 		setInfor(resWithCheck.data);
-		// 		console.log('data id', resWithCheck, context?.user?.id)
-		// 	}
-		// } else {
-		// 	console.log(112, context?.user?.id)
-		const res = await courseAPI.getCourseDetail(id);
-		console.log('data', res);
-		if (res.status === 200) {
-			setInfor(res.data);
+		if (context?.user?.id) {
+			console.log(111)
+			const resWithCheck = await courseAPI.getCourseDetailCheck(id, context?.user?.id);
+			if (resWithCheck.status === 200) {
+				console.log('->', resWithCheck.data)
+				setInfor(resWithCheck.data.data);
+				if (resWithCheck.data.registered === 'true') {
+					setRegister(true);
+				} else {
+					setRegister(false);
+				}
+			}
 		}
+		setLoading(false)
+		// else {
+		// 	// 	console.log(112, context?.user?.id)
+		// 	const res = await courseAPI.getCourseDetail(id);
+		// 	console.log('data', res);
+		// 	if (res.status === 200) {
+		// 		setInfor(res.data);
+		// 	}
+		// 	// }
+		// 	setLoading(false);
 		// }
-		setLoading(false);
 
 	};
 
@@ -145,8 +154,12 @@ const CoureDetail = () => {
 									}
 								</h3>
 								{
-									infor?.price &&
-									<Payment data={ infor } />
+									register ? <button className="bg-red-400 text-white py-1.5 px-3 rounded-full min-w-[150px] hover:bg-red-300">Learning</button>
+										: (
+											infor?.id &&
+											<Payment data={ infor } res={ register } />
+										)
+									// : <p>ok</p>
 								}
 								{/* <button className="bg-red-400 text-white py-1.5 px-3 rounded-full min-w-[150px] hover:bg-red-300" onClick={ handleClickRegister }>
 									Register
