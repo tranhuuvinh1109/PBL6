@@ -133,7 +133,7 @@ const CreateCourse = () => {
 						name: course.name,
 						description: course.description,
 						teacher_id: 1,
-						avatar: imageUrl,
+						image: imageUrl,
 						lessons: arrLesson.map((lesson, index) => ({
 							name: lesson.name,
 							grammar: lesson.grammar,

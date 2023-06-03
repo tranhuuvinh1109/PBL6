@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useMemo } from "react";
+import React, { useEffect, useState, useMemo, useContext } from "react";
 import { Col, Container, Row } from "react-bootstrap";
 import { useParams } from "react-router-dom";
 import { faCheck } from '@fortawesome/free-solid-svg-icons'
@@ -9,22 +9,44 @@ import { useNavigate } from 'react-router-dom'
 import Loading from "../../components/Loading/Loading";
 import { courseAPI } from "../../api/courseAPI";
 import Payment from "../Payment/Payment";
+import { AppContext } from "../../App";
 
 const { Panel } = Collapse;
 
 const CoureDetail = () => {
+	const context = useContext(AppContext);
 	const { id } = useParams();
 	const navigate = useNavigate();
 	const [infor, setInfor] = useState();
 	const [loading, setLoading] = useState(false);
+	const [register, setRegister] = useState(false);
 
 	const GetInformationCourse = async (id) => {
 		setLoading(true);
-		const res = await courseAPI.getCourseDetail(id);
-		if (res.status === 200) {
-			setInfor(res.data);
+		if (context?.user?.id) {
+			console.log(111)
+			const resWithCheck = await courseAPI.getCourseDetailCheck(id, context?.user?.id);
+			if (resWithCheck.status === 200) {
+				console.log('->', resWithCheck.data)
+				setInfor(resWithCheck.data.data);
+				if (resWithCheck.data.registered === 'true') {
+					setRegister(true);
+				} else {
+					setRegister(false);
+				}
+			}
 		}
-		setLoading(false);
+		setLoading(false)
+		// else {
+		// 	// 	console.log(112, context?.user?.id)
+		// 	const res = await courseAPI.getCourseDetail(id);
+		// 	console.log('data', res);
+		// 	if (res.status === 200) {
+		// 		setInfor(res.data);
+		// 	}
+		// 	// }
+		// 	setLoading(false);
+		// }
 
 	};
 
@@ -78,11 +100,11 @@ const CoureDetail = () => {
 								}
 							</h1>
 							<p>
-								Để có kiến thức nền tảng để học tốt tiếng nhật
+								Learn to work
 							</p>
 							<div className="mt-5">
 								<h5>
-									Bạn sẽ học được gì?
+									What will you learn?
 								</h5>
 								<div>
 									<Container>
@@ -132,8 +154,12 @@ const CoureDetail = () => {
 									}
 								</h3>
 								{
-									infor?.price &&
-									<Payment data={ infor } />
+									register ? <button className="bg-red-400 text-white py-1.5 px-3 rounded-full min-w-[150px] hover:bg-red-300">Learning</button>
+										: (
+											infor?.id &&
+											<Payment data={ infor } res={ register } />
+										)
+									// : <p>ok</p>
 								}
 								{/* <button className="bg-red-400 text-white py-1.5 px-3 rounded-full min-w-[150px] hover:bg-red-300" onClick={ handleClickRegister }>
 									Register

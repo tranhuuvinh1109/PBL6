@@ -58,7 +58,7 @@ export const routers = [
 	{
 		path: 'user/:id',
 		component: UserPage
-	},
+	}
 ];
 
 
