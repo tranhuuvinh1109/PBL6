@@ -186,7 +186,7 @@ const Navbar = ({ logo }) => {
 						renderUserMobile
 					}
 					<div className='flex flex-col justify-between'>
-						<Link to='/page/user/profile' className='link-item m-0'>
+						<Link to='/user/profile' className='link-item m-0'>
 							<FontAwesomeIcon icon={ faUser } />
 							<span className='ml-3'>
 								Profile
