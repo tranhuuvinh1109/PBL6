@@ -216,6 +216,7 @@ video {
   display: flex;
   
 }
+
 .btn-change {
   width: 250px;
   height: 250px;
@@ -350,6 +351,9 @@ p{
     width: 100vw;
     padding: 8px;
   }
+  .profile-tab {
+    width: 100%;
+  } 
 }
 
 .overlay-progress {
