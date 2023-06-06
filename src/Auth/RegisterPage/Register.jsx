@@ -78,19 +78,6 @@ const Register = () => {
 		context.setIsLoading(true);
 		if (agree) {
 			if (data.password === data.confirmPassword) {
-				console.log('submit', {
-					username: data.username,
-					gender: data.gender,
-					email: data.email,
-					password: data.password,
-					avatar: data.avatar,
-					address: data.address,
-					phone: data.phone,
-					age: data.age,
-					full_name: data.full_name,
-					google_id: data.google_id
-				});
-				console.log('data', data)
 				const res = await authAPI.register({
 					username: data.username,
 					gender: data.gender,
@@ -103,7 +90,7 @@ const Register = () => {
 					full_name: data.full_name,
 					google_id: data.google_id
 				});
-				if (res.status === 200) {
+				if (res.status === 201) {
 					toast.success('Register successful');
 					navigate('/login');
 				} else {
