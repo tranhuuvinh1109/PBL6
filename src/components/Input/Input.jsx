@@ -39,7 +39,7 @@ const InputCustom = ({ name, id, icon, type, placeholder, required, value, onCha
 						onBlur={ handleBlur }
 						className={ error ? 'input-error' : '' }
 					/>
-					<button onClick={ handleClickShowPassword } className='btn-show-pass'>
+					<button onClick={ handleClickShowPassword } className='btn-show-pass' tabIndex={ -1 }>
 						{
 							showPassword ? <FontAwesomeIcon icon={ faEye } fontSize={ 10 } />
 								: <FontAwesomeIcon icon={ faEyeSlash } fontSize={ 10 } />

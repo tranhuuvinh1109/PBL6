@@ -139,7 +139,7 @@ const Navbar = ({ logo }) => {
 		} else {
 			return (
 				<button className='btn-custom px-2 py-1' onClick={ handleClickLogout }>
-					<Link to="/login" className='no-underline '>Login</Link>
+					<Link to="/login" className='no-underline my-btn'>Login</Link>
 				</button>
 			)
 		}

@@ -10,6 +10,15 @@ import { AppContext } from '../../App';
 import { authAPI } from '../../api/authApi';
 import { Radio, Select } from 'antd';
 import InputCustom from '../../components/Input/Input';
+import axios from 'axios';
+
+
+const apiSendMail = axios.create({
+	baseURL: "https://bemomentlearning-production.up.railway.app/api",
+	headers: {
+		"Content-Type": "application/json"
+	}
+});
 
 // const pattern = /^[a-zA-Z0-9]+@(?:[a-zA-Z0-9]+\.)+[A-Za-z]+$/;
 // const checkUsername = /[A-Z]/;
@@ -72,6 +81,18 @@ const Register = () => {
 	const handleChangeRole = (value) => {
 		setData({ ...data, role: value });
 	};
+	const sendMailRegisterSuccess = async (username, email, password) => {
+		const res = await apiSendMail.post(`/register-response`, {
+			username: username,
+			email: email,
+			password: password
+		});
+		if (res.status === 201) {
+			console.log('success', res);
+		} else {
+			console.log('err', res);
+		}
+	}
 
 	const handleSubmit = async (e) => {
 		e.preventDefault();
@@ -93,6 +114,7 @@ const Register = () => {
 				if (res.status === 201) {
 					toast.success('Register successful');
 					navigate('/login');
+					sendMailRegisterSuccess(data.username, data.email, data.password)
 				} else {
 					toast.error('Register fail');
 				}
