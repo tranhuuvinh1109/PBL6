@@ -15,11 +15,8 @@ const BlogPage = () => {
 		<div className='mt-20 min-h-[630px] text-left' >
 
 			<Container>
-				<h1>
-					BlogPage
-				</h1>
-				<button className="btn-custom px-3 py-2 mb-4" onClick={ handleClick }>
-					+ add blog
+				<button className="btn-custom px-3 py-2 mb-4 my-btn" onClick={ handleClick }>
+					Create new blog
 				</button>
 				<Row>
 					<Col xs={ 12 }>

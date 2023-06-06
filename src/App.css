@@ -372,3 +372,14 @@ p{
 .ant-btn-primary:hover {
   background-color: #59e9b2 !important;
 }
+.my-btn {
+  color: #FFFFFF;
+  font-weight: 600;
+  padding: 0 6px;
+  background-color: #0EDC8D;
+}
+.my-btn:hover {
+  cursor: pointer;
+  color: #FFFFFF;
+  opacity: 0.6;
+}
