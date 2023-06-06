@@ -58,6 +58,7 @@ function App () {
         } else {
           setIsAdmin(false);
         }
+        console.log('me', userData)
         setUser(userData);
       }
       if (courseData) {
@@ -65,7 +66,7 @@ function App () {
       }
       navigate('/');
     } catch (error) {
-      toast.error(`${error}. Please login again`);
+      toast.error(`Please login again`);
       navigate('/login');
       throw error;
     }
