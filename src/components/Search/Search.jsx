@@ -2,14 +2,17 @@ import React, { useRef, useState, useEffect } from "react";
 import useDebounce from "../../hook/useDebounce";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSpinner, faXmark } from "@fortawesome/free-solid-svg-icons";
-import { Divider, Popover } from "antd";
 import { searchAPI } from "../../api/searchApi";
 import CourseResult from "./components/CourseResult";
 import Wrapper from "../Wrapper/Wrapper";
+import Tippy from '@tippyjs/react/headless';
+import UserResult from "./components/UserResult";
+import BlogResult from "./components/BlogResult";
+import { Divider } from "antd";
 
 const Search = () => {
 	const [searchValue, setSearchValue] = useState('');
-	const [searchResult, setSearchResult] = useState([]);
+	const [searchResult, setSearchResult] = useState({});
 	const [showResult, setShowResult] = useState(true);
 	const [loading, setLoading] = useState(false);
 
@@ -22,36 +25,29 @@ const Search = () => {
 
 	const handleClear = () => {
 		setSearchValue('');
-		setSearchResult([]);
+		setSearchResult({});
 		inputRef.current.focus();
 	};
 
-
-	const handleHidePopover = () => {
-		setSearchResult([]);
-	};
-
-
 	useEffect(() => {
 		if (!debounced.trim()) {
-			setSearchResult([])
+			setSearchResult({})
 			return;
 		}
 		setLoading(true);
 
 		searchAPI.search(encodeURIComponent(debounced)).then(
 			(res) => {
-				console.log('search result', res);
 				if (res.status === 200) {
-					if (res.data.data.length > 0) {
-						console.log(3)
-						setSearchResult(res.data.data);
+					if (res.data) {
+						console.log('search', res)
+						setSearchResult(res.data);
 					} else {
-						setSearchResult([])
+						setSearchResult({})
 					}
 				} else {
 					console.log(8)
-					setSearchResult([])
+					setSearchResult({})
 				}
 				setLoading(false);
 			}
@@ -67,41 +63,61 @@ const Search = () => {
 		)
 	}, [debounced])
 	return (
-		<Popover
-			// onVisibleChange={setVisible}
-			onClickOutside={ handleHidePopover }
-			visible={ showResult && searchResult?.length > 0 }
-			content={
-				<Wrapper>
-					<div className="bg-red-300 search-result" tabIndex="-1">
-						{
-							searchResult &&
-							<>
-								<Divider>
-									Accounts
-								</Divider>
-								{
-									searchResult.map(
-										(e) => {
-											return (
-												<CourseResult data={ e } />
-											)
-										}
+
+		<Tippy
+			interactive
+			visible={ showResult && Object.keys(searchResult).length > 0 }
+			onClickOutside={ () => setShowResult(false) }
+			placement="bottom"
+			render={ attrs => (
+				<Wrapper tabIndex={ -1 } { ...attrs }>
+
+					{
+						searchResult?.courses?.length > 0 &&
+						<>
+							<Divider orientation="left">Course</Divider>
+							{
+								searchResult?.courses.map((course) => {
+									return (
+										<CourseResult course={ course } key={ course.id } />
 									)
-								}
-								<h1 onClick={ () => console.log(showResult && searchResult?.length > 0, !!searchValue) }>
-									dsddd
-								</h1>
-							</>
-						}
-					</div>
+								})
+							}
+						</>
+					}
+					{
+						searchResult?.users?.length > 0 &&
+						<>
+							<Divider orientation="left">User</Divider>
+							{
+								searchResult?.users.map((user) => {
+									return (
+										<UserResult user={ user } key={ user.user_id } />
+									)
+								})
+							}
+						</>
+					}
+					{
+						searchResult?.blogs?.length > 0 &&
+						<>
+							<Divider orientation="left">Blog</Divider>
+							{
+								searchResult?.blogs.map((blog) => {
+									return (
+										<BlogResult blog={ blog } key={ blog.blog_id } />
+									)
+								})
+							}
+						</>
+					}
 				</Wrapper>
-			}
+			) }
 		>
 			<div className='search-wrapper'>
 				<div className='search-icon'>
 				</div>
-				<input type='text' placeholder='search course, video, blog,...' className='search-input-nav' value={ searchValue } onChange={ handleChange } ref={ inputRef } />
+				<input type='text' placeholder='search course, video, blog,...' className='search-input-nav' value={ searchValue } onChange={ handleChange } ref={ inputRef } onFocus={ () => setShowResult(true) } />
 				{
 					!!searchValue && !loading && <button className='px-1.5 text-slate-400 hover:text-slate-600 btn-time' onClick={ handleClear }>
 						<FontAwesomeIcon icon={ faXmark } />
@@ -115,7 +131,8 @@ const Search = () => {
 				}
 
 			</div>
-		</Popover>
+
+		</Tippy>
 	)
 }
 

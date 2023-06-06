@@ -2,7 +2,7 @@ import React from "react";
 import '../../../Assets/css/About.css';
 import { Container, Row, Col } from "react-bootstrap";
 
-const text = 'Discover LearnAnywhere - your one - stop online learning platform! With a diverse course catalog, expert instructors, flexible learning options, interactive lessons, community collaboration, and progress tracking, you can unleash your potential and learn anytime, anywhere.Join us at our website and start your educational journey today!';
+const text = 'Discover Learn Anywhere - your one - stop online learning platform! With a diverse course catalog, expert instructors, flexible learning options, interactive lessons, community collaboration, and progress tracking, you can unleash your potential and learn anytime, anywhere.Join us at our website and start your educational journey today!';
 const About = () => {
 	return (
 		// <!-- Start About Us Area -->

@@ -28,14 +28,15 @@ const listNavbar = [
 ]
 const Navbar = ({ logo }) => {
 	const [show, setShow] = useState(false);
-	const handleClose = () => setShow(false);
-	const toggleShow = () => setShow((s) => !s);
-	const contextData = useContext(AppContext)
+	const contextData = useContext(AppContext);
+
 	const handleClickLogout = useCallback(() => {
 		contextData.setUser(undefined);
 		contextData.setIsAdmin(false);
 		localStorage.setItem('userID', '');
 	}, [contextData]);
+	const handleClose = () => setShow(false);
+	const toggleShow = () => setShow((s) => !s);
 
 	const renderUserMobile = useMemo(() => {
 		if (contextData.user) {
@@ -60,7 +61,6 @@ const Navbar = ({ logo }) => {
 			);
 		}
 	}, [contextData]);
-
 
 	const renderUser = useMemo(() => {
 		if (contextData.user) {

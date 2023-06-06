@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { toast } from 'react-hot-toast';
 import { AppContext } from '../../App';
+import { courseAPI } from '../../api/courseAPI';
 
 const apiSendMail = axios.create({
 	baseURL: "https://bemomentlearning-production.up.railway.app/api",
@@ -18,7 +19,6 @@ const Payment = ({ data, res }) => {
 	const navigate = useNavigate();
 	const { price, name, id, image } = data;
 	const [isModalOpen, setIsModalOpen] = useState(false);
-	const [show, setShow] = useState(false)
 	const [success, setSuccess] = useState(false)
 	const [errorMessage, setErrorMessage] = useState('')
 	const [orderId, setOrderId] = useState(false)
@@ -45,23 +45,25 @@ const Payment = ({ data, res }) => {
 			})
 	}
 	const onApprove = (data, actions) => {
-		console.log(12)
 		const param = {
-			email: 'tranhuudu113@gmail.com',
-			// email: context?.user?.email,
+			email: context?.user?.email,
 			price: price,
 			img: image,
 			course: name
 		}
-		sendEmailPayment(param)
-		console.log(13)
-		return actions.order.capture().then(function (details) {
-			const { payer } = details;
+		sendEmailPayment(param);
+		registerCourse(id)
+		return actions.order.capture().then(function () {
 			setSuccess(true);
-
-			navigate(`/learning/${id}`);
-
 		})
+	}
+	const registerCourse = async (id) => {
+		const res = await courseAPI.registerCourse(id);
+		if (res.status === 201) {
+			navigate(`/learning/${id}`);
+		} else {
+			console.log('error')
+		}
 	}
 	const onError = (_data, _actions) => {
 		setErrorMessage("An error occured with your payment")
@@ -74,9 +76,9 @@ const Payment = ({ data, res }) => {
 			img: data.img
 		})
 		if (res.status === 201) {
-			toast('Purchase course successfully');
+			toast(`Purchase course successfully, Order Id: ${orderId}`);
 		} else {
-			toast('Purchase course fail');
+			toast(`Purchase course fail, ${errorMessage}`);
 		}
 
 	}
