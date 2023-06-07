@@ -6,5 +6,7 @@ export const blogAPI = {
 	postBookmark: (params) => axiosClient.post(`/blog`, params),
 	getMyBookmark: (id) => axiosClient.get(`/bookmark/${id}`),
 	bookmark: (params) => axiosClient.get(`/bookmark`, params),
-	getBlogDetail: (id) => axiosClient.get(`/blog/${id}`)
+	getBlogDetail: (id) => axiosClient.get(`/blog/${id}`),
+	deleteBlog: (id) => axiosClient.delete(`/blog/${id}`),
+	editBlog: (id, params) => axiosClient.post(`/blog/${id}`, params)
 };

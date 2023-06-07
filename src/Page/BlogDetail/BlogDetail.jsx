@@ -1,21 +1,25 @@
-import { Avatar } from "antd";
+import { Avatar, Divider } from "antd";
 import React, { useState, useEffect, useMemo, useCallback } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBookmark, faPaperPlane } from "@fortawesome/free-solid-svg-icons"
+import { faBookmark, faPaperPlane, faPenToSquare, faTrash, faEllipsis } from "@fortawesome/free-solid-svg-icons"
 import { Container, Row, Col } from "react-bootstrap";
 import CommentItem from "../../components/CommentItem/CommentItem";
 import { authAPI } from "../../api/authApi";
 import { db } from "../../Firebase/firebaseClient";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useContext } from "react";
 import { AppContext } from "../../App";
 import { blogAPI } from "../../api/blogApi";
 import { toast } from "react-hot-toast";
+import { Popover, Modal } from 'antd';
 import parse from 'html-react-parser';
 
 const BlogDetail = () => {
 	const context = useContext(AppContext);
+	const navigate = useNavigate();
 	const { id } = useParams();
+	const [isOpenDelete, setIsOpenDelete] = useState(false);
+	const [isOpenEdit, setIsOpenEdit] = useState(false);
 	const [dataBlog, setDataBlog] = useState({});
 	const [comments, setComments] = useState([]);
 	const [diffDays, setDiffDays] = useState(0);
@@ -23,10 +27,39 @@ const BlogDetail = () => {
 	const [contentComment, setContentComment] = useState('');
 
 
+	const showModalEdit = () => {
+		setIsOpenEdit(true);
+	};
+	const handleOkEdit = () => {
+		setIsOpenEdit(false);
+	};
+	const handleCancelEdit = () => {
+		setIsOpenEdit(false);
+	};
+	const showModalDelete = () => {
+		setIsOpenDelete(true);
+	};
+	const handleOkDelete = () => {
+		deleteBlog(id);
+		setIsOpenDelete(false);
+	};
+	const handleCancelDelete = () => {
+		setIsOpenDelete(false);
+	};
+
 	const handleChange = (e) => {
 		setContentComment(e.target.value)
 	};
 
+	const deleteBlog = async (id) => {
+		const res = await blogAPI.deleteBlog(id);
+		if (res.status === 200) {
+			toast.success('Delete blog successfully');
+			navigate(`/blog`);
+		} else {
+			toast.error('Delete blog failed');
+		}
+	}
 	const handleSubmitComment = (e) => {
 		e.preventDefault();
 		if (contentComment) {
@@ -113,12 +146,32 @@ const BlogDetail = () => {
 	return (
 		<Container className="text-left">
 			<Row>
-				<h4 className="text-4xl font-bold">
-					{
-						dataBlog?.title
-					}
-				</h4>
 				<Col xs={ 12 } md={ 9 }>
+					<div className="flex justify-between items-center">
+						<h4 className="text-4xl font-bold m-0">
+							{
+								dataBlog?.title
+							}
+						</h4>
+						<Popover trigger="click" placement="bottomRight"
+							content={
+								<div className="flex flex-col ">
+									<button className="text-left p-2.5 my-hover" onClick={ showModalEdit }>
+										<FontAwesomeIcon icon={ faPenToSquare } /> <span className="ml-2 font-medium">Edit Blog</span>
+									</button>
+									<Divider className="m-0" />
+									<button className="text-left p-2.5 my-hover trash" onClick={ showModalDelete }>
+										<FontAwesomeIcon icon={ faTrash } /> <span className="ml-2 font-medium">Delete Blog</span>
+									</button>
+								</div>
+							}
+						>
+							<button className="p-2 hover:text-slate-400" title="Option">
+								<FontAwesomeIcon icon={ faEllipsis } fontSize={ 18 } />
+							</button>
+						</Popover>
+					</div>
+
 					<div className="flex justify-between items-center mt-2">
 						<div className="flex">
 							{
@@ -175,6 +228,20 @@ const BlogDetail = () => {
 				</Col>
 
 			</Row>
+			<Modal title="Delete blog" open={ isOpenDelete } onOk={ handleOkDelete } onCancel={ handleCancelDelete } zIndex={ 100000 }>
+				<div className="min-h-[80px] flex justify-center items-center">
+					<h4 className="m-0">
+						Are you sure you want to delete this blog?
+					</h4>
+				</div>
+			</Modal>
+			<Modal title="Edit Blog" open={ isOpenEdit } onOk={ handleOkEdit } onCancel={ handleCancelEdit } zIndex={ 100001 }>
+				<p>Some contents...</p>
+				<p>Some contents...</p>
+				<p>Some contents...</p>
+			</Modal>
+
+
 		</Container>
 	)
 }

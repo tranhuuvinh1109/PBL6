@@ -391,3 +391,6 @@ p{
 .line-divider {
   border-left: 2px solid rgb(148 163 184);
 }
+.trash {
+  color: #f5365c;
+}

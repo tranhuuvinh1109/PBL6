@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useMemo, useContext } from "react";
+import React, { useEffect, useState, useMemo, useContext, useCallback } from "react";
 import { Col, Container, Row } from "react-bootstrap";
 import { useNavigate, useParams } from "react-router-dom";
 import { faCheck } from '@fortawesome/free-solid-svg-icons'
@@ -20,7 +20,7 @@ const CoureDetail = () => {
 	const [loading, setLoading] = useState(false);
 	const [register, setRegister] = useState(false);
 
-	const GetInformationCourse = async (id) => {
+	const GetInformationCourse = useCallback(async (id) => {
 		setLoading(true);
 		if (context?.user?.id) {
 			const resWithCheck = await courseAPI.getCourseDetailCheck(id, context?.user?.id);
@@ -34,7 +34,7 @@ const CoureDetail = () => {
 			}
 		}
 		setLoading(false)
-	};
+	}, [context?.user?.id]);
 
 
 	const renderVideo = useMemo(() => {
@@ -54,7 +54,7 @@ const CoureDetail = () => {
 
 	useEffect(() => {
 		GetInformationCourse(id)
-	}, [id])
+	}, [id, GetInformationCourse])
 	return (
 		<Container fluid="md" className="text-left mb-20 mt-20 min-h-[630px]">
 			{
