@@ -128,9 +128,6 @@ const CourseManagement = () => {
 			key: 'id',
 			width: '5%',
 			...getColumnSearchProps('id'),
-			sorter: (a, b) => {
-				console.log(1111, a, b)
-			},
 			sortDirections: ['descend', 'ascend'],
 		},
 		{
@@ -202,7 +199,6 @@ const CourseManagement = () => {
 			toast.success('Delete Course Successfully');
 		} else {
 			toast.error('Delete Course Fail');
-			console.log(res.data);
 		}
 	}, [context]);
 

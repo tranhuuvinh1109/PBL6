@@ -58,7 +58,6 @@ function App () {
         } else {
           setIsAdmin(false);
         }
-        console.log('me', userData)
         setUser(userData);
       }
       if (courseData) {
