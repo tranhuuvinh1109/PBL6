@@ -388,3 +388,6 @@ p{
   cursor: pointer;
   background-color: rgb(226 232 240);
 }
+.line-divider {
+  border-left: 2px solid rgb(148 163 184);
+}

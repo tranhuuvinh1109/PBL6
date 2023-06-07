@@ -61,7 +61,7 @@ const BlogDetail = () => {
 	const GetInformationUser = async (id) => {
 		const res = await authAPI.getUser(id);
 		if (res.status === 200) {
-			return res.data.data;
+			return res.data;
 		}
 		return {};
 	};
@@ -148,7 +148,7 @@ const BlogDetail = () => {
 						}
 					</div>
 				</Col>
-				<Col xs={ 12 } md={ 3 }>
+				<Col xs={ 12 } md={ 3 } className="line-divider">
 					<h4>
 						Comments
 					</h4>
