@@ -40,21 +40,18 @@ const Search = () => {
 			(res) => {
 				if (res.status === 200) {
 					if (res.data) {
-						console.log('search', res)
 						setSearchResult(res.data);
 					} else {
 						setSearchResult({})
 					}
 				} else {
-					console.log(8)
 					setSearchResult({})
 				}
 				setLoading(false);
 			}
 		).catch(
-			(error) => {
+			() => {
 				setLoading(false);
-				console.log(error);
 			}
 		).finally(
 			() => {

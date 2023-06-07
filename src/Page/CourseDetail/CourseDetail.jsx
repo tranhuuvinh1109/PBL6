@@ -25,7 +25,6 @@ const CoureDetail = () => {
 		if (context?.user?.id) {
 			const resWithCheck = await courseAPI.getCourseDetailCheck(id, context?.user?.id);
 			if (resWithCheck.status === 200) {
-				console.log('->', resWithCheck.data)
 				setInfor(resWithCheck.data.data);
 				if (resWithCheck.data.registered === 'true') {
 					setRegister(true);

@@ -61,7 +61,6 @@ const Learning = () => {
 
 	const GetInformationUser = async (id) => {
 		const res = await authAPI.getUser(id);
-		console.log('user', res)
 		if (res.status === 200) {
 			return res.data;
 		}
@@ -172,7 +171,7 @@ const Learning = () => {
 			<Container>
 				<Row>
 					<Col xs={ 12 } lg={ 8 } className='text-left'>
-						<h4 onClick={ () => console.log(actived, infor) }>Grammar</h4>
+						<h4>Grammar</h4>
 						{
 							infor && renderGrammar
 						}
@@ -189,7 +188,9 @@ const Learning = () => {
 						</div>
 						<div className='flex mt-2 border-t-2 px-3'>
 							<div className='mt-1'>
-								<Avatar src="https://image.nhandan.vn/1200x630/Uploaded/2023/yqjwcqjlq/2022_11_24/ronaldo-portugal-copy-1844.jpg" size="large" />
+								{
+									context?.user?.avatar && <Avatar src={ context.user.avatar } size="large" />
+								}
 							</div>
 							<div className='ml-2 mt-1 w-full'>
 								<input type="text" placeholder="Enter Comment" name='contentComment' value={ contentComment } onChange={ handleChange } className='py-2 px-2 w-10/12 border-gray-300' />

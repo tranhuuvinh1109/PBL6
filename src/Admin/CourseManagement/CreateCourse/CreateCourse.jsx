@@ -113,22 +113,6 @@ const CreateCourse = () => {
 				]);
 
 				if (imageUrl && videoDownloadURLs.length === arrLesson.length) {
-					console.log('post', JSON.stringify({
-						name: course.name,
-						description: course.description,
-						teacher: 1,
-						image: imageUrl,
-						lessons: arrLesson.map((lesson, index) => ({
-							name: lesson.name,
-							grammar: lesson.grammar,
-							video: videoDownloadURLs[index],
-							created_at: "2023-05-27"
-						})),
-						start: "2023-05-10",
-						end: "2023-08-10",
-						plans: arrPlan,
-						price: course.price,
-					}), videoDownloadURLs)
 					const res = await courseAPI.postCourse({
 						name: course.name,
 						description: course.description,
@@ -237,7 +221,7 @@ const CreateCourse = () => {
 							<div className='mb-4' key={ item.id }>
 								<div className='mb-2 flex justify-between'>
 									<div className='w-9/12'>
-										<label htmlFor={ `lessonName-${item.id}` } onClick={ () => console.log(arrLesson) }>Lesson Name:</label>
+										<label htmlFor={ `lessonName-${item.id}` }>Lesson Name:</label>
 										<Input id={ `lessonName-${item.id}` } name={ `name-${item.id}` } className='w-8/12 ml-3' onChange={ handleChangeLesson } value={ item.name } />
 									</div>
 									<div>
@@ -329,7 +313,7 @@ const CreateCourse = () => {
 			<Divider />
 
 			<div>
-				<label htmlFor='description' className='w-2/12 text-base font-medium' onClick={ () => console.log('arr', arrLesson) }>Description:</label>
+				<label htmlFor='description' className='w-2/12 text-base font-medium'>Description:</label>
 				<TextArea rows={ 4 } className='w-10/12' id='description' name='description' maxLength={ 6 } value={ course.description } onChange={ (event) => hanldeChange(event) } />
 			</div>
 			<Divider />

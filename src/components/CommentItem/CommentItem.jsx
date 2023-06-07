@@ -12,7 +12,7 @@ const CommentItem = ({ comment }) => {
 					<p className='m-0'>
 						<span className='text-base font-medium'>
 							{
-								comment?.user?.name
+								comment?.user[0]?.fullname
 							}
 						</span>
 						<span className='ml-1.5 text-xs text-gray-500'>

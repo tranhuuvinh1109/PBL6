@@ -1,5 +1,5 @@
 import { Avatar } from "antd";
-import React, { useState, useEffect, useMemo } from "react";
+import React, { useState, useEffect, useMemo, useCallback } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBookmark, faPaperPlane } from "@fortawesome/free-solid-svg-icons"
 import { Container, Row, Col } from "react-bootstrap";
@@ -9,13 +9,19 @@ import { db } from "../../Firebase/firebaseClient";
 import { useParams } from "react-router-dom";
 import { useContext } from "react";
 import { AppContext } from "../../App";
+import { blogAPI } from "../../api/blogApi";
+import { toast } from "react-hot-toast";
+import parse from 'html-react-parser';
 
 const BlogDetail = () => {
 	const context = useContext(AppContext);
 	const { id } = useParams();
+	const [dataBlog, setDataBlog] = useState({});
 	const [comments, setComments] = useState([]);
+	const [diffDays, setDiffDays] = useState(0);
 	const [commentsData, setCommentsData] = useState([]);
 	const [contentComment, setContentComment] = useState('');
+
 
 	const handleChange = (e) => {
 		setContentComment(e.target.value)
@@ -39,11 +45,23 @@ const BlogDetail = () => {
 				});
 		}
 	};
+	const getBlogDetail = useCallback(async (id) => {
+		const res = await blogAPI.getBlogDetail(id);
+		if (res.status === 200) {
+			setDataBlog(res.data);
+			const today = new Date();
+			const createAt = new Date(res.data?.created_at);
+			const timeDiff = Math.abs(today - createAt);
+			setDiffDays(Math.ceil(timeDiff / (1000 * 3600 * 24)));
+		} else {
+			toast.error(`Get Blog Has Id: ${id} fails!`);
+		}
+	}, [])
 
 	const GetInformationUser = async (id) => {
 		const res = await authAPI.getUser(id);
 		if (res.status === 200) {
-			return res.data.data;
+			return res.data;
 		}
 		return {};
 	};
@@ -77,6 +95,10 @@ const BlogDetail = () => {
 	}, [convertComment]);
 
 	useEffect(() => {
+		getBlogDetail(id);
+	}, [getBlogDetail, id])
+
+	useEffect(() => {
 		const unsubscribe = db
 			.collection('blogs')
 			.doc(id)
@@ -92,31 +114,41 @@ const BlogDetail = () => {
 		<Container className="text-left">
 			<Row>
 				<h4 className="text-4xl font-bold">
-					Learn JavaScript while Playing Games — Gamify Your Learning
+					{
+						dataBlog?.title
+					}
 				</h4>
 				<Col xs={ 12 } md={ 9 }>
 					<div className="flex justify-between items-center mt-2">
 						<div className="flex">
-							<Avatar src="https://static-images.vnncdn.net/files/publish/2023/1/3/mu-ngoai-hang-anh-85.jpg" size="large" />
+							{
+								dataBlog?.user?.avatar && <Avatar src={ dataBlog.user.avatar } size="large" />
+							}
 							<div className="ml-2">
-								<p className="m-0">
-									Trịnh Gia Minh
+								<p className="m-0 font-semibold">
+									{
+										dataBlog?.user?.fullName
+									}
 								</p>
 								<p className="m-0">
-									6 days ago
+									{ diffDays } days ago
 								</p>
 							</div>
 						</div>
 						<FontAwesomeIcon icon={ faBookmark } className="text-xl" />
 					</div>
 					<div className="mt-3 flex justify-center items-center">
-						<img src="https://znews-photo.zingcdn.me/w1200/Uploaded/aobhuua/2023_04_13/Dodge_2.jpg" className="w-full md:w-8/12" alt="blog" />
+						{
+							dataBlog?.image && <img src={ dataBlog.image } className="w-full md:w-8/12" alt="blog" />
+						}
 					</div>
 					<div className="mt-4">
-						Gamification là một giải pháp tốt cho vấn đề này. Nó sử dụng một nỗ lực chiến lược đơn giản để thúc đẩy và thu hút người dùng trong khi tìm hiểu điều gì đó mới. Đó là một kỹ thuật thêm các yếu tố thiết kế điển hình từ các trò chơi để nâng cao quá trình học tập. Điều này được thực hiện bằng cách thúc đẩy mong muốn tự nhiên của mọi người về giao tiếp xã hội, học tập, làm chủ, cạnh tranh, thành tích, địa vị hoặc thể hiện bản thân. Việc triển khai sớm Gamification sử dụng một hệ thống phần thưởng đơn giản cho người chơi sau khi họ hoàn thành nhiệm vụ để thu hút họ. Phần thưởng bao gồm điểm số, huy hiệu thành tích hoặc tiền ảo để sử dụng.
+						{
+							dataBlog?.content && parse(dataBlog?.content)
+						}
 					</div>
 				</Col>
-				<Col xs={ 12 } md={ 3 }>
+				<Col xs={ 12 } md={ 3 } className="line-divider">
 					<h4>
 						Comments
 					</h4>

@@ -31,7 +31,6 @@ const items = [
 const ProfilePage = () => {
 	const context = useContext(AppContext);
 	const [value, setValue] = useState(0);
-	console.log(context?.user)
 	const renderTab = useMemo(() => {
 		const actived = items.filter(item => item.key === value);
 		return actived[0].children;
