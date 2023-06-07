@@ -24,10 +24,6 @@ const BlogDetail = () => {
 	const handleSubmitComment = (e) => {
 		e.preventDefault();
 		if (contentComment) {
-			console.log("12", {
-				userId: context.user?.id,
-				content: contentComment
-			})
 			db.collection('blogs')
 				.doc(id)
 				.collection('comments')
