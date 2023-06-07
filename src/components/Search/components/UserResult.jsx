@@ -4,21 +4,23 @@ import { Link } from "react-router-dom";
 
 const UserResult = ({ user }) => {
 	return (
-		<div className="flex mb-2 w-full items-center">
-			{
-				user?.avatar ? <Link to={ `user/${user.user_id}` }><Avatar src={ user.avatar } size="large" /></Link>
-					:
-					<Link to={ `user/${user.user_id}` }><Avatar src='https://fullstack.edu.vn/static/media/fallback-avatar.155cdb2376c5d99ea151.jpg' size="large" /></Link>
-			}
-			<div className="ml-2">
+		<Link to={ `user/${user.user_id}` }>
+			<div className="flex mb-2 w-full items-center my-hover px-2 py-1 text-black">
 				{
-					user?.fullname && <h6>{ user.fullname }</h6>
+					user?.avatar ? <Avatar src={ user.avatar } size="large" />
+						:
+						<Avatar src='https://fullstack.edu.vn/static/media/fallback-avatar.155cdb2376c5d99ea151.jpg' size="large" />
 				}
-				{
-					user?.email && <h6 className="text-sm">{ user.email }</h6>
-				}
+				<div className="ml-2 flex flex-col justify-between">
+					{
+						user?.fullname && <h6 className="m-0 font-semibold">{ user.fullname }</h6>
+					}
+					{
+						user?.email && <h6 className="text-sm italic m-0 text-slate-600">{ user.email }</h6>
+					}
+				</div>
 			</div>
-		</div>
+		</Link>
 	)
 }
 

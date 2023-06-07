@@ -383,3 +383,8 @@ p{
   color: #FFFFFF;
   opacity: 0.6;
 }
+.my-hover:hover {
+  border-radius: 0.5rem;
+  cursor: pointer;
+  background-color: rgb(226 232 240);
+}

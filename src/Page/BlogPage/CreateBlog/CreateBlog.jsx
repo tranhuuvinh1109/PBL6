@@ -32,13 +32,6 @@ const CreateBlog = () => {
 	const handleSubmit = async (data) => {
 		setIsLoading(true);
 		if (data) {
-			const params = {
-				title: blog.title,
-				image: 'none',
-				content: blog.content,
-				creator: '' + context.user.id,
-				created_at: '2023-05-27'
-			}
 			const uploadImagePromise = await uploadFileWithProgress(
 				selectedFile,
 				'images/blog',
@@ -46,6 +39,17 @@ const CreateBlog = () => {
 				setProgress
 			);
 			if (uploadImagePromise) {
+				const today = new Date();
+				const year = today.getFullYear();
+				const month = (today.getMonth() + 1).toString().padStart(2, '0');
+				const day = today.getDate().toString().padStart(2, '0');
+				const params = {
+					title: blog.title,
+					image: uploadImagePromise,
+					content: content,
+					creator: '' + context.user.id,
+					created_at: `${year}-${month}-${day}`
+				}
 				const res = await blogAPI.createBlog(params);
 				if (res.status === 201) {
 					toast.success("Create Blog Success");
@@ -92,8 +96,8 @@ const CreateBlog = () => {
 							} }
 						/>
 					</div>
-					<button className="btn-custom px-3 py-1 mt-8" onClick={ handleSubmit }>
-						done
+					<button className="btn-custom px-3 py-1 mt-8 my-btn" onClick={ handleSubmit }>
+						Done
 					</button>
 				</Col>
 				<Col xs={ 6 } className="text-left">
