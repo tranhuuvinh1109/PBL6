@@ -216,7 +216,7 @@ const CourseManagement = () => {
 						okText="Yes"
 						cancelText="No"
 					>
-						<button><FontAwesomeIcon icon={ faTrashCan } /></button>
+						<button className='btn-danger'><FontAwesomeIcon icon={ faTrashCan } /></button>
 					</Popconfirm>
 				}
 			})
@@ -225,10 +225,7 @@ const CourseManagement = () => {
 	}, [context.listCourse, confirm, navigate])
 	return (
 		<div>
-			<div className='flex justify-between'>
-				<h1>
-					Course Daskboard
-				</h1>
+			<div className='flex justify-end'>
 				<Button className='btn-custom' onClick={ () => navigate('create') }>
 					Create Course
 				</Button>

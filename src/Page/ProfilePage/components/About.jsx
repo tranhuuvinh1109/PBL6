@@ -28,6 +28,32 @@ const About = () => {
 				</button>
 
 			</div>
+			{/* <div className='flex mb-2.5 input-wrapper'>
+				<div className='w-2/12'>
+					<label htmlFor='username'>
+						Username:
+					</label>
+				</div>
+				<div className='w-8/12 ml-4'>
+					{
+						edit ? <input id='username' name='username' type='text' value={ context?.user?.username } className='w-full' />
+							: <p className='m-0 text-blue-600'>{ context?.user?.username }</p>
+					}
+				</div>
+			</div> */}
+			<div className='flex mb-2.5 input-wrapper'>
+				<div className='w-2/12'>
+					<label htmlFor='fullName'>
+						Fullname:
+					</label>
+				</div>
+				<div className='w-8/12 ml-4'>
+					{
+						edit ? <input id='fullName' name='fullName' type='text' value={ context?.user?.fullName } className='w-full' />
+							: <p className='m-0 text-blue-600'>{ context?.user?.fullName }</p>
+					}
+				</div>
+			</div>
 			<div className='flex mb-2.5 input-wrapper'>
 				<div className='w-2/12'>
 					<label htmlFor='phone'>

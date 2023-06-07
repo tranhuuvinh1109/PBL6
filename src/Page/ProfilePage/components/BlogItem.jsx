@@ -1,4 +1,5 @@
 import React from "react";
+import parse from 'html-react-parser';
 
 const BlogItem = ({ blog }) => {
 	return (
@@ -18,7 +19,7 @@ const BlogItem = ({ blog }) => {
 						}</h6>
 					<p className="m-0 text-ellipsis whitespace-nowrap w-full overflow-hidden">
 						{
-							blog?.content
+							parse(blog?.content)
 						}
 					</p>
 				</div>
