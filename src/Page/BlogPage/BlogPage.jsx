@@ -4,9 +4,11 @@ import BlogItem from "./components/BlogItem/BlogItem";
 import { useNavigate } from "react-router-dom";
 import { blogAPI } from "../../api/blogApi";
 import { toast } from "react-hot-toast";
+import Loading from "../../components/Loading/Loading";
 
 const BlogPage = () => {
 	const [listBlog, setListBlog] = useState([]);
+	const [isLoading, setIsLoading] = useState(false);
 
 	const navigate = useNavigate();
 
@@ -14,12 +16,14 @@ const BlogPage = () => {
 		navigate('create');
 	};
 	const getAllBlog = async () => {
+		setIsLoading(true);
 		const res = await blogAPI.getAll();
 		if (res.status === 200) {
 			setListBlog(res.data);
 		} else {
 			toast.error('Get Blog Fail!');
 		}
+		setIsLoading(false);
 	}
 	useEffect(() => {
 		getAllBlog();
@@ -27,20 +31,25 @@ const BlogPage = () => {
 
 	return (
 		<div className='mt-20 min-h-[630px] text-left' >
-			<Container>
-				<button className="btn-custom px-3 py-2 mb-4 my-btn" onClick={ handleClick }>
-					Create new blog
-				</button>
-				<Row>
-					<Col xs={ 12 }>
-						{
-							listBlog?.map((blog) => {
-								return <BlogItem key={ blog.id } blog={ blog } />
-							})
-						}
-					</Col>
-				</Row>
-			</Container>
+			{
+				isLoading ? <Loading />
+					:
+					<Container>
+						<button className="btn-custom px-3 py-2 mb-4 my-btn" onClick={ handleClick }>
+							Create new blog
+						</button>
+						<Row>
+							<Col xs={ 12 }>
+								{
+									listBlog?.map((blog) => {
+										return <BlogItem key={ blog.id } blog={ blog } />
+									})
+								}
+							</Col>
+						</Row>
+					</Container>
+			}
+
 		</div >
 	)
 }

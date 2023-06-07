@@ -46,7 +46,7 @@ const User = ({ infor, ...props }) => {
 						<Avatar src="https://fullstack.edu.vn/static/media/fallback-avatar.155cdb2376c5d99ea151.jpg" alt="avatar" size='large' />
 				}
 				{
-					infor?.fullName ? <span className="ml-2">
+					infor?.fullName ? <span className="ml-2 font-medium">
 						{
 							infor.fullName
 						}

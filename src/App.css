@@ -139,6 +139,10 @@ video {
 .btn-custom {
   background-color: #0EDC8D;
   border-radius: 4px;
+  color: #FFFFFF;
+}
+.btn-danger {
+  color: #f5365c;
 }
 .input-custom {
   border-radius: 4px;
