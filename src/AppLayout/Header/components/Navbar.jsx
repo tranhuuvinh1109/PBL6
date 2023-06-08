@@ -150,9 +150,9 @@ const Navbar = ({ logo }) => {
 			<button onClick={ toggleShow } className='lg:hidden float-right px-2 py-1.5'>
 				<FontAwesomeIcon icon={ faBars } />
 			</button>
-			<a href='/' className='logo-customize'>
+			<Link to='/' className='logo-customize'>
 				<img src={ logo } className='w-16 h-16 rounded-lg object-center object-cover' alt='logo' />
-			</a>
+			</Link>
 			<nav className='nav-nav'>
 				{
 					listNavbar.map((item, index) => {
