@@ -35,7 +35,7 @@ export const privateRouter = [
 
 export const routers = [
 	{
-		path: 'home',
+		path: '/',
 		component: HomePage
 	},
 	{

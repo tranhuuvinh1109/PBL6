@@ -1,6 +1,4 @@
 import React, { useContext, useEffect } from 'react';
-import Footer from '../AppLayout/Footer/Footer';
-import Header from '../AppLayout/Header/Header';
 import Slider from '../AppLayout/Slider/Slider';
 import Course from '../components/Course/Course';
 import About from './components/About/About';
@@ -21,16 +19,12 @@ const HomePage = () => {
 				context.isLoading ? <Loading />
 					:
 					<>
-						<Header />
-						<div className='mt-32'>
-							<Slider />
-							<About />
-							<Course />
-							<Achievement />
-							<NewsLetter />
-							<ScrollToTop smooth />
-						</div>
-						<Footer />
+						<Slider />
+						<About />
+						<Course />
+						<Achievement />
+						<NewsLetter />
+						<ScrollToTop smooth />
 					</>
 			}
 		</>

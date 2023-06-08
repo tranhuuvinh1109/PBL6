@@ -1,7 +1,6 @@
 
 import './App.css';
 import React, { createContext, useEffect, useState, useCallback } from 'react';
-import HomePage from './Home/HomePage';
 import Login from './Auth/LoginPage/Login';
 import { Routes, Route, useNavigate } from 'react-router-dom';
 import { PrivateRouter } from './Router/PrivateRouter';
@@ -13,10 +12,8 @@ import { Toaster, toast } from 'react-hot-toast';
 import { authAPI } from './api/authApi';
 import { courseAPI } from './api/courseAPI';
 import Register from './Auth/RegisterPage/Register';
-// import { categoryAPI } from './api/categoryApi';
 import axios from 'axios';
 
-// const apiURL = process.env.REACT_APP_API_URL;
 
 
 
@@ -27,7 +24,6 @@ function App () {
   const [isLoading, setIsLoading] = useState(false);
   const [isAdmin, setIsAdmin] = useState(false);
   const [listCourse, setListCourse] = useState([]);
-  // const [listCategory, setListCategory] = useState([]);
   const [user, setUser] = useState();
 
   const getListCourse = async () => {
@@ -63,7 +59,6 @@ function App () {
       if (courseData) {
         setListCourse(courseData);
       }
-      navigate('/');
     } catch (error) {
       toast.error(`Please login again`);
       navigate('/login');
@@ -86,15 +81,13 @@ function App () {
   return (
     <AppContext.Provider value={{ user, setUser, listCourse, setListCourse, isLoading, setIsLoading, isAdmin, setIsAdmin }} >
       <div className="App">
-        {/* <ScrollToTop smooth color="#6f00ff" /> */}
         <Toaster
           position="top-center"
           reverseOrder={false} />
         <Routes>
-          <Route path='/' element={<HomePage />} />
           <Route path='/login' element={<Login />} />
           <Route path='/register' element={<Register />} />
-          <Route path="/" element={<AppContent />}>
+          <Route path='/' element={<AppContent />}>
             {routers.map((route) => (
               <Route
                 key={route.path}
@@ -104,7 +97,6 @@ function App () {
             ))}
             <Route path="*" element={<NotFound />} />
           </Route>
-
           <Route path="/" element={<PrivateRouter outlet={<AppContent />} path='/login' />}>
             {privateRouter.map((route) => (
               <Route
@@ -115,8 +107,9 @@ function App () {
             ))}
             <Route path="*" element={<NotFound />} />
           </Route>
+
+
           <Route path='admin' element={<PrivateRouter path='/login' outlet={<AdminContent />} />} >
-            {/* <Route path='admin' element={<AdminContent />} > */}
             {
               adminRouter.map(route => {
                 return <Route key={route.path} element={<route.component />} path={route.path} />
