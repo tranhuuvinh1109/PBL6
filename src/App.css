@@ -400,6 +400,16 @@ p{
 }
 .icon-edit-avatar {
   position: absolute;
-  top: 0;
-  right: 0;
+  top: 10px;
+  right: 10px;
+  padding: 4px 8px;
+  border-radius: 50%;
+  background-color: #FFFFFF;
+  box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.12);
+  color: rgb(148 163 184);
+
+}
+.icon-edit-avatar:hover {
+  cursor: pointer;
+  color: rgb(71 85 105);
 }

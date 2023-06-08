@@ -1,4 +1,4 @@
-import React, { useContext, useMemo, useState, useCallback, useEffect } from "react";
+import React, { useContext, useMemo, useState, useCallback, useEffect, createContext } from "react";
 import { AppContext } from "../../App.js";
 import { Container, Row, Col } from "react-bootstrap";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -7,20 +7,24 @@ import './style.css';
 import Blog from "./components/Blog.jsx";
 import About from "./components/About.jsx";
 import Course from "./components/Course.jsx";
-import Loading from "../../components/Loading/Loading.jsx";
+import ProgressUpload from "../../Admin/components/ProgressUpload/ProgressUpload.js";
 
+export const ProfileContext = createContext({});
 
 const ProfilePage = () => {
 	const context = useContext(AppContext);
 	const [value, setValue] = useState(0);
+	const [progress, setProgress] = useState(0);
 	const [avatar, setAvatar] = useState({ preview: '' });
 	const [isLoading, setIsLoading] = useState(false);
+	const [isEdit, setIsEdit] = useState(false);
+	const [dataProfile, setDataProfile] = useState({});
 	const items = [
 		{
 			key: 0,
 			label: `About`,
 			icon: <FontAwesomeIcon icon={ faUser } />,
-			children: <About setIsLoading={ setIsLoading } />,
+			children: <About />,
 		},
 		{
 			key: 1,
@@ -40,12 +44,12 @@ const ProfilePage = () => {
 		const actived = items.filter(item => item.key === value);
 		return actived[0].children;
 	}, [value]);
+
 	const handleChangeAvatar = useCallback((e) => {
 		const file = e.target.files[0];
 		file.preview = URL.createObjectURL(file);
-		console.log('file', file, URL.createObjectURL(file));
 		setAvatar(file);
-	}, [])
+	}, []);
 
 	const renderAvatar = useMemo(() => {
 		return (
@@ -53,21 +57,26 @@ const ProfilePage = () => {
 				{
 					avatar && <img src={ avatar.preview } alt="user" />
 				}
-				<label htmlFor="avatar" className="icon-edit-avatar"><FontAwesomeIcon icon={ faPencil } /></label>
-				<input type='file' id='avatar' name='avatar' className="hidden" onChange={ handleChangeAvatar } />
+				{
+					isEdit && <>
+						<label htmlFor="avatar" className="icon-edit-avatar"><FontAwesomeIcon icon={ faPencil } /></label>
+						<input type='file' id='avatar' name='avatar' className="hidden" onChange={ handleChangeAvatar } />
+					</>
+				}
 			</div>
 		)
-	}, [avatar])
+	}, [avatar, isEdit])
 
 	useEffect(() => {
 		if (context?.user?.avatar) {
 			setAvatar({ ...avatar, preview: context.user.avatar });
 		}
+		setDataProfile(context?.user);
 	}, [context?.user])
 	return (
-		<>
+		<ProfileContext.Provider value={ { isLoading, isEdit, setIsLoading, setIsEdit, dataProfile, setDataProfile, avatar, progress, setProgress } }>
 			{
-				isLoading ? <Loading />
+				isLoading ? <ProgressUpload progress={ progress } />
 					: <Container>
 						<Row>
 							<Col xs={ 12 } md={ 4 }>
@@ -135,8 +144,8 @@ const ProfilePage = () => {
 
 					</Container>
 			}
+		</ProfileContext.Provider>
 
-		</>
 	)
 }
 
