@@ -1,18 +1,52 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPenToSquare, faCircleXmark } from '@fortawesome/free-solid-svg-icons';
-import { useContext } from 'react';
-import { AppContext } from '../../../App';
-import { useState } from 'react';
 import { DatePicker, Select } from 'antd';
+import { authAPI } from '../../../api/authApi';
+import { toast } from 'react-hot-toast';
+import { ProfileContext } from '../ProfilePage';
+import uploadFileWithProgress from '../../../Firebase/uploadFileWithProgress';
+import { AppContext } from '../../../App';
 
 const About = () => {
 	const context = useContext(AppContext);
-	const [edit, setEdit] = useState(false);
+	const profileContext = useContext(ProfileContext);
+
 
 	const toggleButtonEdit = () => {
-		setEdit(!edit);
+		profileContext.setIsEdit(!profileContext.isEdit);
 	};
+
+	const handleChangeField = (e) => {
+		profileContext?.setDataProfile({ ...profileContext?.dataProfile, [e.target.name]: e.target.value });
+	}
+
+	const updateProfile = async () => {
+		profileContext.setIsLoading(true);
+		let url = '';
+		if (profileContext.avatar?.name) {
+			url = await uploadFileWithProgress(profileContext.avatar, 'images/avatar', profileContext.avatar.name, profileContext.setProgress);
+		} else {
+			url = profileContext.avatar.preview;
+		}
+
+		const res = await authAPI.updateProfile({
+			fullName: profileContext.dataProfile.fullName,
+			address: profileContext.dataProfile.address,
+			phone: profileContext.dataProfile.phone,
+			avatar: url,
+			gender: profileContext.dataProfile.gender
+		});
+		if (res.status === 200) {
+			context.setUser(res.data)
+			toast.success('Profile updated');
+		} else {
+			toast.success('Profile failed');
+		}
+		profileContext.setIsLoading(false);
+	};
+
+
 
 	return (
 		<div className='text-left'>
@@ -22,25 +56,11 @@ const About = () => {
 				</p>
 				<button onClick={ toggleButtonEdit }>
 					{
-						edit ? <FontAwesomeIcon icon={ faCircleXmark } />
+						profileContext.isEdit ? <FontAwesomeIcon icon={ faCircleXmark } />
 							: <FontAwesomeIcon icon={ faPenToSquare } />
 					}
 				</button>
-
 			</div>
-			{/* <div className='flex mb-2.5 input-wrapper'>
-				<div className='w-2/12'>
-					<label htmlFor='username'>
-						Username:
-					</label>
-				</div>
-				<div className='w-8/12 ml-4'>
-					{
-						edit ? <input id='username' name='username' type='text' value={ context?.user?.username } className='w-full' />
-							: <p className='m-0 text-blue-600'>{ context?.user?.username }</p>
-					}
-				</div>
-			</div> */}
 			<div className='flex mb-2.5 input-wrapper'>
 				<div className='w-2/12'>
 					<label htmlFor='fullName'>
@@ -49,8 +69,8 @@ const About = () => {
 				</div>
 				<div className='w-8/12 ml-4'>
 					{
-						edit ? <input id='fullName' name='fullName' type='text' value={ context?.user?.fullName } className='w-full' />
-							: <p className='m-0 text-blue-600'>{ context?.user?.fullName }</p>
+						profileContext.isEdit ? <input id='fullName' name='fullName' type='text' onChange={ handleChangeField } value={ profileContext?.dataProfile?.fullName } className='w-full' />
+							: <p className='m-0 text-blue-600'>{ profileContext?.dataProfile?.fullName }</p>
 					}
 				</div>
 			</div>
@@ -62,8 +82,8 @@ const About = () => {
 				</div>
 				<div className='w-8/12 ml-4'>
 					{
-						edit ? <input id='phone' name='phone' type='text' value={ context?.user?.phone } className='w-full' />
-							: <p className='m-0 text-blue-600'>{ context?.user?.phone }</p>
+						profileContext.isEdit ? <input id='phone' name='phone' type='text' onChange={ handleChangeField } value={ profileContext?.dataProfile?.phone } className='w-full' />
+							: <p className='m-0 text-blue-600'>{ profileContext?.dataProfile?.phone }</p>
 					}
 				</div>
 			</div>
@@ -75,8 +95,8 @@ const About = () => {
 				</div>
 				<div className='w-8/12 ml-4'>
 					{
-						edit ? <input id='address' name='address' type='text' value={ context?.user?.address } className='w-full' />
-							: <p className='m-0'>{ context?.user?.address }</p>
+						profileContext.isEdit ? <input id='address' name='address' type='text' onChange={ handleChangeField } value={ profileContext?.dataProfile?.address } className='w-full' />
+							: <p className='m-0'>{ profileContext?.dataProfile?.address }</p>
 					}
 				</div>
 			</div>
@@ -87,10 +107,7 @@ const About = () => {
 					</label>
 				</div>
 				<div className='w-8/12 ml-4'>
-					{
-						edit ? <input id='phone' name='phone' type='email' value={ context?.user?.email } className='w-full' />
-							: <p className='m-0 text-blue-600'>{ context?.user?.email }</p>
-					}
+					<p className='m-0 text-blue-600'>{ profileContext?.dataProfile?.email }</p>
 				</div>
 			</div>
 
@@ -108,7 +125,7 @@ const About = () => {
 						</div>
 						<div className='w-8/12 ml-4'>
 							{
-								edit ? <DatePicker />
+								profileContext.isEdit ? <DatePicker />
 									: <p className='m-0'>11/09/2002</p>
 							}
 						</div>
@@ -121,8 +138,8 @@ const About = () => {
 						</div>
 						<div className='w-8/12 ml-4'>
 							{
-								edit ? <Select
-									defaultValue={ context?.user?.gender }
+								profileContext.isEdit ? <Select
+									defaultValue={ profileContext?.dataProfile?.gender }
 									style={ {
 										width: 120,
 									} }
@@ -139,7 +156,7 @@ const About = () => {
 								/>
 									: <p className='m-0'>
 										{
-											context?.user?.gender === 1 ? 'Male' : 'Female'
+											profileContext?.dataProfile?.gender === 1 ? 'Male' : 'Female'
 										}
 									</p>
 							}
@@ -147,6 +164,12 @@ const About = () => {
 					</div>
 				</div>
 			</div>
+			{
+				profileContext.isEdit && <div className='flex justify-end items-center'>
+					<button className='btn-custom my-btn px-4 py-2' onClick={ updateProfile }>Save</button>
+				</div>
+			}
+
 		</div>
 	)
 }

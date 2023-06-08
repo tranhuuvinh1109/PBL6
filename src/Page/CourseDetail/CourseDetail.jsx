@@ -54,7 +54,12 @@ const CoureDetail = () => {
 
 	useEffect(() => {
 		GetInformationCourse(id)
-	}, [id, GetInformationCourse])
+	}, [id, GetInformationCourse]);
+
+	useEffect(() => {
+		window.scrollTo(0, 0);
+	}, []);
+
 	return (
 		<Container fluid="md" className="text-left mb-20 mt-20 min-h-[630px]">
 			{
