@@ -41,8 +41,8 @@ const Login = () => {
 				} else {
 					throw new Error("Login failed");
 				}
-			} catch (error) {
-				toast.error(error.message);
+			} catch {
+				toast.error("Username or password incorrect");
 			}
 			finally {
 				context.setIsLoading(false);

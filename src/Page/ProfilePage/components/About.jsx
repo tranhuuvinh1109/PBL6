@@ -5,14 +5,50 @@ import { useContext } from 'react';
 import { AppContext } from '../../../App';
 import { useState } from 'react';
 import { DatePicker, Select } from 'antd';
+import { authAPI } from '../../../api/authApi';
+import { useEffect } from 'react';
+import { toast } from 'react-hot-toast';
 
-const About = () => {
+const About = ({ setIsLoading }) => {
 	const context = useContext(AppContext);
+	const [dataProfile, setDataProfile] = useState({});
+
 	const [edit, setEdit] = useState(false);
 
 	const toggleButtonEdit = () => {
 		setEdit(!edit);
 	};
+
+	const handleChangeField = (e) => {
+		setDataProfile({ ...dataProfile, [e.target.name]: e.target.value });
+	}
+
+	const updateProfile = async () => {
+		setIsLoading(true);
+		const res = await authAPI.updateProfile({
+			fullName: "",
+			address: "",
+			phone: "",
+			avatar: "",
+			gender: ""
+		});
+		console.log('dataProfile updated', dataProfile);
+		if (res.status === 200) {
+			console.log('Updated profile', res);
+			toast.success('Profile updated');
+		} else {
+			console.log('errr', res);
+		}
+		setDataProfile(false);
+	};
+
+
+	useEffect(() => {
+		if (context?.user?.id) {
+			console.log('user', context?.user)
+			setDataProfile(context?.user);
+		}
+	}, [context?.user])
 
 	return (
 		<div className='text-left'>
@@ -26,21 +62,7 @@ const About = () => {
 							: <FontAwesomeIcon icon={ faPenToSquare } />
 					}
 				</button>
-
 			</div>
-			{/* <div className='flex mb-2.5 input-wrapper'>
-				<div className='w-2/12'>
-					<label htmlFor='username'>
-						Username:
-					</label>
-				</div>
-				<div className='w-8/12 ml-4'>
-					{
-						edit ? <input id='username' name='username' type='text' value={ context?.user?.username } className='w-full' />
-							: <p className='m-0 text-blue-600'>{ context?.user?.username }</p>
-					}
-				</div>
-			</div> */}
 			<div className='flex mb-2.5 input-wrapper'>
 				<div className='w-2/12'>
 					<label htmlFor='fullName'>
@@ -49,8 +71,8 @@ const About = () => {
 				</div>
 				<div className='w-8/12 ml-4'>
 					{
-						edit ? <input id='fullName' name='fullName' type='text' value={ context?.user?.fullName } className='w-full' />
-							: <p className='m-0 text-blue-600'>{ context?.user?.fullName }</p>
+						edit ? <input id='fullName' name='fullName' type='text' onChange={ handleChangeField } value={ dataProfile?.fullName } className='w-full' />
+							: <p className='m-0 text-blue-600'>{ dataProfile?.fullName }</p>
 					}
 				</div>
 			</div>
@@ -62,8 +84,8 @@ const About = () => {
 				</div>
 				<div className='w-8/12 ml-4'>
 					{
-						edit ? <input id='phone' name='phone' type='text' value={ context?.user?.phone } className='w-full' />
-							: <p className='m-0 text-blue-600'>{ context?.user?.phone }</p>
+						edit ? <input id='phone' name='phone' type='text' onChange={ handleChangeField } value={ dataProfile?.phone } className='w-full' />
+							: <p className='m-0 text-blue-600'>{ dataProfile?.phone }</p>
 					}
 				</div>
 			</div>
@@ -75,8 +97,8 @@ const About = () => {
 				</div>
 				<div className='w-8/12 ml-4'>
 					{
-						edit ? <input id='address' name='address' type='text' value={ context?.user?.address } className='w-full' />
-							: <p className='m-0'>{ context?.user?.address }</p>
+						edit ? <input id='address' name='address' type='text' onChange={ handleChangeField } value={ dataProfile?.address } className='w-full' />
+							: <p className='m-0'>{ dataProfile?.address }</p>
 					}
 				</div>
 			</div>
@@ -87,10 +109,7 @@ const About = () => {
 					</label>
 				</div>
 				<div className='w-8/12 ml-4'>
-					{
-						edit ? <input id='phone' name='phone' type='email' value={ context?.user?.email } className='w-full' />
-							: <p className='m-0 text-blue-600'>{ context?.user?.email }</p>
-					}
+					<p className='m-0 text-blue-600'>{ dataProfile?.email }</p>
 				</div>
 			</div>
 
@@ -122,7 +141,7 @@ const About = () => {
 						<div className='w-8/12 ml-4'>
 							{
 								edit ? <Select
-									defaultValue={ context?.user?.gender }
+									defaultValue={ dataProfile?.gender }
 									style={ {
 										width: 120,
 									} }
@@ -139,7 +158,7 @@ const About = () => {
 								/>
 									: <p className='m-0'>
 										{
-											context?.user?.gender === 1 ? 'Male' : 'Female'
+											dataProfile?.gender === 1 ? 'Male' : 'Female'
 										}
 									</p>
 							}
@@ -147,6 +166,12 @@ const About = () => {
 					</div>
 				</div>
 			</div>
+			{
+				edit && <div className='flex justify-end items-center'>
+					<button className='btn-custom my-btn px-4 py-2' onClick={ updateProfile }>Save</button>
+				</div>
+			}
+
 		</div>
 	)
 }

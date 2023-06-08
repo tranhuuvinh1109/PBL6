@@ -147,6 +147,10 @@ const BlogDetail = () => {
 			unsubscribe();
 		};
 	}, [id]);
+
+	useEffect(() => {
+		window.scrollTo(0, 0);
+	}, []);
 	return (
 		<>
 			{

@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import Footer from '../AppLayout/Footer/Footer';
 import Header from '../AppLayout/Header/Header';
 import Slider from '../AppLayout/Slider/Slider';
@@ -12,6 +12,9 @@ import Loading from '../components/Loading/Loading';
 
 const HomePage = () => {
 	const context = useContext(AppContext);
+	useEffect(() => {
+		window.scrollTo(0, 0);
+	}, []);
 	return (
 		<>
 			{

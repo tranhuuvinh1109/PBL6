@@ -26,8 +26,9 @@ const BlogPage = () => {
 		setIsLoading(false);
 	}
 	useEffect(() => {
+		window.scrollTo(0, 0);
 		getAllBlog();
-	}, [])
+	}, []);
 
 	return (
 		<div className='mt-20 min-h-[630px] text-left' >

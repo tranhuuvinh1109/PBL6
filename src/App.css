@@ -398,3 +398,8 @@ p{
 .trash {
   color: #f5365c;
 }
+.icon-edit-avatar {
+  position: absolute;
+  top: 0;
+  right: 0;
+}
