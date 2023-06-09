@@ -14,6 +14,7 @@ import { toast } from "react-hot-toast";
 import { Popover, Modal } from 'antd';
 import parse from 'html-react-parser';
 import Loading from "../../components/Loading/Loading";
+import EditBlog from "./components/EditBlog/EditBlog";
 
 const BlogDetail = () => {
 	const context = useContext(AppContext);
@@ -250,10 +251,10 @@ const BlogDetail = () => {
 								</h4>
 							</div>
 						</Modal>
-						<Modal title="Edit Blog" open={ isOpenEdit } onOk={ handleOkEdit } onCancel={ handleCancelEdit } zIndex={ 100001 }>
-							<p>Some contents...</p>
-							<p>Some contents...</p>
-							<p>Some contents...</p>
+						<Modal footer={ null } title="Edit Blog" open={ isOpenEdit } onOk={ handleOkEdit } onCancel={ handleCancelEdit } zIndex={ 100001 } width={ 800 }>
+							<div>
+								<EditBlog id={ id } />
+							</div>
 						</Modal>
 					</Container>
 			}

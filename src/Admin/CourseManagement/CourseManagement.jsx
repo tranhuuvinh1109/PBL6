@@ -1,11 +1,10 @@
-import React, { useContext, useCallback } from 'react';
+import React, { useContext, useCallback, useMemo } from 'react';
 import { SearchOutlined } from '@ant-design/icons';
 import { Button, Input, Space, Table, Popconfirm } from 'antd';
 import { useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Highlighter from 'react-highlight-words';
 import { AppContext } from '../../App';
-import { useMemo } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPenToSquare, faTrashCan } from '@fortawesome/free-solid-svg-icons';
 import { courseAPI } from '../../api/courseAPI';
@@ -156,8 +155,6 @@ const CourseManagement = () => {
 			widtd: '10%',
 			key: 'category',
 			...getColumnSearchProps('category'),
-			// sorter: (a, b) => a.address.length - b.address.length,
-			// sortDirections: ['descend', 'ascend'],
 		}, {
 			title: 'Price',
 			dataIndex: 'price',
