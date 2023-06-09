@@ -155,8 +155,6 @@ const CourseManagement = () => {
 			widtd: '10%',
 			key: 'category',
 			...getColumnSearchProps('category'),
-			// sorter: (a, b) => a.address.length - b.address.length,
-			// sortDirections: ['descend', 'ascend'],
 		}, {
 			title: 'Price',
 			dataIndex: 'price',

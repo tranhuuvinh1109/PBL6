@@ -3,6 +3,13 @@ import Highcharts from 'highcharts';
 import HighchartsReact from 'highcharts-react-official';
 import { statisticAPI } from '../../api/statisticAPI';
 
+const colorArray = ['#FFFF00', '#FF00FF', '#FF0000', '#00FFFF', '#00FF00', '#FFCC33', '#FF99FF', '#3300FF', '#330066'];
+
+const randomColor = () => {
+	const randomIndex = Math.floor(Math.random() * colorArray.length);
+	return colorArray[randomIndex];
+}
+
 const Daskboard = () => {
 	const [options, setOptions] = useState({
 		chart: {
@@ -15,21 +22,25 @@ const Daskboard = () => {
 		xAxis: {}
 	});
 
+
 	const getStatisticCourse = async () => {
 		const res = await statisticAPI.statisticCourse();
 		if (res.status === 200) {
-			const { arrayKey, arrayValue } = res.data.reduce(
+			const { arrayValue } = res.data.reduce(
 				(acc, item) => {
-					acc.arrayKey.push(item.course_id);
 					acc.arrayValue.push(item.quantity);
 					return acc;
 				},
-				{ arrayKey: [], arrayValue: [] }
+				{ arrayValue: [] }
 			);
+			const courses = res.data.map(item => {
+				return { course: item.course }
+			});
+
 			setOptions({
 				...options,
 				xAxis: {
-					categories: arrayKey,
+					categories: courses.map(item => item.course.name),
 					crosshair: true,
 					title: {
 						text: null
@@ -37,8 +48,19 @@ const Daskboard = () => {
 				},
 				series: [
 					{
-						name: 'Series 1',
-						data: arrayValue
+						name: '',
+						data: arrayValue.map((item, index) => {
+							return {
+								name: courses[index].course.name,
+								y: item,
+								color: randomColor()
+							}
+						}),
+						tooltip: {
+							formatter: () => {
+								return 'The value for <b>' + this.x + '</b> is <b>' + this.y + '</b>, in series ' + this.series.name;
+							}
+						}
 					}
 				]
 			});
@@ -48,7 +70,6 @@ const Daskboard = () => {
 	};
 
 	const renderStatistic = useMemo(() => {
-		console.log(options);
 		return <HighchartsReact highcharts={ Highcharts } options={ options } />;
 	}, [options]);
 

@@ -6,10 +6,10 @@ const BlogResult = ({ blog }) => {
 		<Link to={ `blog/${blog.blog_id}` } >
 			<div className="flex mb-2 w-full items-center justify-between my-hover px-2 py-1 text-black">
 				{
-					blog?.image && <div className="w-6/12 mr-2"><img src={ blog.image } className="w-full max-h-20 object-cover rounded-lg" alt="blog" /></div>
+					blog?.image && <div className="w-4/12 mr-2"><img src={ blog.image } className="w-full max-h-20 object-cover rounded-lg" alt="blog" /></div>
 				}
 				{
-					blog?.title && <p className="whitespace-nowrap text-ellipsis text-lg overflow-hidden text-sm m-0">{ blog.title }</p>
+					blog?.title && <p className="w-8/12 whitespace-nowrap text-ellipsis text-lg overflow-hidden text-sm m-0">{ blog.title }</p>
 				}
 			</div>
 		</Link>

@@ -6,6 +6,21 @@ import { SearchOutlined } from '@ant-design/icons';
 import Highlighter from 'react-highlight-words';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPenToSquare, faTrashCan } from '@fortawesome/free-solid-svg-icons';
+import parse from 'html-react-parser';
+
+
+const truncateString = (str, maxLength = 100) => {
+	if (str.length > maxLength) {
+		const index = str.indexOf('</p');
+		let end = '';
+		if (index !== -1) {
+			end = str.substring(index);
+		}
+		return str.slice(0, maxLength) + "..." + end;
+	} else {
+		return str;
+	}
+}
 
 const BlogManagement = () => {
 	const [listBlog, setListBlog] = useState([]);
@@ -159,14 +174,9 @@ const BlogManagement = () => {
 			dataIndex: 'content',
 			width: '30%',
 			key: 'content',
-			render: (content) => (
-				<p className='text-ellipsis whitespace-nowrap overflow-hidden'>
-					{
-						content
-					}
-				</p>
-			),
-			...getColumnSearchProps('content')
+			render: (content) => {
+				return parse(truncateString(content));
+			}
 		},
 		{
 			title: '',
@@ -207,7 +217,6 @@ const BlogManagement = () => {
 		const res = await blogAPI.getAll();
 		if (res.status === 200) {
 			setListBlog(res.data);
-			console.log('blog success', res)
 		} else {
 			console.log('blog error', res)
 		}
