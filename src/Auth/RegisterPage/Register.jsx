@@ -88,9 +88,9 @@ const Register = () => {
 			password: password
 		});
 		if (res.status === 201) {
-			console.log('success', res);
+			toast.success("Register Success !");
 		} else {
-			console.log('err', res);
+			toast.error("Register fail !");
 		}
 	}
 

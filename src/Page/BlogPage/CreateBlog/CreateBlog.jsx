@@ -55,10 +55,10 @@ const CreateBlog = () => {
 					toast.success("Create Blog Success");
 					navigate('/blog');
 				} else {
-					toast.error("Create Blog Fail")
+					toast.error("Create Blog Fail");
 				}
 			} else {
-				console.log('error creating', uploadImagePromise)
+				toast.error("Create Blog Fail");
 			}
 		}
 		setIsLoading(false);

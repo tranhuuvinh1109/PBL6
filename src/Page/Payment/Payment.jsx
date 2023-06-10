@@ -61,8 +61,9 @@ const Payment = ({ data, res }) => {
 		const res = await courseAPI.registerCourse(id);
 		if (res.status === 201) {
 			navigate(`/learning/${id}`);
+			toast.success('Course successfully registered !');
 		} else {
-			console.log('error')
+			toast.error('Registering course failed !');
 		}
 	}
 	const onError = (_data, _actions) => {

@@ -22,7 +22,7 @@ const EditBlog = ({ id }) => {
 			setContent(res.data.content);
 			setImage({ ...image, preview: res.data.image })
 		} else {
-			console.log('error', res)
+			toast.error('Get data fail !');
 		}
 	}, [])
 	const handleChangeImage = (e) => {

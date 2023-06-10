@@ -7,6 +7,7 @@ import Highlighter from 'react-highlight-words';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPenToSquare, faTrashCan } from '@fortawesome/free-solid-svg-icons';
 import parse from 'html-react-parser';
+import { toast } from 'react-hot-toast';
 
 
 const truncateString = (str, maxLength = 100) => {
@@ -218,7 +219,7 @@ const BlogManagement = () => {
 		if (res.status === 200) {
 			setListBlog(res.data);
 		} else {
-			console.log('blog error', res)
+			toast.error("Get all blog fail !");
 		}
 
 
