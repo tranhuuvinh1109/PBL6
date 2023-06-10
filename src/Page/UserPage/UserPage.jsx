@@ -17,7 +17,7 @@ const UserPage = () => {
 		try {
 			const res = await userAPI.getUserByID(id);
 			if (res.status === 200) {
-				setUserData(res.data.data);
+				setUserData(res.data[0]);
 			}
 			else {
 				throw new Error("Get Category failed");
@@ -46,9 +46,8 @@ const UserPage = () => {
 							<span className="bg-gradient-default opacity-8"></span>
 							<div className="w-full text-center">
 								<div>
-									<h1 className="text-white">Hello Jesse</h1>
+									<h1 className="text-red-400">{ userData?.fullname }</h1>
 									<p className="text-white mt-0 mb-5">This is your profile page. You can see the progress you've made with your work and manage your projects or assigned tasks</p>
-									<a href="#!" className="btn btn-info">Edit profile</a>
 								</div>
 							</div>
 						</div>
@@ -56,18 +55,13 @@ const UserPage = () => {
 							<Row>
 								<Col xl={ 4 } className='mb-xl-0'>
 									<div className="card card-profile shadow">
-										<Row className="justify-center">
-											<Col lg={ 6 } className="order-lg-2">
-												{
-													userData?.avatar ? <div className="image-preview-profile rounded-full" style={ { backgroundImage: `url(${userData.avatar})` } } ></div>
-														:
-														<div className="image-preview-profile rounded-full" style={ { backgroundImage: `url(https://fullstack.edu.vn/static/media/fallback-avatar.155cdb2376c5d99ea151.jpg)` } }></div>
-												}
-
-												{/* <img src="https://demos.creative-tim.com/argon-dashboard/assets-old/img/theme/team-4.jpg" className="rounded-circle" alt="team" /> */ }
-												{/* <FontAwesomeIcon icon={ faPenToSquare } /> */ }
-											</Col>
-										</Row>
+										<div className="w-full flex justify-center items-center py-4">
+											{
+												userData?.avatar ? <div className="image-preview-profile rounded-full" style={ { backgroundImage: `url(${userData.avatar})` } } ></div>
+													:
+													<div className="image-preview-profile rounded-full" style={ { backgroundImage: `url(https://fullstack.edu.vn/static/media/fallback-avatar.155cdb2376c5d99ea151.jpg)` } }></div>
+											}
+										</div>
 
 										<div className="card-header text-center border-0 pt-32 pt-md-4 pb-0 pb-md-4">
 											<div className="flex justify-between">
@@ -96,9 +90,9 @@ const UserPage = () => {
 
 											</Row>
 											<div className="text-center">
-												<h3 className="text-lg">
+												<h3 className="text-lg text-red-400">
 													{
-														userData?.name
+														userData?.user_name
 													}
 												</h3>
 												<h3 className="mt-4 text-lg">
@@ -116,63 +110,55 @@ const UserPage = () => {
 
 								<Col xl={ 8 } className="order-xl-1">
 									<div className="card shadow">
-										<div className="card-header bg-white border-0">
-											<Row className="items-center">
-												<Col xs={ 8 }>
-													<h3 className="mb-0 text-left text-lg">My account</h3>
-												</Col>
-												<Col xs={ 4 } className="text-right">
-													<button className="btn btn-sm btn-primary">Settings</button>
-												</Col>
-
-											</Row>
-
-										</div>
 										<div className="card-body  text-left">
-											<form>
-												<h6 className="heading-small text-muted mb-4">User information</h6>
-												<div className="pl-lg-4">
-													<Row>
-														<Col lg={ 6 }>
-															{
-																userData?.phone && <h5>
-																	{ userData?.phone }
-																</h5>
-															}
-														</Col>
+											<h6 className="heading-small text-muted mb-4">User information</h6>
+											<div className="pl-lg-4">
+												<Row>
+													<Col xs={ 12 } className="user-infor-wrapper">
+														<label className="user-infor-label">
+															Phone :
+														</label>
+														{
+															userData?.phonenumber && <h5 className="user-infor-h5">
+																{ userData?.phonenumber }
+															</h5>
+														}
+													</Col>
 
-														<Col lg={ 6 }>
-															<div className="form-group">
-																{
-																	userData?.email && <h5>
-																		{ userData?.email }
-																	</h5>
-																}
-															</div>
-														</Col>
-													</Row>
+													<Col xs={ 12 } className="user-infor-wrapper">
+														<label className="user-infor-label">
+															Fullname :
+														</label>
+														{
+															userData?.fullname && <h5 className="user-infor-h5">
+																{ userData?.fullname }
+															</h5>
+														}
+													</Col>
 
-													<Row>
-														<Col lg={ 6 }>
-															<div className="form-group focused">
-																{
-																	userData?.name && <h5>
-																		{ userData?.name }
-																	</h5>
-																}
-															</div>
-														</Col>
-													</Row>
-												</div>
-												<hr className="my-4" />
-												<h6 className="heading-small text-muted mb-4">About me</h6>
-												<div className="pl-lg-4">
-													<div className="form-group focused">
-														<label>About Me</label>
-														<textarea rows={ 4 } className="form-control form-control-alternative" placeholder="A few words about you ...">A beautiful Dashboard for Bootstrap 4. It is Free and Open Source.</textarea>
-													</div>
-												</div>
-											</form>
+													<Col xs={ 12 } className="user-infor-wrapper">
+														<label className="user-infor-label">
+															Address
+														</label>
+														{
+															userData?.address && <h5 className="user-infor-h5">
+																{ userData?.address }
+															</h5>
+														}
+													</Col>
+													<Col xs={ 12 } className="user-infor-wrapper">
+														<label className="user-infor-label">
+															Email
+														</label>
+														{
+															userData?.email && <h5 className="user-infor-h5">
+																{ userData?.email }
+															</h5>
+														}
+													</Col>
+												</Row>
+
+											</div>
 										</div>
 									</div>
 								</Col>

@@ -19,7 +19,7 @@ const ProfilePage = () => {
 	const [isLoading, setIsLoading] = useState(false);
 	const [isEdit, setIsEdit] = useState(false);
 	const [dataProfile, setDataProfile] = useState({});
-	const items = [
+	const items = useMemo(() => [
 		{
 			key: 0,
 			label: `About`,
@@ -38,12 +38,12 @@ const ProfilePage = () => {
 			icon: <FontAwesomeIcon icon={ faBlog } />,
 			children: <Blog />,
 		},
-	];
+	], []);
 
 	const renderTab = useMemo(() => {
 		const actived = items.filter(item => item.key === value);
 		return actived[0].children;
-	}, [value]);
+	}, [value, items]);
 
 	const handleChangeAvatar = useCallback((e) => {
 		const file = e.target.files[0];
@@ -65,14 +65,22 @@ const ProfilePage = () => {
 				}
 			</div>
 		)
-	}, [avatar, isEdit])
+	}, [avatar, isEdit, handleChangeAvatar])
 
 	useEffect(() => {
 		if (context?.user?.avatar) {
-			setAvatar({ ...avatar, preview: context.user.avatar });
+			setAvatar({ preview: context.user.avatar });
 		}
 		setDataProfile(context?.user);
 	}, [context?.user])
+
+	useEffect(() => {
+		return () => {
+			if (avatar?.preview) {
+				URL.revokeObjectURL(avatar.preview)
+			}
+		}
+	}, [avatar])
 	return (
 		<ProfileContext.Provider value={ { isLoading, isEdit, setIsLoading, setIsEdit, dataProfile, setDataProfile, avatar, progress, setProgress } }>
 			{

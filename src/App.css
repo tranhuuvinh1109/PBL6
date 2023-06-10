@@ -427,3 +427,16 @@ p{
   cursor: pointer;
   color: rgb(51 65 85);
 }
+.user-infor-wrapper {
+  margin-top: 18px;
+  display: flex;
+  align-items: center;
+}
+.user-infor-label {
+  width: 40%;
+  font-size: 18px;
+  font-weight: 500;
+}
+.user-infor-h5 {
+  width: 60%;
+}
