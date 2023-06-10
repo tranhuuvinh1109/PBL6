@@ -2,6 +2,7 @@ import React, { useState, useEffect, useMemo } from 'react';
 import Highcharts from 'highcharts';
 import HighchartsReact from 'highcharts-react-official';
 import { statisticAPI } from '../../api/statisticAPI';
+import { toast } from 'react-hot-toast';
 
 const colorArray = ['#FFFF00', '#FF00FF', '#FF0000', '#00FFFF', '#00FF00', '#FFCC33', '#FF99FF', '#3300FF', '#330066'];
 
@@ -65,7 +66,7 @@ const Daskboard = () => {
 				]
 			});
 		} else {
-			console.log('err', res);
+			toast.error('Get static data fail !');
 		}
 	};
 

@@ -5,7 +5,6 @@ import { AppContext } from "../../../App";
 
 const Blog = () => {
 	const context = useContext(AppContext);
-	console.log('blog', context?.user?.listBlogs)
 	const renderBlog = useMemo(() => {
 		return context.user.listBlogs.map((blog) => {
 			return <BlogItem key={ blog.id } blog={ blog } />

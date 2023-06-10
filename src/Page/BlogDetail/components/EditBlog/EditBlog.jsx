@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useMemo } from "react";
+import React, { useEffect, useState, useMemo, useCallback } from "react";
 import { blogAPI } from "../../../../api/blogApi";
 import ReactQuill from "react-quill";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -15,24 +15,24 @@ const EditBlog = ({ id }) => {
 	const [image, setImage] = useState({});
 	const [progress, setProgress] = useState(0);
 	const [content, setContent] = useState('');
-	const getBlogDetail = async () => {
+	const getBlogDetail = useCallback(async () => {
 		const res = await blogAPI.getBlogDetail(id);
 		if (res.status === 200) {
 			setDataBlog(res.data);
 			setContent(res.data.content);
 			setImage({ ...image, preview: res.data.image })
 		} else {
-			console.log('error', res)
+			toast.error('Get data fail !');
 		}
-	}
+	}, [])
 	const handleChangeImage = (e) => {
 		const file = e.target.files[0];
 		file.preview = URL.createObjectURL(file);
 		setImage(file);
 	}
-	const handleClickClearImage = () => {
+	const handleClickClearImage = useCallback(() => {
 		setImage({ ...image, preview: '' })
-	}
+	}, [])
 	const handleChangeTitle = (e) => {
 		setDataBlog({ ...dataBlog, title: e.target.value })
 	}
@@ -94,7 +94,7 @@ const EditBlog = ({ id }) => {
 
 	useEffect(() => {
 		getBlogDetail();
-	}, [])
+	}, [getBlogDetail])
 	useEffect(() => {
 		return () => {
 			if (image.preview) {

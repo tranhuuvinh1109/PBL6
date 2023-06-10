@@ -12,6 +12,7 @@ import { AppContext } from '../../App';
 import { authAPI } from '../../api/authApi';
 import ReactPlayer from 'react-player';
 import CommentItem from '../../components/CommentItem/CommentItem';
+import { toast } from 'react-hot-toast';
 
 const { Panel } = Collapse;
 
@@ -54,7 +55,7 @@ const Learning = () => {
 			if (res.data.lessons.length > 0) {
 				setActived(res.data.lessons[0].id)
 			} else {
-				console.log("...fail", res.data)
+				toast.error('Get data course fail !');
 			}
 		}
 	};

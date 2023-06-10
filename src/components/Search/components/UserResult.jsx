@@ -3,7 +3,6 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 const UserResult = ({ user }) => {
-	console.log('user', user);
 	return (
 		<Link to={ `user/${user.user_id}` }>
 			<div className="flex mb-2 w-full items-center my-hover px-2 py-1 text-black">
