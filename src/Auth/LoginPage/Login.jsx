@@ -13,7 +13,7 @@ import InputCustom from '../../components/Input/Input';
 const Login = () => {
 	const navigator = useNavigate();
 	const [data, setData] = useState({
-		username: '',
+		email: '',
 		password: ''
 	})
 	const context = useContext(AppContext)
@@ -24,31 +24,26 @@ const Login = () => {
 	}
 	const handleSubmit = async (e) => {
 		e.preventDefault();
-		if (data.username && data.password) {
+		if (data.email && data.password) {
 			context.setIsLoading(true);
-			try {
-				const res = await authAPI.login(data);
-				if (res.status === 200) {
-					context.setUser(res.data.data);
-					localStorage.setItem('userID', res.data.access_token);
-					toast.success('Login Successfully');
-					if (res.data.data.role === 0) {
-						context.setIsAdmin(true);
-					} else {
-						context.setIsAdmin(false);
-					}
-					navigator('/');
+			const res = await authAPI.login(data);
+			if (res.status === 200) {
+				context.setUser(res.data.data);
+				console.log('login', res.data.token)
+				localStorage.setItem('userID', res.data.token);
+				toast.success('Login Successfully');
+				if (res.data.data.role === 0) {
+					context.setIsAdmin(true);
 				} else {
-					throw new Error("Login failed");
+					context.setIsAdmin(false);
 				}
-			} catch {
-				toast.error("Username or password incorrect");
+				navigator('/');
+			} else {
+				throw new Error("Login failed");
 			}
-			finally {
-				context.setIsLoading(false);
-			}
+			context.setIsLoading(false);
 		} else {
-			toast.error('Nhap email password');
+			toast.error('Please enter email & password');
 		}
 	};
 	return (
@@ -77,7 +72,7 @@ const Login = () => {
 							>
 								<h3 className=''>SIGN IN</h3>
 								<div>
-									<InputCustom type='text' icon={ <FontAwesomeIcon icon={ faUser } fontSize={ 14 } /> } id='username' placeholder='Your Name' required={ true } name='username' value={ data.username } onChange={ handleChange } onBlur={ () => { } } />
+									<InputCustom type='email' icon={ <FontAwesomeIcon icon={ faUser } fontSize={ 14 } /> } id='email' placeholder='Your Email' required={ true } name='email' value={ data.username } onChange={ handleChange } onBlur={ () => { } } />
 									<InputCustom type='password' icon={ <FontAwesomeIcon icon={ faLock } fontSize={ 14 } /> } id='password' placeholder='Password' required={ true } name='password' value={ data.password } onChange={ handleChange } onBlur={ () => { } } />
 								</div>
 								<div >

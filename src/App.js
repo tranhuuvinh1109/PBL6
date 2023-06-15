@@ -29,7 +29,7 @@ function App () {
   const getListCourse = async () => {
     const res = await courseAPI.getCourse();
     if (res.status === 200) {
-      setListCourse(res.data);
+      setListCourse(res.data.data);
     } else {
       toast.error('Get Course Error');
       setListCourse([]);
@@ -45,9 +45,8 @@ function App () {
         authAPI.getUserByToken(token)
       ]);
 
-      const userData = userResponse.data;
-      const courseData = courseResponse.data;
-
+      const userData = userResponse.data.data;
+      const courseData = courseResponse.data.data;
       if (userData) {
         if (userData.role === 0) {
           setIsAdmin(true);
@@ -72,7 +71,7 @@ function App () {
   useEffect(() => {
     const token = localStorage.getItem('userID');
     if (token) {
-      fetchData({ access_token: token });
+      fetchData(token);
     }
     getListCourse();
   }, [fetchData]);

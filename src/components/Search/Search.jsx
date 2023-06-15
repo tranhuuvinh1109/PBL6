@@ -39,8 +39,8 @@ const Search = () => {
 		searchAPI.search(encodeURIComponent(debounced)).then(
 			(res) => {
 				if (res.status === 200) {
-					if (res.data) {
-						setSearchResult(res.data);
+					if (res.data.data) {
+						setSearchResult(res.data.data);
 					} else {
 						setSearchResult({})
 					}

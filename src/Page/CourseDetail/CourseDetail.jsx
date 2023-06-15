@@ -23,10 +23,10 @@ const CoureDetail = () => {
 	const GetInformationCourse = useCallback(async (id) => {
 		setLoading(true);
 		if (context?.user?.id) {
-			const resWithCheck = await courseAPI.getCourseDetailCheck(id, context?.user?.id);
+			const resWithCheck = await courseAPI.getCourseDetail(id, context?.user?.id);
 			if (resWithCheck.status === 200) {
 				setInfor(resWithCheck.data.data);
-				if (resWithCheck.data.registered === 'true') {
+				if (resWithCheck.data.data.check_purchased_course === true) {
 					setRegister(true);
 				} else {
 					setRegister(false);

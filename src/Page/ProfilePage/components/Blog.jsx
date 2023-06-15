@@ -6,10 +6,10 @@ import { AppContext } from "../../../App";
 const Blog = () => {
 	const context = useContext(AppContext);
 	const renderBlog = useMemo(() => {
-		return context.user.listBlogs.map((blog) => {
+		return context.user.blogs.map((blog) => {
 			return <BlogItem key={ blog.id } blog={ blog } />
 		})
-	}, [context?.user?.listBlogs])
+	}, [context?.user?.blogs])
 	return (
 		<div className='text-left'>
 			<div className="w-1/2 profile-tab">

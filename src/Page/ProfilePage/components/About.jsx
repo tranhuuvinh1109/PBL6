@@ -31,17 +31,18 @@ const About = () => {
 		}
 
 		const res = await authAPI.updateProfile({
-			fullName: profileContext.dataProfile.fullName,
+			fullname: profileContext.dataProfile.fullName,
 			address: profileContext.dataProfile.address,
 			phone: profileContext.dataProfile.phone,
 			avatar: url,
-			gender: profileContext.dataProfile.gender
+			id: context?.user?.id,
+			birthday: '2000-01-02'
 		});
 		if (res.status === 200) {
 			context.setUser(res.data)
 			toast.success('Profile updated');
 		} else {
-			toast.success('Profile failed');
+			toast.error('Profile failed');
 		}
 		profileContext.setIsLoading(false);
 	};
@@ -69,8 +70,8 @@ const About = () => {
 				</div>
 				<div className='w-8/12 ml-4'>
 					{
-						profileContext.isEdit ? <input id='fullName' name='fullName' type='text' onChange={ handleChangeField } value={ profileContext?.dataProfile?.fullName } className='w-full' />
-							: <p className='m-0 text-blue-600'>{ profileContext?.dataProfile?.fullName }</p>
+						profileContext.isEdit ? <input id='fullName' name='fullName' type='text' onChange={ handleChangeField } value={ profileContext?.dataProfile?.fullname } className='w-full' />
+							: <p className='m-0 text-blue-600'>{ profileContext?.dataProfile?.fullname }</p>
 					}
 				</div>
 			</div>
