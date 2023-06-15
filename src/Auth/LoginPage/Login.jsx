@@ -29,7 +29,6 @@ const Login = () => {
 			const res = await authAPI.login(data);
 			if (res.status === 200) {
 				context.setUser(res.data.data);
-				console.log('login', res.data.token)
 				localStorage.setItem('userID', res.data.token);
 				toast.success('Login Successfully');
 				if (res.data.data.role === 0) {

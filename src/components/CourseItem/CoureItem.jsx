@@ -5,7 +5,6 @@ import { faStar } from '@fortawesome/free-solid-svg-icons';
 import { Link } from "react-router-dom";
 
 const CourseItem = ({ data }) => {
-	console.log('courseItem', data)
 	return (
 		<Col lg={ 4 } md={ 6 } xs={ 12 }>
 			<div className="single-course wow fadeInUp" data-wow-delay=".4s">

@@ -83,9 +83,9 @@ const CoureDetail = () => {
 									<Container>
 										<Row>
 											{
-												infor?.plans?.map((item) => {
+												infor?.plans?.map((item, index) => {
 													return (
-														<Col xs={ 12 } lg={ 6 } md={ 6 }>
+														<Col xs={ 12 } lg={ 6 } md={ 6 } key={ index }>
 															<div className="py-2">
 																<FontAwesomeIcon icon={ faCheck } className='mr-2 text-red-400' />
 																<span>

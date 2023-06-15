@@ -12,6 +12,9 @@ const About = () => {
 	const context = useContext(AppContext);
 	const profileContext = useContext(ProfileContext);
 
+	const onChange = (_date, dateString) => {
+		profileContext.setDataProfile({ ...profileContext?.dataProfile, birthday: dateString });
+	};
 
 	const toggleButtonEdit = () => {
 		profileContext.setIsEdit(!profileContext.isEdit);
@@ -24,19 +27,21 @@ const About = () => {
 	const updateProfile = async () => {
 		profileContext.setIsLoading(true);
 		let url = '';
-		if (profileContext.avatar?.name) {
-			url = await uploadFileWithProgress(profileContext.avatar, 'images/avatar', profileContext.avatar.name, profileContext.setProgress);
-		} else {
-			url = profileContext.avatar.preview;
-		}
+		// if (profileContext.avatar?.name) {
+		// 	url = await uploadFileWithProgress(profileContext.avatar, 'images/avatar', profileContext.avatar.name, profileContext.setProgress);
+		// } else {
+		// 	url = profileContext.avatar.preview;
+		// }
+		url = profileContext.avatar.preview;
+
 
 		const res = await authAPI.updateProfile({
-			fullname: profileContext.dataProfile.fullName,
+			fullname: profileContext.dataProfile.fullname,
 			address: profileContext.dataProfile.address,
 			phone: profileContext.dataProfile.phone,
 			avatar: url,
 			id: context?.user?.id,
-			birthday: '2000-01-02'
+			birthday: profileContext.dataProfile.birthday
 		});
 		if (res.status === 200) {
 			context.setUser(res.data)
@@ -126,8 +131,8 @@ const About = () => {
 						</div>
 						<div className='w-8/12 ml-4'>
 							{
-								profileContext.isEdit ? <DatePicker />
-									: <p className='m-0'>11/09/2002</p>
+								profileContext.isEdit ? <DatePicker onChange={ onChange } />
+									: <p className='m-0'>{ profileContext?.dataProfile?.birthday }</p>
 							}
 						</div>
 					</div>

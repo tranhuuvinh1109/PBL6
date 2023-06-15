@@ -1,9 +1,9 @@
 import axios from 'axios';
 // const apiURL = process.env.REACT_APP_API_URL;
 const axiosClient = axios.create({
-	baseURL: 'http://127.0.0.1:8000/api'
+	// baseURL: 'http://127.0.0.1:8000/api'
 	// baseURL: 'https://pbl5-production-dc9d.up.railway.app',
-	// baseURL: 'https://vinh-be-laravel.000webhostapp.com/api',
+	baseURL: 'https://vinh-be-laravel.000webhostapp.com/api',
 
 });
 // axiosClient.interceptors.request.use(
