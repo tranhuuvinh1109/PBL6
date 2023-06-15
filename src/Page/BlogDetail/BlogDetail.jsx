@@ -85,7 +85,7 @@ const BlogDetail = () => {
 		setIsLoading(true);
 		const res = await blogAPI.getBlogDetail(id);
 		if (res.status === 200) {
-			setDataBlog(res.data);
+			setDataBlog(res.data.data);
 			const today = new Date();
 			const createAt = new Date(res.data?.created_at);
 			const timeDiff = Math.abs(today - createAt);
@@ -99,7 +99,7 @@ const BlogDetail = () => {
 	const GetInformationUser = async (id) => {
 		const res = await authAPI.getUser(id);
 		if (res.status === 200) {
-			return res.data;
+			return res.data.data;
 		}
 		return {};
 	};

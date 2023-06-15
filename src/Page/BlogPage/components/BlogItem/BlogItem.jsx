@@ -6,6 +6,7 @@ import User from "../../../../components/User/User";
 import parse from 'html-react-parser';
 
 const BlogItem = ({ blog }) => {
+	console.log('..', blog)
 	const today = new Date();
 	const createAt = new Date(blog?.created_at);
 	const timeDiff = Math.abs(today - createAt);

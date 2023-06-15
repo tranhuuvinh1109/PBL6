@@ -49,11 +49,11 @@ const Learning = () => {
 	};
 
 	const GetInformationCourse = async (id) => {
-		const res = await courseAPI.getCourseDetail(id)
+		const res = await courseAPI.getCourseDetail(id, 0)
 		if (res.status === 200) {
-			setInfor(res.data)
-			if (res.data.lessons.length > 0) {
-				setActived(res.data.lessons[0].id)
+			setInfor(res.data.data);
+			if (res.data.data.lessons.length > 0) {
+				setActived(res.data.data.lessons[0].id)
 			} else {
 				toast.error('Get data course fail !');
 			}
@@ -63,7 +63,7 @@ const Learning = () => {
 	const GetInformationUser = async (id) => {
 		const res = await authAPI.getUser(id);
 		if (res.status === 200) {
-			return res.data;
+			return res.data.data;
 		}
 		return {};
 	};

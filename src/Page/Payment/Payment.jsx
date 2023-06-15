@@ -2,17 +2,10 @@ import React, { useState, useContext } from 'react';
 import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
 import { Modal } from 'antd';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
 import { toast } from 'react-hot-toast';
 import { AppContext } from '../../App';
 import { courseAPI } from '../../api/courseAPI';
-
-const apiSendMail = axios.create({
-	baseURL: "https://bemomentlearning-production.up.railway.app/api",
-	headers: {
-		"Content-Type": "application/json"
-	}
-});
+import { mailAPI } from '../../api/mailAPI';
 
 const Payment = ({ data, res }) => {
 	const context = useContext(AppContext);
@@ -48,7 +41,7 @@ const Payment = ({ data, res }) => {
 		const param = {
 			email: context?.user?.email,
 			price: price,
-			img: image,
+			image: image,
 			course: name
 		}
 		sendEmailPayment(param);
@@ -58,8 +51,8 @@ const Payment = ({ data, res }) => {
 		})
 	}
 	const registerCourse = async (id) => {
-		const res = await courseAPI.registerCourse(id);
-		if (res.status === 201) {
+		const res = await courseAPI.registerCourse(id, context?.user?.id);
+		if (res.status === 200) {
 			navigate(`/learning/${id}`);
 			toast.success('Course successfully registered !');
 		} else {
@@ -70,12 +63,12 @@ const Payment = ({ data, res }) => {
 		setErrorMessage("An error occured with your payment")
 	}
 	const sendEmailPayment = async (data) => {
-		const res = await apiSendMail.post('/send-mail', {
+		const res = await mailAPI.sendMail({
 			email: data.email,
 			price: data.price,
 			course: data.course,
 			img: data.img
-		})
+		});
 		if (res.status === 201) {
 			toast(`Purchase course successfully, Order Id: ${orderId}`);
 		} else {
