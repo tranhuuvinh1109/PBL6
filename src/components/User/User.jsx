@@ -3,7 +3,6 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 
 const User = ({ infor, ...props }) => {
-	console.log('//', infor)
 	const navigate = useNavigate();
 	const handleClick = () => {
 		if (infor?.id) {

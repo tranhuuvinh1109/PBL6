@@ -19,8 +19,6 @@ const BlogPage = () => {
 		setIsLoading(true);
 		const res = await blogAPI.getAll();
 		if (res.status === 200) {
-			console.log('->>', res)
-
 			setListBlog(res.data.data);
 		} else {
 			toast.error('Get Blog Fail!');
