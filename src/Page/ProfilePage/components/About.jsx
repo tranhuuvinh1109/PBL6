@@ -7,6 +7,7 @@ import { toast } from 'react-hot-toast';
 import { ProfileContext } from '../ProfilePage';
 import uploadFileWithProgress from '../../../Firebase/uploadFileWithProgress';
 import { AppContext } from '../../../App';
+import { EnCodeBase64 } from '../../../hook/EnCodeBase64';
 
 const About = () => {
 	const context = useContext(AppContext);
@@ -27,24 +28,23 @@ const About = () => {
 	const updateProfile = async () => {
 		profileContext.setIsLoading(true);
 		let url = '';
-		// if (profileContext.avatar?.name) {
-		// 	url = await uploadFileWithProgress(profileContext.avatar, 'images/avatar', profileContext.avatar.name, profileContext.setProgress);
-		// } else {
-		// 	url = profileContext.avatar.preview;
-		// }
-		url = profileContext.avatar.preview;
+		if (profileContext.avatar?.name) {
+			url = await uploadFileWithProgress(profileContext.avatar, 'images/avatar', profileContext.avatar.name, profileContext.setProgress);
+		} else {
+			url = profileContext.avatar.preview;
+		}
 
 
-		const res = await authAPI.updateProfile({
+		const res = await authAPI.updateProfile(EnCodeBase64({
 			fullname: profileContext.dataProfile.fullname,
 			address: profileContext.dataProfile.address,
 			phone: profileContext.dataProfile.phone,
 			avatar: url,
 			id: context?.user?.id,
 			birthday: profileContext.dataProfile.birthday
-		});
+		}));
 		if (res.status === 200) {
-			context.setUser(res.data)
+			context.setUser(res.data.data)
 			toast.success('Profile updated');
 		} else {
 			toast.error('Profile failed');
@@ -69,13 +69,13 @@ const About = () => {
 			</div>
 			<div className='flex mb-2.5 input-wrapper'>
 				<div className='w-2/12'>
-					<label htmlFor='fullName'>
+					<label htmlFor='fullname'>
 						Fullname:
 					</label>
 				</div>
 				<div className='w-8/12 ml-4'>
 					{
-						profileContext.isEdit ? <input id='fullName' name='fullName' type='text' onChange={ handleChangeField } value={ profileContext?.dataProfile?.fullname } className='w-full' />
+						profileContext.isEdit ? <input id='fullname' name='fullname' type='text' onChange={ handleChangeField } value={ profileContext?.dataProfile?.fullname } className='w-full' />
 							: <p className='m-0 text-blue-600'>{ profileContext?.dataProfile?.fullname }</p>
 					}
 				</div>

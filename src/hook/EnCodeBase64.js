@@ -1,0 +1,1 @@
+export const EnCodeBase64 = (value) => btoa(JSON.stringify(value))

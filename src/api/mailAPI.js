@@ -1,5 +1,6 @@
 import axiosClient from "./axiosClient";
 
 export const mailAPI = {
-	sendMail: (params) => axiosClient.get(`/send-mail/email=${params.email}&course=${params.course}&price=${params.price}&image=${params.image}`)
+	// sendMail: (params) => axiosClient.get(`/send-mail/email=${params.email}&course=${params.course}&price=${params.price}&image=${params.image}`),
+	sendMailGet: (params) => axiosClient.get(`/send-mail?var=${params}`)
 }

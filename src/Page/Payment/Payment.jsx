@@ -6,6 +6,7 @@ import { toast } from 'react-hot-toast';
 import { AppContext } from '../../App';
 import { courseAPI } from '../../api/courseAPI';
 import { mailAPI } from '../../api/mailAPI';
+import { EnCodeBase64 } from '../../hook/EnCodeBase64';
 
 const Payment = ({ data, res }) => {
 	const context = useContext(AppContext);
@@ -44,6 +45,7 @@ const Payment = ({ data, res }) => {
 			image: image,
 			course: name
 		}
+		console.log('img', image)
 		sendEmailPayment(param);
 		registerCourse(id)
 		return actions.order.capture().then(function () {
@@ -51,7 +53,10 @@ const Payment = ({ data, res }) => {
 		})
 	}
 	const registerCourse = async (id) => {
-		const res = await courseAPI.registerCourse(id, context?.user?.id);
+		const res = await courseAPI.registerCourseGet(EnCodeBase64({
+			userId: context?.user?.id,
+			courseId: id
+		}));
 		if (res.status === 200) {
 			navigate(`/learning/${id}`);
 			toast.success('Course successfully registered !');
@@ -63,13 +68,13 @@ const Payment = ({ data, res }) => {
 		setErrorMessage("An error occured with your payment")
 	}
 	const sendEmailPayment = async (data) => {
-		const res = await mailAPI.sendMail({
+		const res = await mailAPI.sendMailGet(EnCodeBase64({
 			email: data.email,
 			price: data.price,
 			course: data.course,
-			img: data.img
-		});
-		if (res.status === 201) {
+			img: image
+		}));
+		if (res.status === 200) {
 			toast(`Purchase course successfully, Order Id: ${orderId}`);
 		} else {
 			toast(`Purchase course fail, ${errorMessage}`);

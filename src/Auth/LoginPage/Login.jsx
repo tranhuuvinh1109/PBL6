@@ -8,7 +8,7 @@ import toast from 'react-hot-toast';
 import { AppContext } from '../../App';
 import { authAPI } from '../../api/authApi';
 import InputCustom from '../../components/Input/Input';
-
+import { EnCodeBase64 } from '../../hook/EnCodeBase64';
 
 const Login = () => {
 	const navigator = useNavigate();
@@ -22,11 +22,12 @@ const Login = () => {
 		e.preventDefault();
 		setData({ ...data, [e.target.name]: e.target.value });
 	}
+
 	const handleSubmit = async (e) => {
 		e.preventDefault();
 		if (data.email && data.password) {
 			context.setIsLoading(true);
-			const res = await authAPI.login(data);
+			const res = await authAPI.loginGet(EnCodeBase64(data));
 			if (res.status === 200) {
 				context.setUser(res.data.data);
 				localStorage.setItem('userID', res.data.token);

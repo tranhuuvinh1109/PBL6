@@ -167,7 +167,7 @@ const BlogManagement = () => {
 			render: (user) => (
 				<>
 					<Avatar src={ user.avatar } alt='avatar' />
-					<span>{ user.fullName }</span>
+					<span>{ user.email }</span>
 				</>),
 		},
 		{
@@ -195,7 +195,7 @@ const BlogManagement = () => {
 
 	const dataSource = useMemo(() => {
 		if (listBlog) {
-			return listBlog.map((course, index) => {
+			return listBlog?.map((course, index) => {
 				return {
 					...course,
 					key: index,
@@ -217,7 +217,7 @@ const BlogManagement = () => {
 	const getAllBlog = async () => {
 		const res = await blogAPI.getAll();
 		if (res.status === 200) {
-			setListBlog(res.data);
+			setListBlog(res.data.data);
 		} else {
 			toast.error("Get all blog fail !");
 		}

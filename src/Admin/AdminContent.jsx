@@ -90,7 +90,7 @@ const AdminContent = () => {
 										<Avatar src={ context.user.avatar } size='large' alt="user" />
 										<span className='ml-1.5 text-base text-base font-semibold'>
 											{
-												context.user.username
+												context.user.name
 											}
 										</span>
 									</>

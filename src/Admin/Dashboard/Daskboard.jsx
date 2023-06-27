@@ -27,16 +27,19 @@ const Daskboard = () => {
 	const getStatisticCourse = async () => {
 		const res = await statisticAPI.statisticCourse();
 		if (res.status === 200) {
-			const { arrayValue } = res.data.reduce(
+			console.log('data saved', res);
+			const { arrayValue } = res.data.data.reduce(
 				(acc, item) => {
 					acc.arrayValue.push(item.quantity);
 					return acc;
 				},
 				{ arrayValue: [] }
 			);
-			const courses = res.data.map(item => {
+			console.log('array value saved', arrayValue);
+			const courses = res.data.data.map(item => {
 				return { course: item.course }
 			});
+			console.log('courses saved', courses);
 
 			setOptions({
 				...options,

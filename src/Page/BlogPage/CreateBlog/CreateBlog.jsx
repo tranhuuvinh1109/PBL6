@@ -10,6 +10,7 @@ import { toast } from "react-hot-toast";
 import uploadFileWithProgress from "../../../Firebase/uploadFileWithProgress";
 import ProgressUpload from "../../../Admin/components/ProgressUpload/ProgressUpload";
 import { useNavigate } from "react-router-dom";
+import { EnCodeBase64 } from "../../../hook/EnCodeBase64";
 
 const CreateBlog = () => {
 	const navigate = useNavigate();
@@ -43,15 +44,21 @@ const CreateBlog = () => {
 				const year = today.getFullYear();
 				const month = (today.getMonth() + 1).toString().padStart(2, '0');
 				const day = today.getDate().toString().padStart(2, '0');
-				const params = {
+				console.log('blog', EnCodeBase64({
 					title: blog.title,
 					image: uploadImagePromise,
 					content: content,
-					creator: '' + context.user.id,
+					creator: context.user.id,
 					created_at: `${year}-${month}-${day}`
-				}
-				const res = await blogAPI.createBlog(params);
-				if (res.status === 201) {
+				}))
+				const res = await blogAPI.createBlogGet(encodeURIComponent(EnCodeBase64({
+					creator: context?.user?.id,
+					title: blog.title,
+					image: uploadImagePromise,
+					content: content
+					// created_at: `${year}-${month}-${day}`
+				})));
+				if (res.status === 200) {
 					toast.success("Create Blog Success");
 					navigate('/blog');
 				} else {
