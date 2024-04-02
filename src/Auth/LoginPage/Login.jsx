@@ -40,6 +40,10 @@ const Login = () => {
         navigator("/");
       }, 2000);
     } else {
+      setTimeout(() => {
+        toast.success("Login Fail");
+        setIsLoading(false);
+      }, 2000);
       toast.error("Please enter email & password");
     }
   };

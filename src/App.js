@@ -99,10 +99,7 @@ function App() {
             ))}
             <Route path="*" element={<NotFound />} />
           </Route>
-          <Route
-            path="/"
-            element={<PrivateRouter outlet={<AppContent />} path="/login" />}
-          >
+          <Route path="/" element={<AppContent />}>
             {privateRouter.map((route) => (
               <Route
                 key={route.path}
